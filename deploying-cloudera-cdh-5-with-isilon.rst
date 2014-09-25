@@ -635,7 +635,8 @@ client perspective.
 
         [user\@workstation ~]$ **ping myhost.lab.example.com**
         PING myhost.lab.example.com (10.111.128.240) 56(84) bytes of data.
-        64 bytes from myhost.lab.example.com (10.111.128.240): icmp\_seq=1 ttl=64 time=1.47 ms
+        64 bytes from myhost.lab.example.com (10.111.128.240): icmp\_seq=1 
+        ttl=64 time=1.47 ms
 
     #. Confirm that the reverse DNS record for that IP address can be
        properly resolved to myhost.lab.example.com.
@@ -931,7 +932,8 @@ Configure Isilon For HDFS
     [user\@workstation ~]$ **scp isilon-hadoop-tools-x.x.tar.gz \\
     root\@isilon\_node\_ip\_address:/ifs/isiloncluster1/scripts**
 
-    isiloncluster1-1# **tar -xzvf /ifs/isiloncluster1/isilon-hadoop-tools-x.x.tar.gz \\
+    isiloncluster1-1# **tar -xzvf \\
+    /ifs/isiloncluster1/isilon-hadoop-tools-x.x.tar.gz \\
     -C /ifs/isiloncluster1/scripts**
 
     isiloncluster1-1# **mv /ifs/isiloncluster1/scripts/isilon-hadoop-tools-x.x \\
@@ -964,7 +966,7 @@ Configure Isilon For HDFS
 
     .. parsed-literal::
 
-      isiloncluster1-1# **isi zone zones modify --user-mapping-rules="hdfs=>root" \\
+      isiloncluster1-1# **isi zone zones modify --user-mapping-rules=\"hdfs=>root\" \\
       --zone System**
       isiloncluster1-1# **isi services isi\_hdfs\_d disable ; \\
       isi services isi\_hdfs\_d enable**
@@ -1960,13 +1962,13 @@ HBase
   hbase(main):004:0> **put 'test', 'row2', 'cf:b', 'value2'**
   0 row(s) in 0.0120 seconds
   hbase(main):005:0> **scan 'test'**
-  ROW                             COLUMN+CELL                                                                                                                                      
-   row1                            column=cf:a,timestamp=1407542488028,value=value1                                                                                               
-   row2                            column=cf:b,timestamp=1407542499562,value=value2                                                                                              
+  ROW                         COLUMN+CELL                                                                                                                                      
+   row1                        column=cf:a,timestamp=1407542488028,value=value1
+   row2                        column=cf:b,timestamp=1407542499562,value=value2
   2 row(s) in 0.0510 seconds
   hbase(main):006:0> **get 'test', 'row1'**
-  COLUMN                          CELL                                                                                                                                            
-   cf:a                            timestamp=1407542488028,value=value1                                                                              
+  COLUMN                      CELL
+   cf:a                        timestamp=1407542488028,value=value1
   1 row(s) in 0.0240 seconds
   hbase(main):007:0> **quit**
 
