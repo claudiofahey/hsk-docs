@@ -269,11 +269,11 @@ software versions:
   +--------------------+---------------------+----------------+-------------------------------+
   | CDH Version        | 7.0.2.2 - 7.1.0.0   | 7.1.1.0        | 7.1.1.0 + patch-130611        |
   +====================+=====================+================+===============================+
-  | 4.2 - 4.7:sup:`3`  | compatible:sup:`1`  | compatible     | compatible                    |
+  | 4.2 - 4.7\ :sup:`3`| compatible\ :sup:`1`| compatible     | compatible                    |
   +--------------------+---------------------+----------------+-------------------------------+
   | 5.0.3              | not compatible      | not compatible | compatible                    |
   +--------------------+---------------------+----------------+-------------------------------+
-  | 5.1.0              | not compatible      | not compatible | partially compatible:sup:`2`  |
+  | 5.1.0              | not compatible      | not compatible | partially compatible\ :sup:`2`|
   +--------------------+---------------------+----------------+-------------------------------+
 
 :sup:`1` Fully-compatible but commands and features described in this
@@ -295,41 +295,59 @@ description of these hosts.
 
 List of Hosts in Hadoop Environments
 
-+-------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Host (Host Name)                                      | Description                                                                                                                                                                                                                                                                                                         |
-+=======================================================+=====================================================================================================================================================================================================================================================================================================================+
-| DNS/DHCP Server                                       | It is recommended to have a DNS and DHCP server that you can control.                                                                                                                                                                                                                                               |
-|                                                       | This will be used by all other hosts for DNS and DHCP services.                                                                                                                                                                                                                                                     |
-+-------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| VMware vCenter                                        | VMware vCenter will manage all ESXi hosts and their VMs.                                                                                                                                                                                                                                                            |
-|                                                       | It is required for Big Data Extensions (BDE).                                                                                                                                                                                                                                                                       |
-+-------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| VMware Big Data Extensions vApp Server (bde)          | This will run the Serengeti components to assist in deploying Hadoop clusters.                                                                                                                                                                                                                                      |
-+-------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| VMware ESXi                                           | Physical machines will run the VMware ESXi operating system to allow virtual machines to run in them.                                                                                                                                                                                                               |
-+-------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Linux workstation (workstation)                       | You should have a Linux workstation with a GUI that you can use to control everything with.                                                                                                                                                                                                                         |
-+-------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Isilon nodes (isiloncluster1-1, 2, 3, ...)            | You will need one or more Isilon Scale-Out NAS nodes. For functional                                                                                                                                                                                                                                                |
-|                                                       | testing, you can use a single Isilon OneFS Simulator node instead of the                                                                                                                                                                                                                                            |
-|                                                       | Isilon appliance. The nodes will be clustered together into an *Isilon                                                                                                                                                                                                                                              |
-|                                                       | Cluster*. Isilon nodes run the OneFS operating system.                                                                                                                                                                                                                                                              |
-+-------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Isilon InsightIQ                                      | This is optional licensed software from Isilon and can be used to monitor the health and performance of your Isilon cluster. It is recommend for any performance testing.                                                                                                                                           |
-+-------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Cloudera Manager (c5manager-server-0)                 | A dedicated host will run the Cloudera Manager application and the Cloudera Management Services. This will deploy and monitor the Cloudera CDH Hadoop components.                                                                                                                                                   |
-+-------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Cloudera CDH Hadoop Master (mycluster1-master-0)      | This host will the YARN Resource Manager, Job History Server, Hue Server, Hive Metastore Server, etc. In general, it will run all "master" services except for the HDFS Name Node.                                                                                                                                  |
-+-------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Cloudera CDH Hadoop Name Node (mycluster1-namenode-0) | This host will only run the CDH Name Node. This will only be used during the installation process. Once you reconfigure the CDH components to use Isilon for HDFS, this node will be idle.                                                                                                                          |
-+-------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Cloudera CDH Hadoop Worker Node                       | There will be any number of worker nodes, depending on the compute requirements. Each node will run the YARN Node Manager, Impala Daemon, HBase Region Server, etc. During the installation process, the first 3 of these nodes will run the HDFS Data Node but these will become idle like the CDH HDFS Name Node. |
-| (mycluster1-worker-0, 1, 2, ...)                      |                                                                                                                                                                                                                                                                                                                     |
-+-------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
++-----------------------------+--------------------------------------------------------------+
+| Host (Host Name)            | Description                                                  |
++=============================+==============================================================+
+| DNS/DHCP Server             | It is recommended to have a DNS and DHCP server that you can |
+|                             | control. This will be used by all other hosts for DNS and    |
+|                             | DHCP services.                                               |
++-----------------------------+--------------------------------------------------------------+
+| VMware vCenter              | VMware vCenter will manage all ESXi hosts and their VMs. It  |
+|                             | is required for Big Data Extensions (BDE).                   |
++-----------------------------+--------------------------------------------------------------+
+| VMware Big Data Extensions  | This will run the Serengeti components to assist in          |
+| vApp Server (bde)           | deploying Hadoop clusters.                                   |
++-----------------------------+--------------------------------------------------------------+
+| VMware ESXi                 | Physical machines will run the VMware ESXi operating system  |
+|                             | to allow virtual machines to run in them.                    |
++-----------------------------+--------------------------------------------------------------+
+| Linux workstation           | You should have a Linux workstation with a GUI that you can  |
+| (workstation)               | use to control everything with.                              |
++-----------------------------+--------------------------------------------------------------+
+| Isilon nodes                | You will need one or more Isilon Scale-Out NAS nodes. For    |
+| (isiloncluster1-1, 2, 3,    | functional testing, you can use a single Isilon OneFS        |
+| ...)                        | Simulator node instead of the Isilon appliance. The nodes    |
+|                             | will be clustered together into an *Isilon Cluster*. Isilon  |
+|                             | nodes run the OneFS operating system.                        |
++-----------------------------+--------------------------------------------------------------+
+| Isilon InsightIQ            | This is optional licensed software from Isilon and can be    |
+|                             | used to monitor the health and performance of your Isilon    |
+|                             | cluster. It is recommend for any performance testing.        |
++-----------------------------+--------------------------------------------------------------+
+| Cloudera Manager            | A dedicated host will run the Cloudera Manager application   |
+| (c5manager-server-0)        | and the Cloudera Management Services. This will deploy and   |
+|                             | monitor the Cloudera CDH Hadoop components.                  |
++-----------------------------+--------------------------------------------------------------+
+| Cloudera CDH Hadoop Master  | This host will the YARN Resource Manager, Job History        |
+| (mycluster1-master-0)       | Server, Hue Server, Hive Metastore Server, etc. In general,  |
+|                             | it will run all "master" services except for the HDFS Name   |
+|                             | Node.                                                        |
++-----------------------------+--------------------------------------------------------------+
+| Cloudera CDH Hadoop Name    | This host will only run the CDH Name Node. This will only be |
+| Node                        | used during the installation process. Once you reconfigure   |
+| (mycluster1-namenode-0)     | the CDH components to use Isilon for HDFS, this node will be |
+|                             | idle.                                                        |
++-----------------------------+--------------------------------------------------------------+
+| Cloudera CDH Hadoop Worker  | There will be any number of worker nodes, depending on the   |
+| Node (mycluster1-worker-0,  | compute requirements. Each node will run the YARN Node       |
+| 1, 2, ...)                  | Manager, Impala Daemon, HBase Region Server, etc. During the |
+|                             | installation process, the first 3 of these nodes will run    |
+|                             | the HDFS Data Node but these will become idle like the CDH   |
+|                             | HDFS Name Node.                                              |
++-----------------------------+--------------------------------------------------------------+
 
-Due to the many hosts involved, all commands that must be typed are
-prefixed with the standard system prompt identifying the user and host
-name. For example:
+Due to the many hosts involved, all commands that must be typed are prefixed with the standard
+system prompt identifying the user and host name. For example:
 
 .. parsed-literal::
 
@@ -946,8 +964,10 @@ Configure Isilon For HDFS
 
     .. parsed-literal::
 
-      isiloncluster1-1# **isi zone zones modify --user-mapping-rules="hdfs=>root" --zone System**
-      isiloncluster1-1# **isi services isi\_hdfs\_d disable ; isi services isi\_hdfs\_d enable**
+      isiloncluster1-1# **isi zone zones modify --user-mapping-rules="hdfs=>root" \\
+      --zone System**
+      isiloncluster1-1# **isi services isi\_hdfs\_d disable ; \\
+      isi services isi\_hdfs\_d enable**
       The service 'isi\_hdfs\_d' has been disabled.
       The service 'isi\_hdfs\_d' has been enabled.
 
@@ -990,7 +1010,7 @@ Configure Isilon For HDFS
     
     .. parsed-literal::
 
-      isiloncluster1-1# **touch \
+      isiloncluster1-1# **touch \\
       /ifs/isiloncluster1/zone1/hadoop/THIS\_IS\_ISILON\_isiloncluster1\_zone1**
 
 Create DNS Records For Isilon
@@ -1141,21 +1161,30 @@ Provision Virtual Machines Using Big Data Extensions
     
     .. table:: Description of mycluster1-bde.json
 
-      +---------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
-      | Field Name                | Description                                                                                                                                         |
-      +===========================+=====================================================================================================================================================+
-      | nodeGroups.instanceNum    | The number of hosts that will be created in this node group. This should be 1 for all node groups except the worker group.                          |
-      +---------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
-      | nodeGroups.storage.sizeGB | Size of additional disks for each host. Note that the OS disk is always 20 GB and the swapdisk will depend on the memory.                           |
-      +---------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
-      | nodeGroups.storage.type   | If "shared", virtual disks will be located on an NFS export. If "local", virtual disks will be located on disks directly attached to the ESXihosts. |
-      +---------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
-      | nodeGroups.cpuNum         | Number of CPU cores assigned to the VM. This can be changed after the cluster has been deployed.                                                    |
-      +---------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
-      | nodeGroups.memCapacityMB  | Amount of RAM assigned to the VM. This can be changed after the cluster has been deployed.                                                          |
-      +---------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
-      | nodeGroups.rpNames        | Resource pool name. For available names, type "resourcepool list" in the Serengeti CLI.                                                             |
-      +---------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------+
+      +---------------------------+----------------------------------------------------------+
+      | Field Name                | Description                                              |
+      +===========================+==========================================================+
+      | nodeGroups.instanceNum    | The number of hosts that will be created in this node    |
+      |                           | group. This should be 1 for all node groups except the   |
+      |                           | worker group.                                            |
+      +---------------------------+----------------------------------------------------------+
+      | nodeGroups.storage.sizeGB | Size of additional disks for each host. Note that the OS |
+      |                           | disk is always 20 GB and the swapdisk will depend on the |
+      |                           | memory.                                                  |
+      +---------------------------+----------------------------------------------------------+
+      | nodeGroups.storage.type   | If "shared", virtual disks will be located on an NFS     |
+      |                           | export. If "local", virtual disks will be located on     |
+      |                           | disks directly attached to the ESXihosts.                |
+      +---------------------------+----------------------------------------------------------+
+      | nodeGroups.cpuNum         | Number of CPU cores assigned to the VM. This can be      |
+      |                           | changed after the cluster has been deployed.             |
+      +---------------------------+----------------------------------------------------------+
+      | nodeGroups.memCapacityMB  | Amount of RAM assigned to the VM. This can be changed    |
+      |                           | after the cluster has been deployed.                     |
+      +---------------------------+----------------------------------------------------------+
+      | nodeGroups.rpNames        | Resource pool name. For available names, type            |
+      |                           | "resourcepool list" in the Serengeti CLI.                |
+      +---------------------------+----------------------------------------------------------+
 
     *For more details, refer to the BDE documentation referenced above.*
 
@@ -1165,7 +1194,8 @@ Provision Virtual Machines Using Big Data Extensions
    
    .. parsed-literal::
 
-      serengeti>\ **cluster create --name c5manager --specFile basic-server.json --password 1**
+      serengeti>\ **cluster create --name c5manager --specFile basic-server.json \\
+      --password 1**
       Hint: Password are from 8 to 128 characters, and can include
       alphanumeric characters ([0-9, a-z, A-Z]) and the following special
       characters: _, @, #, $, %, ^, &, *
@@ -1193,8 +1223,8 @@ Provision Virtual Machines Using Big Data Extensions
 
     .. parsed-literal::
 
-      serengeti>\ **cluster create --name mycluster1 --specFile mycluster1-bde.json --password 1 \\
-      --networkName defaultNetwork**
+      serengeti>\ **cluster create --name mycluster1 --specFile mycluster1-bde.json \\
+      --password 1 --networkName defaultNetwork**
       Hint: Password are from 8 to 128 characters, and can include
       alphanumeric characters ([0-9, a-z, A-Z]) and the following special
       characters: _, @, #, $, %, ^, &, *
@@ -1261,7 +1291,7 @@ This script performs the following actions:
 
 To run the script, follow these steps:
 
-#.  Login to your workstation (shown as user@workstation in the prompts below).
+#.  Login to your workstation (shown as user\@workstation in the prompts below).
 
 #.  Ensure that you are running a Python version 2.6.6 or higher but less than 3.0.
     
@@ -1290,37 +1320,54 @@ To run the script, follow these steps:
 
     .. table:: Description of mycluster1-post.json
 
-      +--------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-      | Field Name               | Description                                                                                                                                                                                                                                      |
-      +==========================+==================================================================================================================================================================================================================================================+
-      | ser\_host                | The URL to the BDE web service. For example: https://bde.lab.example.com:8443                                                                                                                                                                    |
-      +--------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-      | ser\_username            | The user name used to authenticate to the BDE web service. This is the same account used to login using the Serengeti CLI.                                                                                                                       |
-      +--------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-      | ser\_password            | The password for the above account.                                                                                                                                                                                                              |
-      +--------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-      | skip\_configure\_network | If "false" (the default), the script will set the DHCP\_HOSTNAME parameter on the host. If "false", you must also set the dhcp\_domain setting in this file. Set to "true" if you are using static IP addresses or DHCP without DNS integration. |
-      +--------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-      | dhcp\_domain             | This is the DNS suffix that is appended to the host name to create a FQDN. It should begin with a dot. Ignored if skip\_configure\_network is true. For example: .lab.example.com                                                                |
-      +--------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-      | cluster\_name            | This is the name of the BDE cluster.                                                                                                                                                                                                             |
-      +--------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-      | host\_file\_name         | This file will be created and it will contain the FQDN of each host in the BDE cluster.                                                                                                                                                          |
-      +--------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-      | node\_password           | This is the root password of the hosts created by BDE. This was specified when the cluster was created.                                                                                                                                          |
-      +--------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-      | name\_filter\_regex      | If non-empty, specify the name of a single host in your BDE cluster to apply this script to just a single host.                                                                                                                                  |
-      +--------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-      | tools\_root              | This is the fully-qualified path to the Isilon Hadoop Tools. It must be in an NFS mount.                                                                                                                                                         |
-      +--------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-      | nfs\_mounts              | This is a list of one or more NFS mounts that will be imported on each host in the BDE cluster.                                                                                                                                                  |
-      +--------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-      | nfs\_mounts.mount\_point | NFS mount point. For example: /mnt/isiloncluster1                                                                                                                                                                                                |
-      +--------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-      | nfs\_mounts.path         | NFS path. For example: host.domain.com:/directory                                                                                                                                                                                                |
-      +--------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-      | ssh\_commands            | This is a list of commands that will be executed on each host. This can be used to run scripts that will create users, adjust mount points, etc..                                                                                                |
-      +--------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+      +--------------------------+-----------------------------------------------------------+
+      | Field Name               | Description                                               |
+      +==========================+===========================================================+
+      | ser\_host                | The URL to the BDE web service. For example:              |
+      |                          | https://bde.lab.example.com:8443                          |
+      +--------------------------+-----------------------------------------------------------+
+      | ser\_username            | The user name used to authenticate to the BDE web         |
+      |                          | service. This is the same account used to login using the |
+      |                          | Serengeti CLI.                                            |
+      +--------------------------+-----------------------------------------------------------+
+      | ser\_password            | The password for the above account.                       |
+      +--------------------------+-----------------------------------------------------------+
+      | skip\_configure\_network | If "false" (the default), the script will set the         |
+      |                          | DHCP\_HOSTNAME parameter on the host. If "false", you     |
+      |                          | must also set the dhcp\_domain setting in this file. Set  |
+      |                          | to "true" if you are using static IP addresses or DHCP    |
+      |                          | without DNS integration.                                  |
+      +--------------------------+-----------------------------------------------------------+
+      | dhcp\_domain             | This is the DNS suffix that is appended to the host name  |
+      |                          | to create a FQDN. It should begin with a dot. Ignored if  |
+      |                          | skip\_configure\_network is true. For example:            |
+      |                          | .lab.example.com                                          |
+      +--------------------------+-----------------------------------------------------------+
+      | cluster\_name            | This is the name of the BDE cluster.                      |
+      +--------------------------+-----------------------------------------------------------+
+      | host\_file\_name         | This file will be created and it will contain the FQDN of |
+      |                          | each host in the BDE cluster.                             |
+      +--------------------------+-----------------------------------------------------------+
+      | node\_password           | This is the root password of the hosts created by BDE.    |
+      |                          | This was specified when the cluster was created.          |
+      +--------------------------+-----------------------------------------------------------+
+      | name\_filter\_regex      | If non-empty, specify the name of a single host in your   |
+      |                          | BDE cluster to apply this script to just a single host.   |
+      +--------------------------+-----------------------------------------------------------+
+      | tools\_root              | This is the fully-qualified path to the Isilon Hadoop     |
+      |                          | Tools. It must be in an NFS mount.                        |
+      +--------------------------+-----------------------------------------------------------+
+      | nfs\_mounts              | This is a list of one or more NFS mounts that will be     |
+      |                          | imported on each host in the BDE cluster.                 |
+      +--------------------------+-----------------------------------------------------------+
+      | nfs\_mounts.mount\_point | NFS mount point. For example: /mnt/isiloncluster1         |
+      +--------------------------+-----------------------------------------------------------+
+      | nfs\_mounts.path         | NFS path. For example: host.domain.com:/directory         |
+      +--------------------------+-----------------------------------------------------------+
+      | ssh\_commands            | This is a list of commands that will be executed on each  |
+      |                          | host. This can be used to run scripts that will create    |
+      |                          | users, adjust mount points, etc..                         |
+      +--------------------------+-----------------------------------------------------------+
 
 #.  Edit the file isilon-hadoop-tools/bde/create\_cdh\_users.sh with
     the appropriate gid\_base and uid\_base values. This should match the
@@ -1426,7 +1473,8 @@ server FQDNs.
 
 .. parsed-literal::
 
-  [user\@workstation etc]$ **/mnt/scripts/isilon-hadoop-tools/bde/fill\_disk.py mycluster1-hosts.txt**
+  [user\@workstation etc]$ **/mnt/scripts/isilon-hadoop-tools/bde/fill\_disk.py \\
+  mycluster1-hosts.txt**
 
 Resizing Your Cluster
 ---------------------
@@ -1439,9 +1487,10 @@ resize" command. For instance:
 
 .. parsed-literal::
 
-  serengeti>\ **cluster resize --name mycluster1 --nodeGroup worker --instanceNum 20**
-  serengeti>\ **cluster resize --name mycluster1 --nodeGroup worker --cpuNumPerNode 16 \\
-  --memCapacityMbPerNode 131072**
+  serengeti>\ **cluster resize --name mycluster1 --nodeGroup worker \\
+  --instanceNum 20**
+  serengeti>\ **cluster resize --name mycluster1 --nodeGroup worker \\
+  --cpuNumPerNode 16 --memCapacityMbPerNode 131072**
 
 After creating new VMs, you will want to run the BDE Post Deployment
 script and the Fill Disk script on the new nodes. Then use Cloudera
@@ -1461,7 +1510,7 @@ Install Cloudera Manager
     
     .. parsed-literal::
 
-      [root\@c5manager-server-0 Cloudera]# **./cloudera-manager-installer.bin**
+      [root\@c5manager-server-0 ~]# **./cloudera-manager-installer.bin**
 
 #.  Accept all defaults and complete the installation process.
 
@@ -1577,7 +1626,8 @@ Copy HDFS Files to Isilon
     
     .. parsed-literal::
 
-      [root\@mycluster1-master-0 ~]# **sudo -u hdfs hdfs dfs -ls hdfs://mycluster1-hdfs/**
+      [root\@mycluster1-master-0 ~]# **sudo -u hdfs hdfs dfs -ls \\
+      hdfs://mycluster1-hdfs/**
       Found 1 items
       -rw-r--r--   1 root hadoop          0 2014-08-05 05:59 hdfs://mycluster1-hdfs/THIS\_IS\_ISILON
 
@@ -1585,10 +1635,11 @@ Copy HDFS Files to Isilon
     
     .. parsed-literal::
 
-      [root\@mycluster1-master-0 ~]# **sudo -u hdfs hadoop distcp -skipcrccheck -update -pugp \\
-      / hdfs://mycluster1-hdfs/**
+      [root\@mycluster1-master-0 ~]# **sudo -u hdfs hadoop distcp -skipcrccheck \\
+      -update -pugp / hdfs://mycluster1-hdfs/**
       ...
-      [root\@mycluster1-master-0 ~]# **sudo -u hdfs hdfs dfs -ls hdfs://mycluster1-hdfs/**
+      [root\@mycluster1-master-0 ~]# **sudo -u hdfs hdfs dfs -ls \\
+      hdfs://mycluster1-hdfs/**
       Found 5 items
       -rw-r--r--   1 root  hadoop              0 2014-08-05 05:59 hdfs://mycluster1-hdfs/THIS\_IS\_ISILON
       drwxr-xr-x   - hbase hbase             148 2014-08-05 06:06 hdfs://mycluster1-hdfs/hbase
@@ -1674,7 +1725,8 @@ hduser1.
     
     .. parsed-literal::
 
-      isiloncluster1-1# **isi auth groups create hduser1 --zone System --provider local**
+      isiloncluster1-1# **isi auth groups create hduser1 --zone System \\
+      --provider local**
       isiloncluster1-1# **isi auth users create hduser1 --primary-group hduser1 \\
       --zone System --provider local \\
       --home-directory /ifs/isiloncluster1/zone1/hadoop/user/hduser1**

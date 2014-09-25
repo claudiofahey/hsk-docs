@@ -10,5 +10,3 @@ Contents
    :maxdepth: 2
    
    deploying-cloudera-cdh-5-with-isilon
-
-:ref:`search`
