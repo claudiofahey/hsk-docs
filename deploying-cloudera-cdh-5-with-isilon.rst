@@ -966,7 +966,7 @@ Configure Isilon For HDFS
 
     .. parsed-literal::
 
-      isiloncluster1-1# **isi zone zones modify --user-mapping-rules=\"hdfs=>root\" \\
+      isiloncluster1-1# **isi zone zones modify --user-mapping-rules="hdfs=>root" \\
       --zone System**
       isiloncluster1-1# **isi services isi\_hdfs\_d disable ; \\
       isi services isi\_hdfs\_d enable**
