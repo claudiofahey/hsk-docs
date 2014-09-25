@@ -819,8 +819,8 @@ access zone *zone2* to access the *shared\_data* folder that is within
   /ifs/isiloncluster1/zone2/hadoop/shared\_data**
 
   isiloncluster1-1# **ls -l /ifs/isiloncluster1/zone2/hadoop/shared\_data**
-  lrwxr-xr-x    1 root  719  44 Sep  2 01:18  /ifs/isiloncluster1/zone2/hadoop/shared\_data -> 
-  /ifs/isiloncluster1/zone1/hadoop/shared\_data
+  lrwxr-xr-x    1 root  719  44 Sep  2 01:18  /ifs/isiloncluster1/zone2/hadoop/shared\_data
+   -> /ifs/isiloncluster1/zone1/hadoop/shared\_data
 
 User and Group IDs
 ------------------
@@ -1056,7 +1056,8 @@ your Isilon cluster.
     .. parsed-literal::
 
       [user\@workstation ~]$ **ping mycluster1-hdfs.lab.example.com**
-      PING subnet0-pool0.isiloncluster1.lab.example.com (10.111.129.115) 56(84) bytes of data.
+      PING subnet0-pool0.isiloncluster1.lab.example.com (10.111.129.115) 56(84) 
+      bytes of data.
       64 bytes from 10.111.129.115: icmp\_seq=1 ttl=64 time=1.15 ms
 
 Prepare NFS Clients
@@ -1186,7 +1187,7 @@ Provision Virtual Machines Using Big Data Extensions
       |                           | "resourcepool list" in the Serengeti CLI.                |
       +---------------------------+----------------------------------------------------------+
 
-    *For more details, refer to the BDE documentation referenced above.*
+    *For more details, refer to the BDE documentation.*
 
 #. Login to the Serengeti CLI.
 
@@ -1762,7 +1763,7 @@ HDFS
 
   [root\@mycluster1-master-0 ~]# **sudo -u hdfs hdfs dfs -ls /**
   Found 5 items
-  -rw-r--r--   1 root  hadoop              0 2014-08-05 05:59/THIS_IS_ISILON
+  -rw-r--r--   1 root  hadoop              0 2014-08-05 05:59 /THIS_IS_ISILON
   drwxr-xr-x   - hbase hbase             148 2014-08-05 06:06 /hbase
   drwxrwxr-x   - solr  solr                0 2014-08-05 06:07 /solr
   drwxrwxrwt   - hdfs  supergroup        107 2014-08-05 06:07 /tmp
@@ -1959,13 +1960,13 @@ HBase
   hbase(main):004:0> **put 'test', 'row2', 'cf:b', 'value2'**
   0 row(s) in 0.0120 seconds
   hbase(main):005:0> **scan 'test'**
-  ROW                                                COLUMN+CELL                                                                                                                                      
-   row1                                              column=cf:a,timestamp=1407542488028,value=value1                                                                                               
-   row2                                              column=cf:b,timestamp=1407542499562,value=value2                                                                                              
+  ROW                             COLUMN+CELL                                                                                                                                      
+   row1                            column=cf:a,timestamp=1407542488028,value=value1                                                                                               
+   row2                            column=cf:b,timestamp=1407542499562,value=value2                                                                                              
   2 row(s) in 0.0510 seconds
   hbase(main):006:0> **get 'test', 'row1'**
-  COLUMN                                            CELL                                                                                                                                            
-   cf:a                                             timestamp=1407542488028,value=value1                                                                              
+  COLUMN                          CELL                                                                                                                                            
+   cf:a                            timestamp=1407542488028,value=value1                                                                              
   1 row(s) in 0.0240 seconds
   hbase(main):007:0> **quit**
 

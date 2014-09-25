@@ -1,10 +1,7 @@
 
-********************************************
-Welcome to the EMC Isilon Hadoop Starter Kit
-********************************************
-
-Contents
---------
+*****************************
+EMC Isilon Hadoop Starter Kit
+*****************************
 
 .. toctree::
    :maxdepth: 2
