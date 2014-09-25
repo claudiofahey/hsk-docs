@@ -193,20 +193,20 @@ Cloudera and EMC Joint Support Statement
 
 EMC Isilon and Cloudera are pleased to communicate a business
 collaboration and intention to enable joint support for EMC Isilon
-scale-­‐out NAS and Cloudera Enterprise products to bring the value of
+scale-out NAS and Cloudera Enterprise products to bring the value of
 Cloudera Enterprise to customers using EMC Isilon storage.
 
-EMC Isilon Scale‐Out NAS storage for Hadoop currently supports the
+EMC Isilon Scale-Out NAS storage for Hadoop currently supports the
 Apache Hadoop Distributed File System (HDFS) protocol. CDH is 100% open
 source and is the only Hadoop solution to offer batch processing,
-interactive SQL and interactive search, as well as enterprise‐grade
+interactive SQL and interactive search, as well as enterprise-grade
 continuous availability.
 
 EMC Isilon allows a customer to start using Hadoop now by using already
 existing data thus eliminating extra copies and reducing associated
 CAPEX costs for additional storage capacity. In addition, EMC Isilon is
 the only Hadoop storage solution that allows you access to the data via
-NAS (i.e. SMB) or HDFS protocols as well as providing a  POSIX‐Compliant
+NAS (i.e. SMB) or HDFS protocols as well as providing a  POSIX-Compliant
 file system for regulated environments.
 
 EMC Isilon and Cloudera are now jointly working to support the following
@@ -229,7 +229,7 @@ two scenarios:
   and EMC Isilon clusters.
 
   - Customers will be able to integrate existing EMC Isilon clusters with
-    existing HDFS‐storage based Cloudera Enterprise clusters by using
+    existing HDFS-storage based Cloudera Enterprise clusters by using
     existing Hadoop tools built for data movement. This scenario will allow
     customers to more easily ingest data into both systems, as well as
     enable use cases such as online or remote backup and disaster recovery.
@@ -239,7 +239,7 @@ support models, and intend to have a supported joint offering in the
 market in the first half of 2014.
 
 In addition, EMC Isilon and Cloudera are working together to advance the
-ongoing joint roadmap for Cloudera Enterprise on EMC Isilon Scale‐Out
+ongoing joint roadmap for Cloudera Enterprise on EMC Isilon Scale-Out
 NAS for subsequent releases of CDH, Cloudera manager, Cloudera Navigator
 and OneFS software.
 
