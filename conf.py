@@ -181,6 +181,9 @@ html_use_smartypants = False
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'HadoopStarterKit'
 
+def setup(app):
+    # overrides for wide tables in RTD theme
+    app.add_stylesheet('theme_overrides.css')   # path relative to _static
 
 # -- Options for LaTeX output ---------------------------------------------
 
