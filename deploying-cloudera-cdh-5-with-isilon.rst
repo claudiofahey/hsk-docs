@@ -862,6 +862,11 @@ Configure Isilon For HDFS
     script. Instead, refer to the OneFS documentation and `EMC
     Isilon Best Practices for Hadoop Data
     Storage <http://www.emc.com/collateral/white-paper/h12877-wp-emc-isilon-hadoop-best-practices.pdf>`__.
+
+.. note::
+
+    In the steps below, replace *zone1* with ``System`` to use the default System access zone
+    or you may specify the name of a new access zone that you previously created.
   
 #.  Open a web browser to the your Isilon cluster's web administration
     page. If you don't know the URL, simply point your browser to
@@ -967,7 +972,7 @@ Configure Isilon For HDFS
     .. parsed-literal::
 
       isiloncluster1-1# **isi zone zones modify --user-mapping-rules="hdfs=>root" \\
-      --zone System**
+      --zone zone1**
       isiloncluster1-1# **isi services isi\_hdfs\_d disable ; \\
       isi services isi\_hdfs\_d enable**
       The service 'isi\_hdfs\_d' has been disabled.
@@ -1005,7 +1010,7 @@ Configure Isilon For HDFS
    
    .. parsed-literal::
 
-      isiloncluster1-1# **isi zone zones modify System \\
+      isiloncluster1-1# **isi zone zones modify zone1 \\
       --hdfs-root-directory /ifs/isiloncluster1/zone1/hadoop**
 
 #.  Create an indicator file so that we can easily determine when we are looking your Isilon cluster via HDFS.
@@ -1728,10 +1733,10 @@ hduser1.
     
     .. parsed-literal::
 
-      isiloncluster1-1# **isi auth groups create hduser1 --zone System \\
+      isiloncluster1-1# **isi auth groups create hduser1 --zone zone1 \\
       --provider local**
       isiloncluster1-1# **isi auth users create hduser1 --primary-group hduser1 \\
-      --zone System --provider local \\
+      --zone zone1 --provider local \\
       --home-directory /ifs/isiloncluster1/zone1/hadoop/user/hduser1**
 
 #.  Add user to Cloudera nodes. Usually, this only needs to be performed on the master-0 node.
