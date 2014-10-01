@@ -7,4 +7,4 @@ EMC Isilon Hadoop Starter Kit
    :maxdepth: 2
    
    deploying-cloudera-cdh-5-with-isilon
-   hsk-pivotal
+   hsk-phd

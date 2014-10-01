@@ -214,8 +214,8 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
 #  ('index', 'hsk-all.tex', u'EMC Isilon Hadoop Starter Kit', u'EMC', 'manual'),
+  ('hsk-phd', 'hsk-phd.tex', u'EMC Isilon Hadoop Starter Kit for Pivotal HD', u'EMC', 'manual'),
   ('deploying-cloudera-cdh-5-with-isilon', 'hsk-cloudera.tex', u'EMC Isilon Hadoop Starter Kit for Cloudera', u'EMC', 'manual'),
-  ('hsk-pivotal', 'hsk-pivotal.tex', u'EMC Isilon Hadoop Starter Kit for Pivotal HD', u'EMC', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
