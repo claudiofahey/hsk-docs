@@ -213,7 +213,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'hsk-all.tex', u'EMC Isilon Hadoop Starter Kit', u'EMC', 'manual'),
+#  ('index', 'hsk-all.tex', u'EMC Isilon Hadoop Starter Kit', u'EMC', 'manual'),
   ('deploying-cloudera-cdh-5-with-isilon', 'hsk-cloudera.tex', u'EMC Isilon Hadoop Starter Kit for Cloudera', u'EMC', 'manual'),
 ]
 
