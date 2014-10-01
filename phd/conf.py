@@ -47,7 +47,7 @@ source_suffix = '.rst'
 #source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-master_doc = 'index'
+master_doc = 'phd/index'
 
 # General information about the project.
 project = u'EMC Isilon Hadoop Starter Kit'
@@ -75,6 +75,7 @@ release = '3.0'
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 exclude_patterns = ['_build',
+					'index.rst',
                     'cdh']
 
 # The reST default role (used for this markup: `text`) to use for all
@@ -214,7 +215,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'index.tex', u'EMC Isilon Hadoop Starter Kit for PHD', u'EMC', 'manual')
+  ('phd/index', 'index.tex', u'EMC Isilon Hadoop Starter Kit for PHD', u'EMC', 'manual')
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
