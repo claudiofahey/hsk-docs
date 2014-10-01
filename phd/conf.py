@@ -23,7 +23,6 @@ import os
 # on_rtd is whether we are on readthedocs.org, this line of code grabbed from docs.readthedocs.org
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
-
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -47,7 +46,10 @@ source_suffix = '.rst'
 #source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-master_doc = 'phd/index'
+if on_rtd:
+	master_doc = 'index'
+else:
+	master_doc = 'phd/index'
 
 # General information about the project.
 project = u'EMC Isilon Hadoop Starter Kit'
@@ -215,7 +217,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('phd/index', 'index.tex', u'EMC Isilon Hadoop Starter Kit for PHD', u'EMC', 'manual')
+  (master_doc, 'index.tex', u'EMC Isilon Hadoop Starter Kit for PHD', u'EMC', 'manual')
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
