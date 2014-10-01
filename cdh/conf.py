@@ -38,7 +38,7 @@ extensions = [
 ]
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ['../_templates']
 
 # The suffix of source filenames.
 source_suffix = '.rst'
@@ -47,7 +47,7 @@ source_suffix = '.rst'
 #source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-master_doc = 'index-cdh'
+master_doc = 'index'
 
 # General information about the project.
 project = u'EMC Isilon Hadoop Starter Kit'
@@ -214,7 +214,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index-cdh', 'index-cdh.tex', u'EMC Isilon Hadoop Starter Kit for Cloudera', u'EMC', 'manual')
+  ('index', 'index.tex', u'EMC Isilon Hadoop Starter Kit for Cloudera', u'EMC', 'manual')
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
