@@ -1,10 +1,10 @@
 
-*****************************************
-EMC Isilon Hadoop Starter Kit for Pivotal
-*****************************************
+********************************************************
+Deploying Cloudera Manager and CDH 5 on EMC Isilon
+********************************************************
 
 This document describes how to create a Hadoop environment utilizing
-Pivotal HD and an EMC Isilon Scale-Out NAS for HDFS accessible
+Cloudera Manager and an EMC Isilon Scale-Out NAS for HDFS accessible
 shared storage. VMware Big Data Extensions is used to provision and
 manage the compute resources.
 
@@ -2031,41 +2031,41 @@ VMware and vSphere are registered trademarks or trademarks of VMware,
 Inc. in the United States and/or other jurisdictions. All other
 trademarks used herein are the property of their respective owners.
 
-.. include:: references.rst
+.. include:: ../common/references.rst
 
 .. #############################################################################
 .. Image references below
 .. #############################################################################
 
-.. |image0| image:: deploying-cloudera-cdh-5-with-isilon_images/image001.png
-.. |image2| image:: deploying-cloudera-cdh-5-with-isilon_images/image002.png
-.. |image4| image:: deploying-cloudera-cdh-5-with-isilon_images/image003.png
-.. |image6| image:: deploying-cloudera-cdh-5-with-isilon_images/image004.png
-.. |image8| image:: deploying-cloudera-cdh-5-with-isilon_images/image005.png
-.. |image10| image:: deploying-cloudera-cdh-5-with-isilon_images/image006.png
-.. |image12| image:: deploying-cloudera-cdh-5-with-isilon_images/image007.png
-.. |image14| image:: deploying-cloudera-cdh-5-with-isilon_images/image008.jpg
-.. |image16| image:: deploying-cloudera-cdh-5-with-isilon_images/image009.png
-.. |image18| image:: deploying-cloudera-cdh-5-with-isilon_images/image010.png
-.. |image20| image:: deploying-cloudera-cdh-5-with-isilon_images/image011.png
-.. |image22| image:: deploying-cloudera-cdh-5-with-isilon_images/image012.png
-.. |image24| image:: deploying-cloudera-cdh-5-with-isilon_images/image013.png
-.. |image26| image:: deploying-cloudera-cdh-5-with-isilon_images/image014.png
-.. |image28| image:: deploying-cloudera-cdh-5-with-isilon_images/image015.jpg
-.. |image30| image:: deploying-cloudera-cdh-5-with-isilon_images/image016.jpg
-.. |image32| image:: deploying-cloudera-cdh-5-with-isilon_images/image017.jpg
-.. |image34| image:: deploying-cloudera-cdh-5-with-isilon_images/image018.png
-.. |image36| image:: deploying-cloudera-cdh-5-with-isilon_images/image019.jpg
-.. |image38| image:: deploying-cloudera-cdh-5-with-isilon_images/image020.png
-.. |image40| image:: deploying-cloudera-cdh-5-with-isilon_images/image021.jpg
-.. |image42| image:: deploying-cloudera-cdh-5-with-isilon_images/image022.jpg
-.. |image44| image:: deploying-cloudera-cdh-5-with-isilon_images/image023.jpg
-.. |image46| image:: deploying-cloudera-cdh-5-with-isilon_images/image024.png
-.. |image48| image:: deploying-cloudera-cdh-5-with-isilon_images/image025.png
-.. |image50| image:: deploying-cloudera-cdh-5-with-isilon_images/image026.png
-.. |image52| image:: deploying-cloudera-cdh-5-with-isilon_images/image027.jpg
-.. |image54| image:: deploying-cloudera-cdh-5-with-isilon_images/image028.jpg
-.. |image56| image:: deploying-cloudera-cdh-5-with-isilon_images/image029.jpg
-.. |image58| image:: deploying-cloudera-cdh-5-with-isilon_images/image030.png
-.. |image60| image:: deploying-cloudera-cdh-5-with-isilon_images/image031.png
-.. |image62| image:: deploying-cloudera-cdh-5-with-isilon_images/image032.png
+.. |image0| image:: ../common/images/image001.png
+.. |image2| image:: ../common/images/image002.png
+.. |image4| image:: ../common/images/image003.png
+.. |image6| image:: ../common/images/image004.png
+.. |image8| image:: ../common/images/image005.png
+.. |image10| image:: ../common/images/image006.png
+.. |image12| image:: ../common/images/image007.png
+.. |image14| image:: ../common/images/image008.jpg
+.. |image16| image:: ../common/images/image009.png
+.. |image18| image:: ../common/images/image010.png
+.. |image20| image:: ../common/images/image011.png
+.. |image22| image:: ../common/images/image012.png
+.. |image24| image:: ../common/images/image013.png
+.. |image26| image:: ../common/images/image014.png
+.. |image28| image:: ../common/images/image015.jpg
+.. |image30| image:: ../common/images/image016.jpg
+.. |image32| image:: ../common/images/image017.jpg
+.. |image34| image:: ../common/images/image018.png
+.. |image36| image:: ../common/images/image019.jpg
+.. |image38| image:: ../common/images/image020.png
+.. |image40| image:: ../common/images/image021.jpg
+.. |image42| image:: ../common/images/image022.jpg
+.. |image44| image:: ../common/images/image023.jpg
+.. |image46| image:: ../common/images/image024.png
+.. |image48| image:: ../common/images/image025.png
+.. |image50| image:: ../common/images/image026.png
+.. |image52| image:: ../common/images/image027.jpg
+.. |image54| image:: ../common/images/image028.jpg
+.. |image56| image:: ../common/images/image029.jpg
+.. |image58| image:: ../common/images/image030.png
+.. |image60| image:: ../common/images/image031.png
+.. |image62| image:: ../common/images/image032.png

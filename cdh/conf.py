@@ -47,7 +47,7 @@ source_suffix = '.rst'
 #source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-master_doc = 'index'
+master_doc = 'cdh/index-cdh'
 
 # General information about the project.
 project = u'EMC Isilon Hadoop Starter Kit'
@@ -74,7 +74,8 @@ release = '3.0'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ['_build']
+exclude_patterns = ['_build',
+                    'phd']
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -141,7 +142,7 @@ html_title = project + ' ' + version
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = ['../_static']
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied
@@ -190,7 +191,7 @@ html_use_smartypants = False
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'HadoopStarterKit'
+# htmlhelp_basename = 'HadoopStarterKit'
 
 def setup(app):
     # overrides for wide tables in RTD theme
@@ -213,9 +214,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-#  ('index', 'hsk-all.tex', u'EMC Isilon Hadoop Starter Kit', u'EMC', 'manual'),
-  ('hsk-phd', 'hsk-phd.tex', u'EMC Isilon Hadoop Starter Kit for Pivotal HD', u'EMC', 'manual'),
-  ('deploying-cloudera-cdh-5-with-isilon', 'hsk-cloudera.tex', u'EMC Isilon Hadoop Starter Kit for Cloudera', u'EMC', 'manual'),
+  ('cdh/index-cdh', 'index-cdh.tex', u'EMC Isilon Hadoop Starter Kit for Cloudera', u'EMC', 'manual')
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -243,10 +242,10 @@ latex_show_urls = False
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [
-    ('index', 'hadoopstarterkit', u'EMC Isilon Hadoop Starter Kit',
-     [u'Claudio Fahey'], 1)
-]
+# man_pages = [
+#     ('cdh/index-cdh', 'hadoopstarterkit', u'EMC Isilon Hadoop Starter Kit',
+#      [u'Claudio Fahey'], 1)
+# ]
 
 # If true, show URL addresses after external links.
 #man_show_urls = False
@@ -257,11 +256,11 @@ man_pages = [
 # Grouping the document tree into Texinfo files. List of tuples
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
-texinfo_documents = [
-  ('index', 'HadoopStarterKit', u'EMC Isilon Hadoop Starter Kit',
-   u'Claudio Fahey', 'HadoopStarterKit', 'EMC Isilon Hadoop Starter Kit',
-   'Miscellaneous'),
-]
+# texinfo_documents = [
+#   ('index', 'HadoopStarterKit', u'EMC Isilon Hadoop Starter Kit',
+#    u'Claudio Fahey', 'HadoopStarterKit', 'EMC Isilon Hadoop Starter Kit',
+#    'Miscellaneous'),
+# ]
 
 # Documents to append as an appendix to all manuals.
 #texinfo_appendices = []
@@ -277,4 +276,4 @@ texinfo_documents = [
 
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'http://docs.python.org/': None}
+# intersphinx_mapping = {'http://docs.python.org/': None}
