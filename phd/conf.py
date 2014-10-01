@@ -76,9 +76,14 @@ release = '3.0'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ['_build',
-					# 'index.rst',
-                    'cdh']
+exclude_patterns = ['_build']
+
+if not on_rtd:
+	exclude_patterns.extend([
+		'index.rst',
+		'common',
+		'cdh'
+		])
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
