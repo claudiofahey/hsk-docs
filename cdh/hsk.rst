@@ -580,4 +580,6 @@ http://www.cloudera.com/content/cloudera-content/cloudera-docs/Impala/latest/Ins
 
 .. include:: ../common/references.rst
 
+http://www.cloudera.com/
+
 .. include:: ../common/substitutions.rst

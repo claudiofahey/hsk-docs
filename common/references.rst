@@ -13,10 +13,6 @@ http://bigdatablog.emc.com/
 
 http://pubs.vmware.com/bde-2/index.jsp
 
-http://www.cloudera.com/
-
 http://hadoop.apache.org/
 
 http://www.transparencymarketresearch.com
-
-New reference 2:36PM

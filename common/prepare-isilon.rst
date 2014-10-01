@@ -206,7 +206,7 @@ Configure Isilon For HDFS
 
 .. warning::
 
-    The scripts isilon\_create\_\ |hsk_dst|\ \_users.sh will create local
+    The script isilon\_create\_\ |hsk_dst|\ \_users.sh will create local
     user and group accounts on your Isilon cluster. If you are using a
     directory service such as Active Directory, and you want these users and
     groups to be defined in your directory service, then DO NOT run this
