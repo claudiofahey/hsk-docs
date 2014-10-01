@@ -77,7 +77,7 @@ release = '3.0'
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 exclude_patterns = ['_build',
-					'index.rst',
+					# 'index.rst',
                     'cdh']
 
 # The reST default role (used for this markup: `text`) to use for all
