@@ -213,8 +213,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'HadoopStarterKit.tex', u'EMC Isilon Hadoop Starter Kit',
-   u'Claudio Fahey', 'manual'),
+  ('index', 'hsk-all.tex', u'EMC Isilon Hadoop Starter Kit', u'EMC', 'manual'),
+  ('deploying-cloudera-cdh-5-with-isilon', 'hsk-cloudera.tex', u'EMC Isilon Hadoop Starter Kit for Cloudera', u'EMC', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -223,13 +223,13 @@ latex_documents = [
 
 # For "manual" documents, if this is true, then toplevel headings are parts,
 # not chapters.
-#latex_use_parts = False
+latex_use_parts = False
 
 # If true, show page references after internal links.
-#latex_show_pagerefs = False
+latex_show_pagerefs = False
 
 # If true, show URL addresses after external links.
-#latex_show_urls = False
+latex_show_urls = False
 
 # Documents to append as an appendix to all manuals.
 #latex_appendices = []

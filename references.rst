@@ -1,5 +1,5 @@
-References 2
-============
+References
+==========
 
 http://www.emc.com/collateral/white-paper/h12877-wp-emc-isilon-hadoop-best-practices.pdf
 
