@@ -47,7 +47,7 @@ source_suffix = '.rst'
 #source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-master_doc = 'cdh/index-cdh'
+master_doc = 'index-cdh'
 
 # General information about the project.
 project = u'EMC Isilon Hadoop Starter Kit'
@@ -214,7 +214,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('cdh/index-cdh', 'index-cdh.tex', u'EMC Isilon Hadoop Starter Kit for Cloudera', u'EMC', 'manual')
+  ('index-cdh', 'index-cdh.tex', u'EMC Isilon Hadoop Starter Kit for Cloudera', u'EMC', 'manual')
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
