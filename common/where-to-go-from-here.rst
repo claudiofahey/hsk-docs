@@ -10,4 +10,4 @@ fine-tuning.
 
 - Isilon HDFS daemon thread count (e.g. "isi hdfs settings modify --server-threads 255")
 
-- Isilon HDFS read block size (e.g. "isi hdfs settings modify --default-block-size 512M5")
+- Isilon HDFS read block size (e.g. "isi hdfs settings modify --default-block-size 512M")
