@@ -16,7 +16,7 @@ HDFS
   drwxrwxr-x   - solr  solr                0 2014-08-05 06:07 /solr
   drwxrwxrwt   - hdfs  supergroup        107 2014-08-05 06:07 /tmp
   drwxr-xr-x   - hdfs  supergroup        184 2014-08-05 06:07 /user
-  [root\@mycluster1-master-0 ~]# **sudo -u hdfs hdfs dfs -put /etc/hosts /tmp**
+  [root\@mycluster1-master-0 ~]# **sudo -u hdfs hdfs dfs -put -f /etc/hosts /tmp**
   [root\@mycluster1-master-0 ~]# **sudo -u hdfs hdfs dfs -cat /tmp/hosts**
   127.0.0.1 localhost
   [root\@mycluster1-master-0 ~]# **sudo -u hdfs hdfs dfs -rm -skipTrash /tmp/hosts**
@@ -35,8 +35,8 @@ YARN / MapReduce
 
 .. parsed-literal::
 
-  [hduser1\@mycluster1-master-0 ~]$ **hadoop jar \\
-  /opt/cloudera/parcels/CDH/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar \\
+  [hduser1\@mycluster1-master-0 ~]$ **hadoop jar \\**
+  |hadoop-mapreduce-examples-jar| **\\
   pi 10 1000**
   ...
   Estimated value of Pi is 3.14000000000000000000
@@ -47,10 +47,11 @@ datasource for subsequent tests.
 
 .. parsed-literal::
 
-  [hduser1\@mycluster1-master-0 ~]$ **hadoop fs -put /etc/hosts in**
+  [hduser1\@mycluster1-master-0 ~]$ **hadoop fs -put -f /etc/hosts in**
   [hduser1\@mycluster1-master-0 ~]$ **hadoop fs -ls in**
-  [hduser1\@mycluster1-master-0 ~]$ **hadoop jar \\
-  /opt/cloudera/parcels/CDH/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar \\
+  [hduser1\@mycluster1-master-0 ~]$ **hadoop fs -rm -r out**
+  [hduser1\@mycluster1-master-0 ~]$ **hadoop jar \\**
+  |hadoop-mapreduce-examples-jar| **\\
   wordcount in out**
   [hduser1\@mycluster1-master-0 ~]$ **hadoop fs -ls out**
   Found 4 items
@@ -67,26 +68,72 @@ Hive
 
 .. parsed-literal::
 
+  [hduser1\@mycluster1-master-0 ~]$ **hadoop fs -mkdir -p sample\_data/tab1**
+  [hduser1\@mycluster1-master-0 ~]$ **cat - > tab1.csv
+  1,true,123.123,2012-10-24 08:55:00
+  2,false,1243.5,2012-10-25 13:40:00
+  3,false,24453.325,2008-08-22 09:33:21.123
+  4,false,243423.325,2007-05-12 22:32:21.33454
+  5,true,243.325,1953-04-22 09:11:33**
+  
+Type <Control+D>.
+
+.. parsed-literal::
+
+  [hduser1\@mycluster1-master-0 ~]$ **hadoop fs -put -f tab1.csv sample_data/tab1**
   [hduser1\@mycluster1-master-0 ~]$ **hive**
+  hive> 
+  **DROP TABLE IF EXISTS tab1;
+  CREATE EXTERNAL TABLE tab1
+  (
+     id INT,
+     col\_1 BOOLEAN,
+     col\_2 DOUBLE,
+     col\_3 TIMESTAMP
+  )
+  ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+  LOCATION '/user/hduser1/sample\_data/tab1';
+
+  DROP TABLE IF EXISTS tab2;
+  
+  CREATE TABLE tab2
+  (
+     id INT,
+     col\_1 BOOLEAN,
+     col\_2 DOUBLE,
+     month INT,
+     day INT
+  )
+  ROW FORMAT DELIMITED FIELDS TERMINATED BY ',';
+
+  INSERT OVERWRITE TABLE tab2
+  SELECT id, col\_1, col\_2, MONTH(col\_3), DAYOFMONTH(col\_3)
+  FROM tab1 WHERE YEAR(col\_3) = 2012;**
+  ...
+  OK
+  Time taken: 28.256 seconds
+
   hive> **show tables;**
   OK
   tab1
-  tab3
+  tab2
   Time taken: 0.889 seconds, Fetched: 2 row(s)
+
   hive> **select \* from tab1;**
   OK
   1      true   123.123       2012-10-24 08:55:00
-  2      false  1243.5 2012-10-25 13:40:00
+  2      false  1243.5        2012-10-25 13:40:00
   3      false  24453.325     2008-08-22 09:33:21.123
   4      false  243423.325    2007-05-12 22:32:21.33454
   5      true   243.325       1953-04-22 09:11:33
-  NULL   NULL   NULL   NULL
-  Time taken: 1.083 seconds, Fetched: 6 row(s)
-  hive> **select \* from tab3;**
+  Time taken: 1.083 seconds, Fetched: 5 row(s)
+
+  hive> **select \* from tab2;**
   OK
   1      true   123.123       10     24
-  2      false  1243.5 10     25
-  Time taken: 0.094 seconds, Fetched: 2 row(s)
+  2      false  1243.5        10     25
+  Time taken: 0.094 seconds, Fetched: 2 row(s)  
+
   hive> **exit;**
 
 Pig

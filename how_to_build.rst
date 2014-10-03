@@ -41,3 +41,8 @@ Github
 ------
 
 Configure Github to push changes to ReadTheDocs.org.
+
+See Also
+--------
+
+http://openalea.gforge.inria.fr/doc/openalea/doc/_build/html/source/sphinx/sphinx.html

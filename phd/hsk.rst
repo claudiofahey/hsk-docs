@@ -4,16 +4,20 @@
 .. |hsk_dst| replace:: phd
 .. |hsk_dst_strong| replace:: **phd**
 .. |hadoop-manager| replace:: Pivotal Control Center
+.. |hadoop-mapreduce-examples-jar| replace:: **/opt/cloudera/parcels/CDH/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar**
 
 
-********************************************
-EMC Isilon Hadoop Starter Kit for Pivotal HD
-********************************************
+****************************************************************************
+EMC Isilon Hadoop Starter Kit for Pivotal HD with VMware Big Data Extensions
+****************************************************************************
 
 This document describes how to create a Hadoop environment utilizing
 Cloudera Manager and an EMC Isilon Scale-Out NAS for HDFS accessible
 shared storage. VMware Big Data Extensions is used to provision and
 manage the compute resources.
+
+.. note::
+  The latest version of this document is available at http://hsk-phd.readthedocs.org/.
 
 Introduction
 ============
