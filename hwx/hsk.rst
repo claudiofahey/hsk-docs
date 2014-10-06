@@ -1,15 +1,15 @@
 
 .. The following substitutions are used by the common documents.
 
-.. |hsk_dst| replace:: cdh
-.. |hsk_dst_strong| replace:: **cdh**
-.. |hadoop-manager| replace:: Cloudera Manager
+.. |hsk_dst| replace:: phd
+.. |hsk_dst_strong| replace:: **hwx**
+.. |hadoop-manager| replace:: Ambari
 .. |hadoop-mapreduce-examples-jar| replace:: **/opt/cloudera/parcels/CDH/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar**
 
 
-**************************************************************************
-EMC Isilon Hadoop Starter Kit for Cloudera with VMware Big Data Extensions
-**************************************************************************
+*****************************************************************************
+EMC Isilon Hadoop Starter Kit for Hortonworks with VMware Big Data Extensions
+*****************************************************************************
 
 This document describes how to create a Hadoop environment utilizing
 Cloudera Manager and an EMC Isilon Scale-Out NAS for HDFS accessible
@@ -17,7 +17,7 @@ shared storage. VMware Big Data Extensions is used to provision and
 manage the compute resources.
 
 .. note::
-  The latest version of this document is available at http://hsk-cdh.readthedocs.org/.
+  The latest version of this document is available at http://hsk-hwx.readthedocs.org/.
 
 Introduction
 ============
@@ -493,10 +493,24 @@ Impala
 
 .. parsed-literal::
 
+  [hduser1\@mycluster1-master-0 ~]$ **hadoop fs -mkdir -p sample\_data/tab1**
+  [hduser1\@mycluster1-master-0 ~]$ **cat - > tab1.csv
+  1,true,123.123,2012-10-24 08:55:00
+  2,false,1243.5,2012-10-25 13:40:00
+  3,false,24453.325,2008-08-22 09:33:21.123
+  4,false,243423.325,2007-05-12 22:32:21.33454
+  5,true,243.325,1953-04-22 09:11:33**
+  
+Type <Control+D>.
+
+.. parsed-literal::
+
+  [hduser1\@mycluster1-master-0 ~]$ **hadoop fs -put tab1.csv sample_data/tab1**
   [hduser1\@mycluster1-master-0 ~]$ **impala-shell -i mycluster1-worker-0**
   [mycluster1-worker-0:21000] >  
-  **DROP TABLE IF EXISTS tab11;
-  CREATE EXTERNAL TABLE tab11
+  
+  **DROP TABLE IF EXISTS tab1;
+  CREATE EXTERNAL TABLE tab1
   (
      id INT,
      col\_1 BOOLEAN,
@@ -506,9 +520,13 @@ Impala
   ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
   LOCATION '/user/hduser1/sample\_data/tab1';
    
-  DROP TABLE IF EXISTS tab12;
+  DROP TABLE IF EXISTS tab3;
+  -- Leaving out the EXTERNAL clause means the data will be managed
+  -- in the central Impala data directory tree. Rather than reading
+  -- existing data files when the table is created, we load the
+  -- data after creating the table.
 
-  CREATE TABLE tab12
+  CREATE TABLE tab3
   (
      id INT,
      col\_1 BOOLEAN,
@@ -518,26 +536,15 @@ Impala
   )
   ROW FORMAT DELIMITED FIELDS TERMINATED BY ',';
 
-  INSERT OVERWRITE TABLE tab12
+  INSERT OVERWRITE TABLE tab3
   SELECT id, col\_1, col\_2, MONTH(col\_3), DAYOFMONTH(col\_3)
-  FROM tab11 WHERE YEAR(col\_3) = 2012;**
-  ...
+  FROM tab1 WHERE YEAR(col\_3) = 2012;**
+
   WARNINGS: Backend 0:Unknown disk id.  This will negatively affect
   performance. Check your hdfs settings to enable block location metadata.
-  ...
 
-  [cdhdas2-worker-0:21000] > **show tables;**
-  Query: show tables
-  +-------+
-  \| name  \|
-  +-------+
-  \| tab11 \|
-  \| tab12 \|
-  +-------+
-  Returned 2 row(s) in 0.01s
-
-  [mycluster1-worker-0:21000] > **select \* from tab11;**
-  Query: select \* from tab11
+  [mycluster1-worker-0:21000] > **select \* from tab1;**
+  Query: select \* from tab1
   +------+-------+------------+-------------------------------+
   \| id   \| col\_1 \| col\_2      \| col\_3                         \|
   +------+-------+------------+-------------------------------+
@@ -552,8 +559,8 @@ Impala
   WARNINGS: Backend 0:Unknown disk id.  This will negatively affect
   performance. Check your hdfs settings to enable block location metadata.
 
-  [mycluster1-worker-0:21000] > **select \* from tab12;**
-  Query: select \* from tab12
+  [mycluster1-worker-0:21000] > **select \* from tab3;**
+  Query: select \* from tab3
   +----+-------+---------+-------+-----+
   \| id \| col\_1 \| col\_2   \| month \| day \|
   +----+-------+---------+-------+-----+
@@ -563,11 +570,11 @@ Impala
   Returned 2 row(s) in 0.29s
   WARNINGS: Backend 0:Unknown disk id.  This will negatively affect
   performance. Check your hdfs settings to enable block location metadata.
-
   [mycluster1-worker-0:21000] > **quit;**
 
 For more details regarding Impala, refer to
 http://www.cloudera.com/content/cloudera-content/cloudera-docs/Impala/latest/Installing-and-Using-Impala/ciiu_tutorial.html.
+
 
 .. include:: ../common/wikipedia.rst
 
@@ -578,7 +585,5 @@ http://www.cloudera.com/content/cloudera-content/cloudera-docs/Impala/latest/Ins
 .. include:: ../common/legal.rst
 
 .. include:: ../common/references.rst
-
-http://www.cloudera.com/
 
 .. include:: ../common/substitutions.rst

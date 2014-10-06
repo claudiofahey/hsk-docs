@@ -1,7 +1,7 @@
 
-*********************************
-EMC Isilon Hadoop Starter Kit PHD
-*********************************
+*****************************************
+EMC Isilon Hadoop Starter Kit for Pivotal
+*****************************************
 
 .. toctree::
    :maxdepth: 2

@@ -576,6 +576,8 @@ For more details regarding Impala, refer to
 http://www.cloudera.com/content/cloudera-content/cloudera-docs/Impala/latest/Installing-and-Using-Impala/ciiu_tutorial.html.
 
 
+.. include:: ../common/wikipedia.rst
+
 .. include:: ../common/where-to-go-from-here.rst
 
 .. include:: ../common/known-limitations.rst

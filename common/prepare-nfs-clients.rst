@@ -20,7 +20,7 @@ Isilon best-practices suggest creating an NFS mount for
       [root\@workstation ~]$ **yum install nfs-utils**
       [root\@workstation ~]$ **mkdir /mnt/scripts**
       [root\@workstation ~]$ **echo subnet0-pool0.isiloncluster1.lab.example.com:\\
-      /ifs/isiloncluster1/scripts/mnt/scripts nfs \\
+      /ifs/isiloncluster1/scripts /mnt/scripts nfs \\
       nolock,nfsvers=3,tcp,rw,hard,intr,timeo=600,retrans=2,rsize=131072,wsize=524288 \\
       >> /etc/fstab**
       [root\@workstation ~]$ **mount -a**

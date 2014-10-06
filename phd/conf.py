@@ -78,6 +78,8 @@ if not on_rtd:
 		exclude_patterns.append('cdh')
 	if hsk_dst != 'phd':
 		exclude_patterns.append('phd')
+	if hsk_dst != 'hwx':
+		exclude_patterns.append('hwx')
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
