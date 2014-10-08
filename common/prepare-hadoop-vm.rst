@@ -52,7 +52,7 @@ Provision Virtual Machines Using Big Data Extensions
    .. parsed-literal::
 
       serengeti>\ **cluster create --name hadoop-manager --specFile basic-server.json \\
-      --password 1**
+      --password 1 --networkName defaultNetwork**
       Hint: Password are from 8 to 128 characters, and can include
       alphanumeric characters ([0-9, a-z, A-Z]) and the following special
       characters: _, @, #, $, %, ^, &, *
@@ -67,7 +67,9 @@ Provision Virtual Machines Using Big Data Extensions
         hadoop-manager-server-0  10.111.128.240  Service Ready
       cluster hadoop-manager created
 
-#.  Note: If any errors occur during cluster creation, you can try to
+  .. note::
+
+    If any errors occur during cluster creation, you can try to
     resume the cluster creation with the --resume parameter. If that does
     not work, you may need to delete and recreate the cluster. For example:
 
@@ -76,7 +78,7 @@ Provision Virtual Machines Using Big Data Extensions
       serengeti>\ **cluster create --name mycluster1 --resume**
       serengeti>\ **cluster delete --name mycluster1**
 
-#.  Create the Hadoop cluster.
+5.  Create the Hadoop cluster.
 
     .. parsed-literal::
 
@@ -226,10 +228,10 @@ To run the script, follow these steps:
       |                          | users, adjust mount points, etc..                         |
       +--------------------------+-----------------------------------------------------------+
 
-#.  Edit the file isilon-hadoop-tools/bde/create\_cdh\_users.sh with
+#.  Edit the file isilon-hadoop-tools/bde/create\_\ |hsk_dst|\ \_users.sh with
     the appropriate gid\_base and uid\_base values. This should match the
     values entered in
-    isilon-hadoop-tools/onefs/isilon\_create\_cdh\_users.sh in a previous
+    isilon-hadoop-tools/onefs/isilon\_create\_\ |hsk_dst|\ \_users.sh in a previous
     step.
 
 #.  Run bde\_cluster\_post\_deploy.py:
@@ -242,14 +244,14 @@ To run the script, follow these steps:
       ...
       Success!
 
-#.  Repeat the above steps for your Cloudera Manager BDE cluster named c5manager.
+#.  Repeat the above steps for your |hadoop-manager| cluster named *hadoop-manager*.
 
 Resize Root Disk
 ----------------
 
 By default, the / (root) partition size for a VM created by BDE is 20
 GB. This is sufficient for a Hadoop worker but should be increased for
-the your Hadoop cluster manager (*hadoop-manager*) and the master node
+the your |hadoop-manager| cluster (*hadoop-manager*) and the master node
 (*mycluster1-master-0*). Follow the steps below on each of these nodes.
 
 #.  Remove old data disk.
@@ -260,18 +262,20 @@ the your Hadoop cluster manager (*hadoop-manager*) and the master node
 
           [root\@mycluster1-master-0 ~]# **vi /etc/fstab**
 
-    #.  Remove line containing "/dev/scsi-", save the file, and then unmount it.
+    #.  Remove line containing "/dev/sdc1", save the file, and then unmount it.
         
         .. parsed-literal::
 
           [root\@mycluster1-master-0 ~]# **umount /dev/sdc1**
-          [root\@mycluster1-master-0 ~]# **rmdir /mnt/scsi-\***
+          [root\@mycluster1-master-0 ~]# **rmdir /data/1**
 
     #.  Shutdown the VM.
 
     #.  Use the vSphere Web Client to remove virtual disk 3.
 
 #.  Use the vSphere Web Client to increase the size of virtual disk 1 to 250 GB.
+    
+#.  Power on the VM and SSH into it.
 
 #.  Extend the partition.
     
@@ -350,8 +354,8 @@ resize" command. For instance:
   --cpuNumPerNode 16 --memCapacityMbPerNode 131072**
 
 After creating new VMs, you will want to run the BDE Post Deployment
-script and the Fill Disk script on the new nodes. Then use Cloudera
-Manager to deploy the appropriate Hadoop components.
+script and the Fill Disk script on the new nodes. Then use |hadoop-manager|
+to deploy the appropriate Hadoop components.
 
 When changing the CPUs and RAM, you will usually want to change the
 amount allocated for YARN or your other services using your Hadoop cluster manager.

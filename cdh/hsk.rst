@@ -278,7 +278,7 @@ Install Cloudera Manager
 
 #.  Accept all defaults and complete the installation process.
 
-#.  Browse to http://c5manager-server-0.example.com:7180/.
+#.  Browse to ``http://c5manager-server-0.example.com:7180/``.
 
     |image28|
 

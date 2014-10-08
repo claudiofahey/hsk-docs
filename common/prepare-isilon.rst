@@ -120,16 +120,21 @@ To create a new access zone and an associated IP address pool:
     Saving:                                                                         
     OK
 
+.. note::
+
+  If you do not have a SmartConnect Advanced license, you will need to omit
+  the --dynamic option.
+
 To allow the new IP address pool to be used by data node connections:
 
 .. parsed-literal::
 
+    isiloncluster1-1# **isi hdfs racks create /rack0 --client-ip-ranges 0.0.0.0-255.255.255.255**
     isiloncluster1-1# **isi hdfs racks modify /rack0 --add-ip-pools subnet0:pool1**
     isiloncluster1-1# **isi hdfs racks list**
     Name   Client IP Ranges        IP Pools    
     --------------------------------------------
-    /rack0 0.0.0.0-255.255.255.255 subnet0:pool0
-                                   subnet0:pool1
+    /rack0 0.0.0.0-255.255.255.255 subnet0:pool1
     --------------------------------------------
     Total: 1
 
@@ -203,16 +208,6 @@ zone for Hadoop cluster B as well as every server in Hadoop cluster B.
 
 Configure Isilon For HDFS
 -------------------------
-
-.. warning::
-
-    The script isilon\_create\_\ |hsk_dst|\ \_users.sh will create local
-    user and group accounts on your Isilon cluster. If you are using a
-    directory service such as Active Directory, and you want these users and
-    groups to be defined in your directory service, then DO NOT run this
-    script. Instead, refer to the OneFS documentation and `EMC
-    Isilon Best Practices for Hadoop Data
-    Storage <http://www.emc.com/collateral/white-paper/h12877-wp-emc-isilon-hadoop-best-practices.pdf>`__.
 
 .. note::
 
@@ -301,6 +296,16 @@ Configure Isilon For HDFS
     will may need to change the zone parameter to the name of your Isilon
     access zone in which to create the users and groups.
 
+    .. warning::
+
+      The script isilon\_create\_\ |hsk_dst|\ \_users.sh will create local
+      user and group accounts on your Isilon cluster. If you are using a
+      directory service such as Active Directory, and you want these users and
+      groups to be defined in your directory service, then DO NOT run this
+      script. Instead, refer to the OneFS documentation and `EMC
+      Isilon Best Practices for Hadoop Data
+      Storage <http://www.emc.com/collateral/white-paper/h12877-wp-emc-isilon-hadoop-best-practices.pdf>`__.  
+
 #.  Execute the script isilon\_create\_\ |hsk_dst|\ \_users.sh.
     This script performs the following actions:
 
@@ -336,18 +341,17 @@ Configure Isilon For HDFS
 
       isiloncluster1-1# **mkdir -p /ifs/isiloncluster1/zone1/hadoop**
 
-#.  Set the onwer and permissions for the HDFS root directory. Unless
-    you are using the System access zone, you first need to determine the
-    numeric IDs for the hdfs user and the hadoop group. Then use these
-    numeric IDs to set the owner.
+#.  Set the owner and permissions for the HDFS root directory.
+    You first need to determine the access zone ID. 
+    Then we will run the ``chown`` command in the context of this access zone.
 
     .. parsed-literal::
 
-      isiloncluster1-1# **isi auth users view hdfs --zone zone1**
-                   UID: 601
-      isiloncluster1-1# **isi auth groups view hadoop --zone zone1**
-                   GID: 619
-      isiloncluster1-1# **chown 601:619 /ifs/isiloncluster1/zone1/hadoop**
+      isiloncluster1-1# **isi zone zones view zone1**
+      ...
+                        Zone ID: 2
+      isiloncluster1-1# **isi_run -z 2 chown hdfs:hadoop \\
+      /ifs/isiloncluster1/zone1/hadoop**
 
 #.  Set the permissions for the HDFS root directory. The command below
     will give the hdfs superuser full access and everyone else will have

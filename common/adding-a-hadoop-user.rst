@@ -5,6 +5,16 @@ You must add a user account for each Linux user that will submit
 MapReduce jobs. The procedure below can be used to add a user named
 hduser1.
 
+.. warning::
+
+  The steps below will create local
+  user and group accounts on your Isilon cluster. If you are using a
+  directory service such as Active Directory, and you want these users and
+  groups to be defined in your directory service, then DO NOT run these steps.
+  Instead, refer to the OneFS documentation and `EMC
+  Isilon Best Practices for Hadoop Data
+  Storage <http://www.emc.com/collateral/white-paper/h12877-wp-emc-isilon-hadoop-best-practices.pdf>`__.  
+      
 #.  Add user to Isilon.
     
     .. parsed-literal::
