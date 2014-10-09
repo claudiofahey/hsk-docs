@@ -51,8 +51,8 @@ Provision Virtual Machines Using Big Data Extensions
    
    .. parsed-literal::
 
-      serengeti>\ **cluster create --name hadoop-manager --specFile basic-server.json \\
-      --password 1 --networkName defaultNetwork**
+      serengeti>\ **cluster create --name hadoop-manager \\
+      --specFile basic-server.json --password 1 --networkName defaultNetwork**
       Hint: Password are from 8 to 128 characters, and can include
       alphanumeric characters ([0-9, a-z, A-Z]) and the following special
       characters: _, @, #, $, %, ^, &, *
@@ -173,7 +173,7 @@ To run the script, follow these steps:
 
     [user\@workstation ~]$ **ssh-keygen -t rsa**
 
-#. Copy the file isilon-hadoop-tools/etc/template-post.json to isilon-hadoop-tools/etc/mycluster1-post.json.
+#. Copy the file isilon-hadoop-tools/etc/template-\ |hsk_dst|\ -post.json to isilon-hadoop-tools/etc/mycluster1-post.json.
 
 #.  Edit the file mycluster1-post.json with parameters that apply to your environment.
 
@@ -183,7 +183,7 @@ To run the script, follow these steps:
       | Field Name               | Description                                               |
       +==========================+===========================================================+
       | ser\_host                | The URL to the BDE web service. For example:              |
-      |                          | https://bde.lab.example.com:8443                          |
+      |                          | \https://bde.lab.example.com:8443                         |
       +--------------------------+-----------------------------------------------------------+
       | ser\_username            | The user name used to authenticate to the BDE web         |
       |                          | service. This is the same account used to login using the |
@@ -251,7 +251,7 @@ Resize Root Disk
 
 By default, the / (root) partition size for a VM created by BDE is 20
 GB. This is sufficient for a Hadoop worker but should be increased for
-the your |hadoop-manager| cluster (*hadoop-manager*) and the master node
+the your |hadoop-manager| (*hadoop-manager-server-0*) and the master node
 (*mycluster1-master-0*). Follow the steps below on each of these nodes.
 
 #.  Remove old data disk.
@@ -278,6 +278,11 @@ the your |hadoop-manager| cluster (*hadoop-manager*) and the master node
 #.  Power on the VM and SSH into it.
 
 #.  Extend the partition.
+    
+    .. warning::
+
+      Perform the steps below very carefully. Failure performing these steps may
+      result in an unusable system or lost data.
     
     .. parsed-literal::
 

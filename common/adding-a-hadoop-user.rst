@@ -25,7 +25,7 @@ hduser1.
       --zone zone1 --provider local \\
       --home-directory /ifs/isiloncluster1/zone1/hadoop/user/hduser1**
 
-#.  Add user to Cloudera nodes. Usually, this only needs to be performed on the master-0 node.
+#.  Add user to Hadoop nodes. Usually, this only needs to be performed on the master-0 node.
     
     .. parsed-literal::
 

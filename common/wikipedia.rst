@@ -21,7 +21,7 @@ expression can be as complicated as you like.
         
         #.  You may authenticate as *root* with your Isilon root password.
         
-        #.  Browse to ``\ifs\isiloncluster1\zone1\hadoop\tmp``.
+        #.  Browse to *\\ifs\\isiloncluster1\\zone1\\hadoop\\tmp*.
         
         #.  Create a directory here called *wikidata*. This is where you will download the Wikipedia data to.
 
@@ -32,23 +32,25 @@ expression can be as complicated as you like.
             .. parsed-literal::
 
               [root\@workstation ~]$ **mkdir /mnt/isiloncluster1**
-              [root\@workstation ~]$ **echo subnet0-pool0.isiloncluster1.lab.example.com:\\
-              /ifs /mnt/isiloncluster1 nfs \\
+              [root\@workstation ~]$ **echo \\
+              subnet0-pool0.isiloncluster1.lab.example.com:/ifs \\
+              /mnt/isiloncluster1 nfs \\
               nolock,nfsvers=3,tcp,rw,hard,intr,timeo=600,retrans=2,rsize=131072,wsize=524288 \\
               >> /etc/fstab**
               [root\@workstation ~]$ **mount -a**
-              [root\@workstation ~]$ **mkdir -p /mnt/isiloncluser1/isiloncluster1/zone1/hadoop/tmp/wikidata**
+              [root\@workstation ~]$ **mkdir -p \\
+              /mnt/isiloncluser1/isiloncluster1/zone1/hadoop/tmp/wikidata**
 
 #.  Open your favorite web browser and go to http://dumps.wikimedia.org/enwiki/latest.
     
     .. image:: ../common/images/wikipedia-browser.png
         
-#.  Locate the file ``enwiki-latest-pages-articles.xml.bz2`` and download it directly to the *wikidata* folder
+#.  Locate the file *enwiki-latest-pages-articles.xml.bz2* and download it directly to the *wikidata* folder
     on Isilon. Your web browser will be writing this file to the Isilon file system using SMB or NFS.
 
     .. note:: 
        This file is approximately 10 GB in size and contains the entire text of the English version of Wikipedia.
-       If this is too large, you may want to download one of the smaller files such as enwiki-latest-all-titles.gz
+       If this is too large, you may want to download one of the smaller files such as *enwiki-latest-all-titles.gz*.
 
     .. image:: ../common/images/wikipedia-save-as.png
 

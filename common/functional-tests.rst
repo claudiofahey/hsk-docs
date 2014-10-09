@@ -4,6 +4,8 @@ Functional Tests
 The tests below should be performed to ensure a proper installation.
 Perform the tests in the order shown.
 
+You must create the Hadoop user *hduser1* before proceeding.
+
 HDFS
 ----
 
@@ -62,6 +64,13 @@ datasource for subsequent tests.
   [hduser1\@mycluster1-master-0 ~]$ **hadoop fs -cat out/part\***
   localhost     1
   127.0.0.1     1
+
+Browse to the YARN Resource Manager GUI
+``http://mycluster1-master-0.lab.example.com:8088/``.
+
+Browse to the MapReduce History Server GUI
+``http://mycluster1-master-0.lab.example.com:19888/``.
+In particular, confirm that you can view the complete logs for task attempts.
 
 Hive
 ----
@@ -142,8 +151,8 @@ Pig
 .. parsed-literal::
 
   [hduser1\@mycluster1-master-0 ~]$ **pig**
-  grunt> **A = LOAD 'in';**
-  grunt> **DUMP A;**
+  grunt> **a = load 'in';**
+  grunt> **dump a;**
   ...
   Success!
   ...

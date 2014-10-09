@@ -80,5 +80,5 @@ client perspective.
        .. parsed-literal::
 
         [user\@workstation ~]$ **dig +noall +answer -x 10.111.128.240**
-        240.128.111.10.in-addr.arpa. 900 IN      PTR    myhost.lab.example.com.
+        240.128.111.10.in-addr.arpa. 900 IN    PTR    myhost.lab.example.com.
 

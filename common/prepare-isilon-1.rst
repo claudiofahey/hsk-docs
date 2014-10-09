@@ -110,7 +110,7 @@ To create a new access zone and an associated IP address pool:
     --path /ifs/isiloncluster1/zone1**
 
     isiloncluster1-1# **isi networks create pool --name subnet0:pool1 \\
-    --ranges=10.111.129.127-10.111.129.138 --ifaces 1-4:10gige-1 \\
+    --ranges 10.111.129.127-10.111.129.138 --ifaces 1-4:10gige-1 \\
     --access-zone zone1 --zone subnet0-pool1.isiloncluster1.lab.example.com \\
     --sc-subnet subnet0 --dynamic**
 
@@ -129,7 +129,8 @@ To allow the new IP address pool to be used by data node connections:
 
 .. parsed-literal::
 
-    isiloncluster1-1# **isi hdfs racks create /rack0 --client-ip-ranges 0.0.0.0-255.255.255.255**
+    isiloncluster1-1# **isi hdfs racks create /rack0 --client-ip-ranges \\
+    0.0.0.0-255.255.255.255**
     isiloncluster1-1# **isi hdfs racks modify /rack0 --add-ip-pools subnet0:pool1**
     isiloncluster1-1# **isi hdfs racks list**
     Name   Client IP Ranges        IP Pools    
@@ -152,7 +153,7 @@ Fully-qualified HDFS Paths
 
 In this method, datasets wil not cross access zones. Instead, you will
 configure your Hadoop jobs to simply access the datasets from a common
-shared HDFS namespace. For instance, you would start with two indepdent
+shared HDFS namespace. For instance, you would start with two independent
 Hadoop clusters, each with its own access zone on Isilon. Then you can
 add a 3\ :sup:`rd` access zone on Isilon, with its own IP addresses and
 HDFS root, and containing a dataset that is shared with other Hadoop
@@ -290,71 +291,15 @@ Configure Isilon For HDFS
     isiloncluster1-1# **mv /ifs/isiloncluster1/scripts/isilon-hadoop-tools-x.x \\
     /ifs/isiloncluster1/scripts/isilon-hadoop-tools**
 
-#.  Edit the file isilon\_create\_\ |hsk_dst|\ \_users.sh from the Isilon
-    Hadoop Tools. You may likely need to change the uid\_base and gid\_base
-    parameters. Refer to the previous section on User and Group IDs. Also,
-    will may need to change the zone parameter to the name of your Isilon
-    access zone in which to create the users and groups.
-
-    .. warning::
-
-      The script isilon\_create\_\ |hsk_dst|\ \_users.sh will create local
-      user and group accounts on your Isilon cluster. If you are using a
-      directory service such as Active Directory, and you want these users and
-      groups to be defined in your directory service, then DO NOT run this
-      script. Instead, refer to the OneFS documentation and `EMC
-      Isilon Best Practices for Hadoop Data
-      Storage <http://www.emc.com/collateral/white-paper/h12877-wp-emc-isilon-hadoop-best-practices.pdf>`__.  
-
-#.  Execute the script isilon\_create\_\ |hsk_dst|\ \_users.sh.
-    This script performs the following actions:
-
-    - Creates local groups and users with the following names:
-      hadoop, hdfs, mapred, hbase, hive, yarn, oozie, sentry, impala spark,
-      hue, sqoop2, solr sqoop, httpfs, llama, zookeper, flume, sample, admin
-
-    - Creates a local group named supergroup.
-
-    - Adds the users hdfs, yarn, and mapred to the hadoop and supergroup groups.
-
-    .. parsed-literal::
-
-     isiloncluster1-1# **sh \\
-     /ifs/isiloncluster1/scripts/isilon-hadoop-tools/onefs/isilon\_create\_**\ |hsk_dst_strong|\ **\_users.sh**
-
-#.  Map the "hdfs" user to the Isilon superuser. This will allow the
-    "hdfs" user to chown (change ownership of) all files.
-
-    .. parsed-literal::
-
-      isiloncluster1-1# **isi zone zones modify --user-mapping-rules="hdfs=>root" \\
-      --zone zone1**
-      isiloncluster1-1# **isi services isi\_hdfs\_d disable ; \\
-      isi services isi\_hdfs\_d enable**
-      The service 'isi\_hdfs\_d' has been disabled.
-      The service 'isi\_hdfs\_d' has been enabled.
-
-#.  Create the HDFS root directory. This is usually called hadoop and
+#.  Create the HDFS root directory. This is usually called *hadoop* and
     must be within the access zone directory.
 
     .. parsed-literal::
 
       isiloncluster1-1# **mkdir -p /ifs/isiloncluster1/zone1/hadoop**
 
-#.  Set the owner and permissions for the HDFS root directory.
-    You first need to determine the access zone ID. 
-    Then we will run the ``chown`` command in the context of this access zone.
-
-    .. parsed-literal::
-
-      isiloncluster1-1# **isi zone zones view zone1**
-      ...
-                        Zone ID: 2
-      isiloncluster1-1# **isi_run -z 2 chown hdfs:hadoop \\
-      /ifs/isiloncluster1/zone1/hadoop**
-
 #.  Set the permissions for the HDFS root directory. The command below
-    will give the hdfs superuser full access and everyone else will have
+    will give the owner full access and everyone else will have
     read-only access.
 
     .. parsed-literal::

@@ -20,8 +20,8 @@ Isilon
   the console-based installation process for your first Isilon node and
   added at least two other nodes for a minimum of 3 Isilon nodes.
 
-- To allow Cloudera CDH 5 or higher to access Isilon, you must
-  have OneFS version 7.1.1.0 with patch-130611.
+- You must have OneFS version 7.1.1.0 with patch-130611
+  or version 7.2.0.0 and higher.
 
 - You must obtain a OneFS HDFS license code and install it on
   your Isilon cluster. You can get your free OneFS HDFS license from
@@ -99,7 +99,7 @@ Networking
   give by the formula below. Of course, this is in addition to any IP
   addresses used for non-HDFS pools.
 
-    # of IP addresses = 2 * (# of Isilon Nodes) * (# of Access Zones)
+  # of IP addresses = 2 * (# of Isilon Nodes) * (# of Access Zones)
 
   For example, 20 IP addresses are recommended for 5 Isilon nodes and 2
   Access Zones.

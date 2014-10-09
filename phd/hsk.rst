@@ -3,8 +3,8 @@
 
 .. |hsk_dst| replace:: phd
 .. |hsk_dst_strong| replace:: **phd**
-.. |hadoop-manager| replace:: Pivotal Control Center
-.. |hadoop-mapreduce-examples-jar| replace:: **/opt/cloudera/parcels/CDH/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar**
+.. |hadoop-manager| replace:: Pivotal Command Center
+.. |hadoop-mapreduce-examples-jar| replace:: **/usr/lib/gphd/hadoop-mapreduce/hadoop-mapreduce-examples.jar**
 
 
 ****************************************************************************
@@ -12,7 +12,7 @@ EMC Isilon Hadoop Starter Kit for Pivotal HD with VMware Big Data Extensions
 ****************************************************************************
 
 This document describes how to create a Hadoop environment utilizing
-Cloudera Manager and an EMC Isilon Scale-Out NAS for HDFS accessible
+Pivotal HD and an EMC Isilon Scale-Out NAS for HDFS accessible
 shared storage. VMware Big Data Extensions is used to provision and
 manage the compute resources.
 
@@ -61,16 +61,16 @@ it took IT to deploy Hadoop as the primary reason to start with a
 deployment outside of IT.
 
 This guide is intended to simplify Hadoop deployments by creating a
-shared storage model with EMC Isilon scale out NAS and using the
-industry leader in Enterprise Hadoop, Cloudera, reduce the time to
-deployment, and the cost of deployment leveraging Cloudera Manager
-tool’s that can automate Hadoop cluster deployments.
+shared storage model with EMC Isilon scale out NAS and Pivotal HD, 
+reduce the time to
+deployment, and the cost of deployment leveraging 
+tools that can automate Hadoop cluster deployments.
 
 Audience
 --------
 
 This document is intended for IT program managers, IT architects,
-Developers, and IT management to easily deploy Cloudera Hadoop with
+Developers, and IT management to easily deploy Hadoop with
 automation tools and leverage EMC Isilon for HDFS shared storage. It can
 be used by somebody who does not yet have an EMC Isilon cluster by
 downloading the free EMC Isilon OneFS Simulator which can be installed
@@ -82,102 +82,20 @@ environment as best-practices are followed whenever possible.
 .. include:: ../common/apache-hadoop-projects.rst
 
 
-Cloudera CDH and Cloudera Manager
----------------------------------
+Pivotal HD with HAWQ
+--------------------
 
-CDH (Cloudera’s Distribution Including Apache Hadoop) is the world’s
-most complete, tested, and widely deployed distribution of Apache
-Hadoop. CDH is 100% open source and is the only Hadoop solution to
-offer batch processing, interactive SQL, and interactive search as well
-as enterprise-grade continuous availability. More enterprises have
-downloaded CDH than all other distributions combined.
+Open-source Hadoop frameworks have rapidly emerged as preferred technology to grapple with the explosion of structured and unstructured big data. You can accelerate your Hadoop investment with an enterprise-ready, fully supported Hadoop distribution that ensures you can harness—and quickly gain insight from—the massive data being driven by new apps, systems, machines, and the torrent of customer sources.
 
-CDH delivers the core elements of Hadoop – scalable storage and
-distributed computing – as well as all of the necessary enterprise
-capabilities such as security, high availability and integration with a
-broad range of hardware and software solutions
+HAWQ™ adds SQL’s expressive power to Hadoop to accelerate data analytics projects, simplify development while increasing productivity, expand Hadoop’s capabilities and cut costs. HAWQ can help your organization render Hadoop queries faster than any Hadoop-based query interface on the market by adding rich, proven, parallel SQL processing facilities. HAWQ leverages your existing business intelligence products, analytic products, and your workforce’s SQL skills to bring more than 100X performance improvement (in some cases up to 600X) to a wide range of query types and workloads. The world’s fastest SQL query engine on Hadoop, HAWQ is 100 percent SQL compliant.
 
-Cloudera Manager is the industry’s first and most sophisticated
-management application for Apache Hadoop. Cloudera Manager sets the
-standard for enterprise deployment by delivering granular visibility
-into and control over every part of the Hadoop cluster — empowering
-operators to improve performance, enhance quality of service, increase
-compliance and reduce administrative costs.
+The first true SQL processing for enterprise-ready Hadoop, Pivotal HD with HAWQ is available to you as software only or as an appliance-based solution.
 
-Cloudera Manager is designed to make administration of Hadoop simple and
-straightforward, at any scale. With Cloudera Manager, you can easily
-deploy and centrally operate the complete Hadoop stack. The application
-automates the installation process, reducing deployment time from weeks
-to minutes; gives you a cluster-wide, real-time view of nodes and
-services running; provides a single, central console to enact
-configuration changes across your cluster; and incorporates a full range
-of reporting and diagnostic tools to help you optimize performance and
-utilization.
-
-More information on Cloudera can be found on http://www.cloudera.com/.
+More information on Pivotal HD and HAWQ can be found on http://www.pivotal.io/big-data/pivotal-hd.
 
 
 .. include:: ../common/intro-isilon.rst
 
-
-Cloudera and EMC Joint Support Statement
-----------------------------------------
-
-EMC Isilon and Cloudera are pleased to communicate a business
-collaboration and intention to enable joint support for EMC Isilon
-scale-out NAS and Cloudera Enterprise products to bring the value of
-Cloudera Enterprise to customers using EMC Isilon storage.
-
-EMC Isilon Scale-Out NAS storage for Hadoop currently supports the
-Apache Hadoop Distributed File System (HDFS) protocol. CDH is 100% open
-source and is the only Hadoop solution to offer batch processing,
-interactive SQL and interactive search, as well as enterprise-grade
-continuous availability.
-
-EMC Isilon allows a customer to start using Hadoop now by using already
-existing data thus eliminating extra copies and reducing associated
-CAPEX costs for additional storage capacity. In addition, EMC Isilon is
-the only Hadoop storage solution that allows you access to the data via
-NAS (i.e. SMB) or HDFS protocols as well as providing a  POSIX-Compliant
-file system for regulated environments.
-
-EMC Isilon and Cloudera are now jointly working to support the following
-two scenarios:
-
-- Customers running Cloudera Enterprise on EMC Isilon NAS
-  products.
-
-  - Customers will be able to leverage the full Cloudera Enterprise offering
-    on their existing data sets stored in EMC Isilon. Cloudera Enterprise is
-    a subscription offering that combines CDH with Cloudera Manager for
-    system management, Cloudera Navigator for data management, technical
-    support, indemnity, and open source advocacy. Customers will be able to
-    simplify storage management and reduce overall costs by managing storage
-    and compute independently, with new server hardware purchases required
-    only for additional compute in the case of an existing EMC Isilon
-    installation.
-
-- Customers wishing to integrate existing Cloudera Enterprise
-  and EMC Isilon clusters.
-
-  - Customers will be able to integrate existing EMC Isilon clusters with
-    existing HDFS-storage based Cloudera Enterprise clusters by using
-    existing Hadoop tools built for data movement. This scenario will allow
-    customers to more easily ingest data into both systems, as well as
-    enable use cases such as online or remote backup and disaster recovery.
-
-EMC Isilon and Cloudera are currently working on product development and
-support models, and intend to have a supported joint offering in the
-market in the first half of 2014.
-
-In addition, EMC Isilon and Cloudera are working together to advance the
-ongoing joint roadmap for Cloudera Enterprise on EMC Isilon Scale-Out
-NAS for subsequent releases of CDH, Cloudera manager, Cloudera Navigator
-and OneFS software.
-
-This guide illustrates the first scenario. Using an existing Isilon
-cluster to integrate with Cloudera manager to allow CDH access to
-existing data sets located in the Isilon cluster.
 
 Environment
 ===========
@@ -185,36 +103,15 @@ Environment
 Versions
 --------
 
-The test environments used for this document consist of the following
+The test environment used for this document consists of the following
 software versions:
 
-* Cloudera Manager 5.1.0
-* Cloudera CDH 4.7, 5.0.3, and 5.1.0
-* Isilon OneFS 7.1.1 and 7.1.1 with patch-130611
+* Pivotal HD 2.1.0
+* Pivotal Command Center 2.3.0
+* Pivotal HAWQ 1.2.1.0
+* Isilon OneFS 7.2.0 (available 3-Nov-2014)
 * VMware vSphere Enterprise 5.5.0
 * VMware Big Data Extensions 2.0
-
-.. table:: Cloudera CDH and Isilon OneFS Compatibility Matrix
-
-  +--------------------+---------------------+----------------+-------------------------------+
-  |                    | OneFS Version                                                        |
-  +--------------------+---------------------+----------------+-------------------------------+
-  | CDH Version        | 7.0.2.2 - 7.1.0.0   | 7.1.1.0        | 7.1.1.0 + patch-130611        |
-  +====================+=====================+================+===============================+
-  | 4.2 - 4.7\ :sup:`3`| compatible\ :sup:`1`| compatible     | compatible                    |
-  +--------------------+---------------------+----------------+-------------------------------+
-  | 5.0.3              | not compatible      | not compatible | compatible                    |
-  +--------------------+---------------------+----------------+-------------------------------+
-  | 5.1.0              | not compatible      | not compatible | partially compatible\ :sup:`2`|
-  +--------------------+---------------------+----------------+-------------------------------+
-
-:sup:`1` Fully-compatible but commands and features described in this
-document may not all apply to this version of OneFS.
-
-:sup:`2` Impala 1.4 on CDH 5.1.0 is not compatible with OneFS.
-
-:sup:`3` Commands and features described in this document may not all
-apply to these versions of CDH.
  
 
 .. include:: ../common/environment-hosts.rst
@@ -224,10 +121,7 @@ Installation Overview
 =====================
 
 Below is the overview of the installation process that this document
-will describe. If you have an existing Cloudera environment managed by
-Cloudera Manager and you wish to integrate EMC Isilon for HDFS then you
-can skip to the section titled “Connect Cloudera Hadoop to Isilon” (step
-8 below).
+will describe. 
 
 #. Confirm prerequisites.
 
@@ -239,11 +133,11 @@ can skip to the section titled “Connect Cloudera Hadoop to Isilon” (step
 
 #. Use BDE to provision multiple virtual machines.
 
-#. Install Cloudera Manager.
+#. Install Pivotal Command Center.
 
-#. Use Cloudera Manager to deploy Cloudera CDH to the virtual machines.
-
-#. Connect Cloudera Hadoop services and components to Isilon for all HDFS file access.
+#. Use Pivotal Command Center to deploy Pivotal HD to the virtual machines.
+   
+#. Initialize HAWQ.
 
 #. Perform key functional tests.
 
@@ -252,7 +146,69 @@ can skip to the section titled “Connect Cloudera Hadoop to Isilon” (step
 
 .. include:: ../common/prepare-network-infrastructure.rst
 
-.. include:: ../common/prepare-isilon.rst
+
+.. include:: ../common/prepare-isilon-1.rst
+
+#.  Execute the script isilon\_create\_\ |hsk_dst|\ \_users.sh.
+
+    .. warning::
+
+      The script isilon\_create\_\ |hsk_dst|\ \_users.sh will create local
+      user and group accounts on your Isilon cluster for Hadoop services. If you are using a
+      directory service such as Active Directory, and you want these users and
+      groups to be defined in your directory service, then DO NOT run this
+      script. Instead, refer to the OneFS documentation and `EMC
+      Isilon Best Practices for Hadoop Data
+      Storage <http://www.emc.com/collateral/white-paper/h12877-wp-emc-isilon-hadoop-best-practices.pdf>`__.  
+
+    This script performs the following actions:
+
+    - Creates local groups and users with the following names:
+      hdfs mapred hbase gpadmin hive yarn
+
+    - Adds these users to hadoop group.
+      
+    Script Usage: isilon\_create\_\ |hsk_dst|\ \_users.sh [--startgid <GID>] [--startuid <UID>] [--zone <ZONE>]
+
+    startgid
+      Group IDs will begin with this value. For example: 501
+
+    startuid
+      User IDs will begin with this value. This is generally the same as gid_base. For example: 501
+
+    zone
+      Access Zone name. For example: System
+
+    .. parsed-literal::
+
+      isiloncluster1-1# **bash \\
+      /ifs/isiloncluster1/scripts/isilon-hadoop-tools/onefs/isilon\_create\_**\ |hsk_dst_strong|\ **\_users.sh \\
+      --startgid 501 --startuid 501 --zone zone1**
+
+#.  Execute the script isilon\_create\_\ |hsk_dst|\ \_directories.sh.
+
+    This script performs the following actions:
+
+    - Creates directories in the HDFS root for standard Hadoop applications and services.
+
+    - Assigns the appropriate permissions and ownership to these directories.
+
+    Script Usage: isilon\_create\_\ |hsk_dst|\ \_directories.sh [--hbase] [--hive] [--hawq] --fixperm --hdfsroot <hdfs root dir>
+
+    You first need to determine the access zone ID. 
+    Then we will run this script in the context of this access zone.
+
+    .. parsed-literal::
+
+      isiloncluster1-1# **isi zone zones view zone1**
+      ...
+                        Zone ID: 2
+      isiloncluster1-1# **isi_run -z 2 bash \\
+      /ifs/isiloncluster1/scripts/isilon-hadoop-tools/onefs/isilon\_create\_**\ |hsk_dst_strong|\ **\_directories.sh \\
+      --hbase --hive --hawq --fixperm --hdfsroot /ifs/isiloncluster1/zone1/hadoop**
+
+.. include:: ../common/prepare-isilon-3-after-users-and-directories.rst
+
 
 .. include:: ../common/create-dns-records-for-isilon.rst
 
@@ -263,317 +219,262 @@ can skip to the section titled “Connect Cloudera Hadoop to Isilon” (step
 .. include:: ../common/prepare-hadoop-vm.rst
 
 
-Install Cloudera Manager
-========================
-
-#.  Download Cloudera Manager 5.1.0 from
-    http://www.cloudera.com/content/cloudera-content/cloudera-docs/CM5/latest/Cloudera-Manager-Quick-Start/Cloudera-Manager-Quick-Start-Guide.html,
-    section *Download and Run the Cloudera Manager Server Installer*.
-
-#.  Launch the installer.
-    
-    .. parsed-literal::
-
-      [root\@c5manager-server-0 ~]# **./cloudera-manager-installer.bin**
-
-#.  Accept all defaults and complete the installation process.
-
-#.  Browse to http://c5manager-server-0.example.com:7180/.
-
-    |image28|
-
-#.  Login using the following account:    
-  
-    Username: admin
-
-    Password: admin
-
-
-Deploy a Cloudera Hadoop Cluster
-================================
-
-You will deploy Cloudera CDH Hadoop in the traditional way, meaning you
-will have an HDFS NameNode and three DataNodes. Once all software
-components are installed, you will reconfigure them to use Isilon for
-HDFS and the original NameNode and DataNodes will be unused and idle.
+Install Pivotal Command Center
+==============================
 
 .. note::
-  **Only some of the steps are documented below.**
-  Refer to the Cloudera Manager Quick Start Guide
-  (http://www.cloudera.com/content/cloudera-content/cloudera-docs/CM5/latest/Cloudera-Manager-Quick-Start/Cloudera-Manager-Quick-Start-Guide.html)
-  for complete details.
+  The steps below will walk you through one way of installing Pivotal Command Center and Pivotal HD.
+  This is intended to guide you through your first POC.
+  In particular, Kerberos security is **not** enabled.
+  For complete details, refer to the Pivotal HD documentation
+  (http://pivotalhd.docs.pivotal.io/doc/2100/index.html).
 
-#.  Login to Cloudera Manager.
+#.  Download the following files from https://network.pivotal.io/products/pivotal-hd.
+    This document assumes they have been downloaded to your Isilon cluster in
+    /mnt/scripts/downloads
     
-    |image30|
+    -  PHD 2.1.0
+    -  PHD 2.1.0: Pivotal Command Center 2.3.0
+    -  PHD 2.1.0: Pivotal HAWQ 1.2.1.0 (optional)
 
-#.  Specify hosts for your CDH cluster installation. You can copy and
-    paste from the files isilon-hadoop-tools/etc/\*-hosts.txt that were
-    generated by the BDE post deployment script. Be sure to also include the
-    Cloudera Manager host.
+#.  Extract Pivotal Command Center and install it.
 
-    |image32|
-
-#.  You will likely want to install a specific version of CDH. When
-    prompted to Select Repository, click More Options.
-
-    |image34|
-
-#.  To make CDH 5.0.3 available for selection, add the following to
-    your Remote Parcel Repository URLs: ::
-
-      http://archive.cloudera.com/cdh5/parcels/5.0.3/
-
-    |image36|
-
-#.  Now you can select the desired version of CDH. Then click Continue.
-
-    |image38|
-
-#.  Click Continue to select defaults and answer the prompts
-    appropriately. When prompted to provide SSH login credentials, enter the
-    same password that you typed into the Serengeti CLI when you created the
-    cluster.
-
-    |image40|
-
-#.  Click Continue to select defaults and answer the prompts appropriately.
-    
-    |image42|
-
-#.  Customize role assignments. For small clusters, the following role
-    assignment can be used:
-
-    - c5manager-server-0 for all Cloudera Management Service roles
-
-    - mycluster1-namenode-0 for HDFS NameNode
-
-    - mycluster1-worker-\* for HDFS DataNode, YARN Node Manager, HBase Region Server, Impala Daemon, Spark Worker
-
-    |image44|
-
-#.  Complete the installation process.
-
-    |image46|
-
-#.  Log into the Hue Web UI and install all of the application examples.
-
-#.  After a successful installation, review Cloudera Manager for any
-    warnings or errors. It is recommended to correct any warnings or errors
-    before continuing.
-
-
-Connect Cloudera Hadoop To Isilon
-=================================
-
-Copy HDFS Files to Isilon
--------------------------
-
-#.  Login to Cloudera Manager.
-
-#.  Stop all Cloudera cluster services except HDFS,YARN, and Zookeeper.
-    
-    |image48|
-
-#.  SSH to mycluster1-master-0 as root.
-
-#.  Test HDFS access to your CDH cluster's NameNode.
-    
     .. parsed-literal::
 
-      [root\@mycluster1-master-0 ~]# **sudo -u hdfs hdfs dfs -ls /**
-      Found 4 items
-      drwxr-xr-x   - hbase hbase               0 2014-08-05 05:38 /hbase
-      drwxrwxr-x   - solr  solr                0 2014-08-05 05:03 /solr
-      drwxrwxrwt   - hdfs  supergroup          0 2014-08-05 05:10 /tmp
-      drwxr-xr-x   - hdfs  supergroup          0 2014-08-05 05:10 /user
-
-#.  Test HDFS access to your Isilon cluster.
-    
-    .. parsed-literal::
-
-      [root\@mycluster1-master-0 ~]# **sudo -u hdfs hdfs dfs -ls \\
-      hdfs://mycluster1-hdfs/**
-      Found 1 items
-      -rw-r--r--   1 root hadoop          0 2014-08-05 05:59 hdfs://mycluster1-hdfs/THIS\_IS\_ISILON
-
-#.  Copy the entire CDH cluster's HDFS namespace to Isilon.
-    
-    .. parsed-literal::
-
-      [root\@mycluster1-master-0 ~]# **sudo -u hdfs hadoop distcp -skipcrccheck \\
-      -update -pugp / hdfs://mycluster1-hdfs/**
+      [root\@hadoop-manager-server-0 ~]# **mkdir phd**
+      [root\@hadoop-manager-server-0 ~]# **cd phd**
+      [root\@hadoop-manager-server-0 phd]# **tar --no-same-owner -zxvf \\
+      /mnt/scripts/downloads/PCC-2.3.0-443.x86_64.tgz**
+      [root\@hadoop-manager-server-0 phd]# **cd PCC-2.3.0-443**
+      [root\@hadoop-manager-server-0 PCC-2.3.0-443]# **./install**
+      You may find the logs in /usr/local/pivotal-cc/pcc_installation.log
+      Performing pre-install checks ...                          [  OK  ]
+      [INFO]: User gpadmin does not exist. It will be created as part of the 
+      installation process.
+      [INFO]: By default, the directory '/home/gpadmin' is created as the default 
+      home directory for the gpadmin user. This directory must must be consistent 
+      across all nodes.
+      Do you wish to use the default home directory? [Yy|Nn]: **y**
+      [INFO]: Continuing with default /home/gpadmin as home directory for gpadmin
       ...
-      [root\@mycluster1-master-0 ~]# **sudo -u hdfs hdfs dfs -ls \\
-      hdfs://mycluster1-hdfs/**
-      Found 5 items
-      -rw-r--r--   1 root  hadoop              0 2014-08-05 05:59 hdfs://mycluster1-hdfs/THIS\_IS\_ISILON
-      drwxr-xr-x   - hbase hbase             148 2014-08-05 06:06 hdfs://mycluster1-hdfs/hbase
-      drwxrwxr-x   - solr  solr                0 2014-08-05 06:07 hdfs://mycluster1-hdfs/solr
-      drwxrwxrwt   - hdfs  supergroup        107 2014-08-05 06:07 hdfs://mycluster1-hdfs/tmp
-      drwxr-xr-x   - hdfs  supergroup        184 2014-08-05 06:07 hdfs://mycluster1-hdfs/user
+      You have successfully installed Pivotal Command Center 2.3.0.
+      You now need to install a PHD cluster to monitor with Pivotal Command 
+      Center.
+      You can view your cluster statuses here: 
+      \https://hadoop-manager-server-0.lab.example.com:5443/status
+      [root\@hadoop-manager-server-0 PCC-2.3.0-443]# **service commander status**
+      nodeagent is running
+      Jetty is running
+      httpd is running
+      Pivotal Command Center HTTPS is running
+      Pivotal Command Center Background Worker is running
 
+#.  Import packages into Pivotal Command Center.
 
-Reconfigure Cloudera Services to use Isilon for HDFS
-----------------------------------------------------
-
-#.  Stop all Cloudera cluster services.
-    
-    |image50|
-
-#.  Edit HDFS \\ Service-Wide \\ Advanced \\ Cluster-wide Advanced
-    Configuration Snippet (Safety Valve) for core-site.xml: ::
-
-      <property>
-      <name>fs.defaultFS</name>
-      <value>hdfs://mycluster1-hdfs.lab.example.com:8020</value>
-      </property>
-
-    |image52|
-
-#.  If HBase is installed, edit HBase \\ Service-Wide \\ Advanced \\
-    HBase Service Advanced Configuration Snippet (Safety Valve) for
-    hbase-site.xml: ::
-
-      <property>
-      <name>hbase.rootdir</name>
-      <value>hdfs://mycluster1-hdfs.lab.example.com:8020/hbase</value>
-      </property>
-
-    |image54|
-
-
-#.  Edit Hue \\ Service-Wide \\ Advanced \\ Hue Service Advanced
-    Configuration Snippet (Safety Valve) for hue\_safety\_valve.ini: ::
-
-      [hadoop]
-      [[hdfs_clusters]]
-      [[[default]]]
-      fs_defaultfs=hdfs://mycluster1-hdfs.lab.example.com:8020
-      webhdfs_url=https://mycluster1-hdfs.lab.example.com:8080/webhdfs/v1
-
-    |image56|
-
-#.  Deploy Client Configuration.
-
-    |image58|
-
-#.  Restart the Cloudera cluster.
-
-    |image60|
-
-#.  Confirm that the Isilon is now your default Hadoop file system.
-    
     .. parsed-literal::
 
-      [root\@mycluster1-master-0 ~]# **sudo -u hdfs hdfs dfs -ls /**
-      Found 5 items
-      -rw-r--r--   1 root  hadoop              0 2014-08-05 05:59 /THIS_IS_ISILON
-      drwxr-xr-x   - hbase hbase             148 2014-08-05 06:06 /hbase
-      drwxrwxr-x   - solr  solr                0 2014-08-05 06:07 /solr
-      drwxrwxrwt   - hdfs  supergroup        107 2014-08-05 06:07 /tmp
-      drwxr-xr-x   - hdfs  supergroup        184 2014-08-05 06:07 /user
+      [root\@hadoop-manager-server-0 ~]# su - gpadmin
+      [gpadmin\@hadoop-manager-server-0 ~] -bash-4.1$ **tar zxf \\
+      /mnt/scripts/downloads/PHD-2.1.0.0-175.tgz**
+      [gpadmin\@hadoop-manager-server-0 ~] -bash-4.1$ **tar zxf \\
+      /mnt/scripts/downloads/PADS-1.2.1.0-10335.tgz**
+      [gpadmin\@hadoop-manager-server-0 ~] -bash-4.1$ **icm_client import -s \\
+      PHD-2.1.0.0-175/**
+      stack: PHD-2.1.0.0
+      [INFO] Importing stack
+      [INFO] Finding and copying available stack rpms from PHD-2.1.0.0-175/... [OK]
+      [INFO] Creating local stack repository...
+      [OK]
+      [INFO] Import complete
+      [gpadmin\@hadoop-manager-server-0 ~] -bash-4.1$ **icm_client import -s \\
+      PADS-1.2.1.0-10335/**
+      stack: PADS-1.2.1.0
+      [INFO] Importing stack
+      [INFO] Finding and copying available stack rpms from PADS-1.2.1.0-10335/... 
+      [OK]
+      [INFO] Creating local stack repository...
+      [OK]
+      [INFO] Import complete
 
-#.  To ensure that no services are using the CDH NameNode and
-    DataNodes, you may stop the CDH HDFS services.
 
-    |image62|
+Deploy a Pivotal HD Cluster
+===========================
 
-#.  Review Cloudera Manager for any warnings or errors.
+#.  Make a copy of the cluster configuration template directory.
+
+    .. parsed-literal::
+
+      [gpadmin\@hadoop-manager-server-0 ~] -bash-4.1$ **cd \\
+      /mnt/scripts/isilon-hadoop-tools/etc**
+      [gpadmin\@hadoop-manager-server-0 etc] -bash-4.1$ **cp -rv template-pcc \\
+      mycluster1-pcc**
+
+#.  Edit mycluster1-pcc/clusterConfig.xml.
+    
+    #.  Replace all occurances of *mycluster1* with your actual BDE cluster name. This will
+        identify your host names.
+
+    #.  Replace the value of the *url* element within *isi-hdfs* with your Isilon HDFS URL.
+        For example. ``hdfs://mycluster1-hdfs.lab.example.com:8020``.
+
+    #.  Update *yarn-nodemanager*, *hawq-segment*, and *pxf-service* elements with the complete list
+        of worker host names. You may copy and paste from the file
+        isilon-hadoop-tools/etc/mycluster1-hosts.txt. 
+        Do *not* include your master node in these lists.
+
+    #.  Update *datanode.disk.mount.points* so that it refers to the local disks that you will use
+        for temporary files. For example, if you deployed your VMs to ESXi hosts with 4 local disks,
+        the value will be ``/data/1,/data/2,/data/3,/data/4``. You should confirm that these mounts
+        points exists on your workers using the ``df`` command.
+
+    #.  Update *yarn.nodemanager.resource.memory-mb* with the maximum number of MB that you will
+        allow YARN applications to use on your worker nodes.
+        You must ensure that the machine has enough RAM for the OS, Hadoop services, YARN applications, and HAWQ.
+        Usually 12 GB less than the machine RAM is recommended. You may need to reduce this further
+        if you are using multiple HAWQ segments.
+
+    #.  If you want to run more than one HAWQ segment per worker node, update *hawq.segment.directory*. For example,
+        to run two HAWQ segments, the value can be ``(/data/1/primary /data/2/primary)``.
+
+    For complete details, refer to http://pivotalhd.docs.pivotal.io/doc/2100/EditingtheClusterConfigurationFiles.html.
+
+#.  Deploy your cluster.
+
+    .. parsed-literal::
+
+      [gpadmin\@hadoop-manager-server-0 etc] -bash-4.1$ **icm_client deploy \\
+      --confdir mycluster1-pcc --selinuxoff --iptablesoff**
+      Please enter the root password for the cluster nodes: **\*\*\***
+      PCC creates a gpadmin user on the newly added cluster nodes (if any). 
+      Please enter a non-empty password to be used for the gpadmin user: **\*\*\***
+      Verifying input
+      Starting install
+      [==================================================================] 100%
+      Results:
+      mycluster1-hdfs.lab.example.com... [Success]
+      mycluster1-worker-1.lab.example.com... [Success]
+      mycluster1-master-0.lab.example.com... [Success]
+      mycluster1-worker-2.lab.example.com... [Success]
+      mycluster1-worker-0.lab.example.com... [Success]
+      Details at /var/log/gphd/gphdmgr/gphdmgr-webservices.log
+      Cluster ID: 5
+
+#.  Start your cluster.
+
+    .. parsed-literal::
+
+      [gpadmin\@hadoop-manager-server-0 etc] -bash-4.1$ **icm_client start \\
+      --clustername mycluster1**
+      Starting services
+      Starting cluster
+      [==================================================================] 100%
+      Results:
+      Details at /var/log/gphd/gphdmgr/gphdmgr-webservices.log
+
+
+Initialize HAWQ
+===============
+
+#.  Initialize HAWQ.
+
+    .. parsed-literal::
+
+      [gpadmin\@mycluster1-master-0 ~]$ **source /usr/local/hawq/greenplum_path.sh**
+      [gpadmin\@mycluster1-master-0 ~]$ **gpssh-exkeys -f \\
+      /mnt/scripts/isilon-hadoop-tools/etc/mycluster1-hosts.txt** 
+      [STEP 1 of 5] create local ID and authorize on local host
+
+      [STEP 2 of 5] keyscan all hosts and update known_hosts file
+
+      [STEP 3 of 5] authorize current user on remote hosts
+        ... send to mycluster1-worker-0.lab.example.com
+        ***
+        *** Enter password for mycluster1-worker-0.lab.example.com: **\*\*\***
+        ... send to mycluster1-worker-1.lab.example.com
+        ... send to mycluster1-worker-2.lab.example.com
+
+      [STEP 4 of 5] determine common authentication file content
+
+      [STEP 5 of 5] copy authentication files to all remote hosts
+        ... finished key exchange with mycluster1-worker-0.lab.example.com
+        ... finished key exchange with mycluster1-worker-1.lab.example.com
+        ... finished key exchange with mycluster1-worker-2.lab.example.com
+
+      [INFO] completed successfully
+
+      [gpadmin\@mycluster1-master-0 ~]$ **/etc/init.d/hawq init**
+      20141009:06:05:35:009986 gpinitsystem:mycluster1-master-0:gpadmin-[INFO]:
+      -Checking configuration parameters, please wait...
+      ...
+      20141009:06:06:55:009986 gpinitsystem:mycluster1-master-0:gpadmin-[INFO]:
+      -HAWQ instance successfully created
+      ...
 
 
 .. include:: ../common/adding-a-hadoop-user.rst
 
-
 .. include:: ../common/functional-tests.rst
 
 
-Impala
-------
+HAWQ
+----
 
 .. parsed-literal::
 
-  [hduser1\@mycluster1-master-0 ~]$ **hadoop fs -mkdir -p sample\_data/tab1**
-  [hduser1\@mycluster1-master-0 ~]$ **cat - > tab1.csv
-  1,true,123.123,2012-10-24 08:55:00
-  2,false,1243.5,2012-10-25 13:40:00
-  3,false,24453.325,2008-08-22 09:33:21.123
-  4,false,243423.325,2007-05-12 22:32:21.33454
-  5,true,243.325,1953-04-22 09:11:33**
-  
-Type <Control+D>.
+  [gpadmin\@mycluster1-master-0 ~]$ **psql**
+  psql (8.2.15)
+  Type "help" for help.
 
-.. parsed-literal::
+  gpadmin=# **\\l**
+                   List of databases
+     Name    |  Owner  | Encoding | Access privileges 
+  -----------+---------+----------+-------------------
+   gpadmin   | gpadmin | UTF8     | 
+   postgres  | gpadmin | UTF8     | 
+   template0 | gpadmin | UTF8     | 
+   template1 | gpadmin | UTF8     | 
+  (4 rows)
 
-  [hduser1\@mycluster1-master-0 ~]$ **hadoop fs -put tab1.csv sample_data/tab1**
-  [hduser1\@mycluster1-master-0 ~]$ **impala-shell -i mycluster1-worker-0**
-  [mycluster1-worker-0:21000] >  
-  
-  **DROP TABLE IF EXISTS tab1;
-  CREATE EXTERNAL TABLE tab1
-  (
-     id INT,
-     col\_1 BOOLEAN,
-     col\_2 DOUBLE,
-     col\_3 TIMESTAMP
-  )
-  ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
-  LOCATION '/user/hduser1/sample\_data/tab1';
-   
-  DROP TABLE IF EXISTS tab3;
-  -- Leaving out the EXTERNAL clause means the data will be managed
-  -- in the central Impala data directory tree. Rather than reading
-  -- existing data files when the table is created, we load the
-  -- data after creating the table.
+  gpadmin=# **\\c gpadmin**
+  psql (8.4.20, server 8.2.15)
+  WARNING: psql version 8.4, server version 8.2.
+           Some psql features might not work.
+  You are now connected to database "gpadmin".
+  gpadmin=# **create table test (a int, b text);**
+  NOTICE:  Table doesn't have 'DISTRIBUTED BY' clause -- Using column named 'a' 
+  as the Greenplum Database data distribution key for this table.
+  HINT:  The 'DISTRIBUTED BY' clause determines the distribution of data. Make 
+  sure column(s) chosen are the optimal data distribution key to minimize skew.
+  CREATE TABLE
+  gpadmin=# **insert into test values (1, '435252345');**
+  INSERT 0 1
+  gpadmin=# **select * from test;**
+   a |     b     
+  ---+-----------
+   1 | 435252345
+  (1 row)
 
-  CREATE TABLE tab3
-  (
-     id INT,
-     col\_1 BOOLEAN,
-     col\_2 DOUBLE,
-     month INT,
-     day INT
-  )
-  ROW FORMAT DELIMITED FIELDS TERMINATED BY ',';
+  gpadmin=# **\\q**
 
-  INSERT OVERWRITE TABLE tab3
-  SELECT id, col\_1, col\_2, MONTH(col\_3), DAYOFMONTH(col\_3)
-  FROM tab1 WHERE YEAR(col\_3) = 2012;**
 
-  WARNINGS: Backend 0:Unknown disk id.  This will negatively affect
-  performance. Check your hdfs settings to enable block location metadata.
+Pivotal Command Center
+----------------------
 
-  [mycluster1-worker-0:21000] > **select \* from tab1;**
-  Query: select \* from tab1
-  +------+-------+------------+-------------------------------+
-  \| id   \| col\_1 \| col\_2      \| col\_3                         \|
-  +------+-------+------------+-------------------------------+
-  \| 1    \| true  \| 123.123    \| 2012-10-24 08:55:00           \|
-  \| 2    \| false \| 1243.5     \| 2012-10-25 13:40:00           \|
-  \| 3    \| false \| 24453.325  \| 2008-08-22 09:33:21.123000000 \|
-  \| 4    \| false \| 243423.325 \| 2007-05-12 22:32:21.334540000 \|
-  \| 5    \| true  \| 243.325    \| 1953-04-22 09:11:33           \|
-  \| NULL \| NULL  \| NULL       \| NULL                          \|
-  +------+-------+------------+-------------------------------+
-  Returned 6 row(s) in 0.20s
-  WARNINGS: Backend 0:Unknown disk id.  This will negatively affect
-  performance. Check your hdfs settings to enable block location metadata.
+Browse to the Pivotal Command Center GUI
+``https://hadoop-manager-server-0.lab.example.com:5443``.
 
-  [mycluster1-worker-0:21000] > **select \* from tab3;**
-  Query: select \* from tab3
-  +----+-------+---------+-------+-----+
-  \| id \| col\_1 \| col\_2   \| month \| day \|
-  +----+-------+---------+-------+-----+
-  \| 1  \| true  \| 123.123 \| 10    \| 24  \|
-  \| 2  \| false \| 1243.5  \| 10    \| 25  \|
-  +----+-------+---------+-------+-----+
-  Returned 2 row(s) in 0.29s
-  WARNINGS: Backend 0:Unknown disk id.  This will negatively affect
-  performance. Check your hdfs settings to enable block location metadata.
-  [mycluster1-worker-0:21000] > **quit;**
+Login using the following default account: 
 
-For more details regarding Impala, refer to
-http://www.cloudera.com/content/cloudera-content/cloudera-docs/Impala/latest/Installing-and-Using-Impala/ciiu_tutorial.html.
+Username: gpadmin 
+
+Password: Gpadmin1
+
+
+Additional Functional Tests
+---------------------------
+
+If you will be using other Hadoop components and applications, refer to
+http://pivotalhd.docs.pivotal.io/doc/2100/RunningPHDSamplePrograms.html for additional functional tests.
 
 
 .. include:: ../common/wikipedia.rst
@@ -585,5 +486,7 @@ http://www.cloudera.com/content/cloudera-content/cloudera-docs/Impala/latest/Ins
 .. include:: ../common/legal.rst
 
 .. include:: ../common/references.rst
+
+http://www.pivotal.io/
 
 .. include:: ../common/substitutions.rst
