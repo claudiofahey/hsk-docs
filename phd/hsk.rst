@@ -207,6 +207,27 @@ will describe.
       /ifs/isiloncluster1/scripts/isilon-hadoop-tools/onefs/isilon\_create\_**\ |hsk_dst_strong|\ **\_directories.sh \\
       --hbase --hive --hawq --fixperm --hdfsroot /ifs/isiloncluster1/zone1/hadoop**
 
+
+#.  Set the owner for the HDFS root directory.
+    You first need to determine the access zone ID. 
+    Then we will run the ``chown`` command in the context of this access zone.
+
+    .. parsed-literal::
+
+      isiloncluster1-1# **isi zone zones view zone1**
+      ...
+                        Zone ID: 2
+      isiloncluster1-1# **isi_run -z 2 chown hdfs:hadoop \\
+      /ifs/isiloncluster1/zone1/hadoop**
+
+#.  Set the permissions for the HDFS root directory. The command below
+    will give the owner full access and everyone else will have
+    read-only access.
+
+    .. parsed-literal::
+
+      isiloncluster1-1# **chmod 755 /ifs/isiloncluster1/zone1/hadoop**
+
 .. include:: ../common/prepare-isilon-3-after-users-and-directories.rst
 
 

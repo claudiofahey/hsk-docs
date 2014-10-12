@@ -31,6 +31,7 @@ HDFS
   drwxrwxrwt   - hdfs  supergroup        107 2014-08-05 06:07 /tmp
   drwxr-xr-x   - hdfs  supergroup        209 2014-08-05 06:39 /user
   [hduser1\@mycluster1-master-0 ~]$ **hdfs dfs -ls**
+  ...
 
 YARN / MapReduce
 ----------------
@@ -51,10 +52,12 @@ datasource for subsequent tests.
 
   [hduser1\@mycluster1-master-0 ~]$ **hadoop fs -put -f /etc/hosts in**
   [hduser1\@mycluster1-master-0 ~]$ **hadoop fs -ls in**
+  ...
   [hduser1\@mycluster1-master-0 ~]$ **hadoop fs -rm -r out**
   [hduser1\@mycluster1-master-0 ~]$ **hadoop jar \\**
   |hadoop-mapreduce-examples-jar| **\\
   wordcount in out**
+  ...
   [hduser1\@mycluster1-master-0 ~]$ **hadoop fs -ls out**
   Found 4 items
   -rw-r--r--   1 hduser1 hduser1          0 2014-08-05 06:44 out/_SUCCESS

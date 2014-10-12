@@ -142,43 +142,19 @@ To allow the new IP address pool to be used by data node connections:
 Sharing Data Between Access Zones
 ---------------------------------
 
-By default, access zones in OneFS provide a measure of multi-tenancy in
+Access zones in OneFS provide a measure of multi-tenancy in
 that data within one access zone cannot be accessed by another access
 zone. In certain use cases, however, you may actually want to make the
 same dataset available to more than one Hadoop cluster. This can be done
-using the following two methods.
+by using fully-qualified paths to refer to data in other access zones.
 
-Fully-qualified HDFS Paths
-^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-In this method, datasets wil not cross access zones. Instead, you will
+To use this approach, you will
 configure your Hadoop jobs to simply access the datasets from a common
 shared HDFS namespace. For instance, you would start with two independent
 Hadoop clusters, each with its own access zone on Isilon. Then you can
 add a 3\ :sup:`rd` access zone on Isilon, with its own IP addresses and
 HDFS root, and containing a dataset that is shared with other Hadoop
 clusters.
-
-Softlinks
-^^^^^^^^^
-
-Another method available to share data between access zones is to create
-a softlink (i.e. symbolic link) within one access zone that points to
-another access zone. This method takes some care and a good
-understanding of the OneFS security model to be used securely.
-
-The following command will create a softlink that allows clients in
-access zone *zone2* to access the *shared\_data* folder that is within
-*zone1*.
-
-.. parsed-literal::
-
-  isiloncluster1-1# **ln -s /ifs/isiloncluster1/zone1/hadoop/shared\_data \\
-  /ifs/isiloncluster1/zone2/hadoop/shared\_data**
-
-  isiloncluster1-1# **ls -l /ifs/isiloncluster1/zone2/hadoop/shared\_data**
-  lrwxr-xr-x    1 root  719  44 Sep  2 01:18  /ifs/isiloncluster1/zone2/hadoop/shared\_data
-   -> /ifs/isiloncluster1/zone1/hadoop/shared\_data
 
 User and Group IDs
 ------------------
@@ -298,17 +274,9 @@ Configure Isilon For HDFS
 
       isiloncluster1-1# **mkdir -p /ifs/isiloncluster1/zone1/hadoop**
 
-#.  Set the permissions for the HDFS root directory. The command below
-    will give the owner full access and everyone else will have
-    read-only access.
-
-    .. parsed-literal::
-
-      isiloncluster1-1# **chmod 755 /ifs/isiloncluster1/zone1/hadoop**
-
-#. Finally, set the HDFS root directory for the access zone.
+#.  Set the HDFS root directory for the access zone.
    
-   .. parsed-literal::
+    .. parsed-literal::
 
       isiloncluster1-1# **isi zone zones modify zone1 \\
       --hdfs-root-directory /ifs/isiloncluster1/zone1/hadoop**

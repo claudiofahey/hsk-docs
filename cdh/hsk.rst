@@ -188,34 +188,12 @@ Versions
 The test environments used for this document consist of the following
 software versions:
 
-* Cloudera Manager 5.1.0
-* Cloudera CDH 4.7, 5.0.3, and 5.1.0
-* Isilon OneFS 7.1.1 and 7.1.1 with patch-130611
+* Cloudera Manager 5.2.0
+* Cloudera CDH 5.1.3
+* Isilon OneFS 7.2.0 (available 3-Nov-2014)
 * VMware vSphere Enterprise 5.5.0
 * VMware Big Data Extensions 2.0
 
-.. table:: Cloudera CDH and Isilon OneFS Compatibility Matrix
-
-  +--------------------+---------------------+----------------+-------------------------------+
-  |                    | OneFS Version                                                        |
-  +--------------------+---------------------+----------------+-------------------------------+
-  | CDH Version        | 7.0.2.2 - 7.1.0.0   | 7.1.1.0        | 7.1.1.0 + patch-130611        |
-  +====================+=====================+================+===============================+
-  | 4.2 - 4.7\ :sup:`3`| compatible\ :sup:`1`| compatible     | compatible                    |
-  +--------------------+---------------------+----------------+-------------------------------+
-  | 5.0.3              | not compatible      | not compatible | compatible                    |
-  +--------------------+---------------------+----------------+-------------------------------+
-  | 5.1.0              | not compatible      | not compatible | partially compatible\ :sup:`2`|
-  +--------------------+---------------------+----------------+-------------------------------+
-
-:sup:`1` Fully-compatible but commands and features described in this
-document may not all apply to this version of OneFS.
-
-:sup:`2` Impala 1.4 on CDH 5.1.0 is not compatible with OneFS.
-
-:sup:`3` Commands and features described in this document may not all
-apply to these versions of CDH.
- 
 
 .. include:: ../common/environment-hosts.rst
 
@@ -243,8 +221,6 @@ can skip to the section titled “Connect Cloudera Hadoop to Isilon” (step
 
 #. Use Cloudera Manager to deploy Cloudera CDH to the virtual machines.
 
-#. Connect Cloudera Hadoop services and components to Isilon for all HDFS file access.
-
 #. Perform key functional tests.
 
 
@@ -255,37 +231,7 @@ can skip to the section titled “Connect Cloudera Hadoop to Isilon” (step
 
 .. include:: ../common/prepare-isilon-1.rst
 
-#.  Edit the file isilon\_create\_\ |hsk_dst|\ \_users.sh from the Isilon
-    Hadoop Tools. You may likely need to change the uid\_base and gid\_base
-    parameters. Refer to the previous section on User and Group IDs. Also,
-    will may need to change the zone parameter to the name of your Isilon
-    access zone in which to create the users and groups.
-
-    .. warning::
-
-      The script isilon\_create\_\ |hsk_dst|\ \_users.sh will create local
-      user and group accounts on your Isilon cluster. If you are using a
-      directory service such as Active Directory, and you want these users and
-      groups to be defined in your directory service, then DO NOT run this
-      script. Instead, refer to the OneFS documentation and `EMC
-      Isilon Best Practices for Hadoop Data
-      Storage <http://www.emc.com/collateral/white-paper/h12877-wp-emc-isilon-hadoop-best-practices.pdf>`__.  
-
-#.  Execute the script isilon\_create\_\ |hsk_dst|\ \_users.sh.
-    This script performs the following actions:
-
-    - Creates local groups and users with the following names:
-      hadoop, hdfs, mapred, hbase, hive, yarn, oozie, sentry, impala spark,
-      hue, sqoop2, solr sqoop, httpfs, llama, zookeper, flume, sample, admin
-
-    - Creates a local group named supergroup.
-
-    - Adds the users hdfs, yarn, and mapred to the hadoop and supergroup groups.
-      
-    .. parsed-literal::
-
-     isiloncluster1-1# **sh \\
-     /ifs/isiloncluster1/scripts/isilon-hadoop-tools/onefs/isilon\_create\_**\ |hsk_dst_strong|\ **\_users.sh**
+.. include:: ../common/prepare-isilon-2-create-users-and-directories.rst
 
 .. include:: ../common/prepare-isilon-3-after-users-and-directories.rst
 
@@ -302,7 +248,7 @@ can skip to the section titled “Connect Cloudera Hadoop to Isilon” (step
 Install Cloudera Manager
 ========================
 
-#.  Download Cloudera Manager 5.1.0 from
+#.  Download Cloudera Manager 5.2.0 from
     http://www.cloudera.com/content/cloudera-content/cloudera-docs/CM5/latest/Cloudera-Manager-Quick-Start/Cloudera-Manager-Quick-Start-Guide.html,
     section *Download and Run the Cloudera Manager Server Installer*.
 
@@ -314,11 +260,11 @@ Install Cloudera Manager
 
 #.  Accept all defaults and complete the installation process.
 
-#.  Browse to ``http://c5manager-server-0.example.com:7180/``.
+#.  Browse to ``http://hadoop-manager-server-0.example.com:7180/``.
 
     |image28|
 
-#.  Login using the following account:    
+#.  Login using the following account:
   
     Username: admin
 
@@ -327,11 +273,6 @@ Install Cloudera Manager
 
 Deploy a Cloudera Hadoop Cluster
 ================================
-
-You will deploy Cloudera CDH Hadoop in the traditional way, meaning you
-will have an HDFS NameNode and three DataNodes. Once all software
-components are installed, you will reconfigure them to use Isilon for
-HDFS and the original NameNode and DataNodes will be unused and idle.
 
 .. note::
   **Only some of the steps are documented below.**
@@ -346,7 +287,7 @@ HDFS and the original NameNode and DataNodes will be unused and idle.
 #.  Specify hosts for your CDH cluster installation. You can copy and
     paste from the file isilon-hadoop-tools/etc/mycluster1-hosts.txt that were
     generated by the BDE post deployment script. Be sure to also include the
-    Cloudera Manager host.
+    Cloudera Manager host. Do *not* specify your Isilon cluster here.
 
     |image32|
 
@@ -355,10 +296,10 @@ HDFS and the original NameNode and DataNodes will be unused and idle.
 
     |image34|
 
-#.  To make CDH 5.0.3 available for selection, add the following to
+#.  To make CDH 5.1.3 available for selection, add the following to
     your Remote Parcel Repository URLs: ::
 
-      http://archive.cloudera.com/cdh5/parcels/5.0.3/
+      http://archive.cloudera.com/cdh5/parcels/5.1.3/
 
     |image36|
 
@@ -373,147 +314,36 @@ HDFS and the original NameNode and DataNodes will be unused and idle.
 
     |image40|
 
-#.  Click Continue to select defaults and answer the prompts appropriately.
-    
-    |image42|
+#.  When prompted to choose the CDH services that you want to install, select *Custom Services*. 
+    Then check *Isilon* and any other services that you would like to install.
+    Do *not* select *HDFS*.
+
+    .. image:: cloudera-manager-5.2-custom-services-isilon.png
 
 #.  Customize role assignments. For small clusters, the following role
     assignment can be used:
 
-    - c5manager-server-0 for all Cloudera Management Service roles
+    - hadoop-manager-server-0 for all Cloudera Management Service roles
 
-    - mycluster1-namenode-0 for HDFS NameNode
+    - mycluster1-worker-\* for YARN Node Manager, HBase Region Server, Impala Daemon
 
-    - mycluster1-worker-\* for HDFS DataNode, YARN Node Manager, HBase Region Server, Impala Daemon, Spark Worker
+    - mycluster1-master-0 for all other roles (e.g. YARN Resource Manager, Isilon Gateway)
 
-    |image44|
+    .. image:: view-by-host.png
+
+#.  When prompted to review changes, here you will specify your Isilon cluster address.
+  
+    Default File System URI
+      \hdfs://mycluster1-hdfs.lab.example.com:8020
+      
+    WebHDFS URL
+      \http://mycluster1-hdfs.lab.example.com:8082/webhdfs/v1
+
+    .. image:: review-changes.png
 
 #.  Complete the installation process.
 
     |image46|
-
-#.  Log into the Hue Web UI and install all of the application examples.
-
-#.  After a successful installation, review Cloudera Manager for any
-    warnings or errors. It is recommended to correct any warnings or errors
-    before continuing.
-
-
-Connect Cloudera Hadoop To Isilon
-=================================
-
-Copy HDFS Files to Isilon
--------------------------
-
-#.  Login to Cloudera Manager.
-
-#.  Stop all Cloudera cluster services except HDFS,YARN, and Zookeeper.
-    
-    |image48|
-
-#.  SSH to mycluster1-master-0 as root.
-
-#.  Test HDFS access to your CDH cluster's NameNode.
-    
-    .. parsed-literal::
-
-      [root\@mycluster1-master-0 ~]# **sudo -u hdfs hdfs dfs -ls /**
-      Found 4 items
-      drwxr-xr-x   - hbase hbase               0 2014-08-05 05:38 /hbase
-      drwxrwxr-x   - solr  solr                0 2014-08-05 05:03 /solr
-      drwxrwxrwt   - hdfs  supergroup          0 2014-08-05 05:10 /tmp
-      drwxr-xr-x   - hdfs  supergroup          0 2014-08-05 05:10 /user
-
-#.  Test HDFS access to your Isilon cluster.
-    
-    .. parsed-literal::
-
-      [root\@mycluster1-master-0 ~]# **sudo -u hdfs hdfs dfs -ls \\
-      hdfs://mycluster1-hdfs/**
-      Found 1 items
-      -rw-r--r--   1 root hadoop          0 2014-08-05 05:59 hdfs://mycluster1-hdfs/THIS\_IS\_ISILON
-
-#.  Copy the entire CDH cluster's HDFS namespace to Isilon.
-    
-    .. parsed-literal::
-
-      [root\@mycluster1-master-0 ~]# **sudo -u hdfs hadoop distcp -skipcrccheck \\
-      -update -pugp / hdfs://mycluster1-hdfs/**
-      ...
-      [root\@mycluster1-master-0 ~]# **sudo -u hdfs hdfs dfs -ls \\
-      hdfs://mycluster1-hdfs/**
-      Found 5 items
-      -rw-r--r--   1 root  hadoop              0 2014-08-05 05:59 hdfs://mycluster1-hdfs/THIS\_IS\_ISILON
-      drwxr-xr-x   - hbase hbase             148 2014-08-05 06:06 hdfs://mycluster1-hdfs/hbase
-      drwxrwxr-x   - solr  solr                0 2014-08-05 06:07 hdfs://mycluster1-hdfs/solr
-      drwxrwxrwt   - hdfs  supergroup        107 2014-08-05 06:07 hdfs://mycluster1-hdfs/tmp
-      drwxr-xr-x   - hdfs  supergroup        184 2014-08-05 06:07 hdfs://mycluster1-hdfs/user
-
-
-Reconfigure Cloudera Services to use Isilon for HDFS
-----------------------------------------------------
-
-#.  Stop all Cloudera cluster services.
-    
-    |image50|
-
-#.  Edit HDFS \\ Service-Wide \\ Advanced \\ Cluster-wide Advanced
-    Configuration Snippet (Safety Valve) for core-site.xml: ::
-
-      <property>
-      <name>fs.defaultFS</name>
-      <value>hdfs://mycluster1-hdfs.lab.example.com:8020</value>
-      </property>
-
-    |image52|
-
-#.  If HBase is installed, edit HBase \\ Service-Wide \\ Advanced \\
-    HBase Service Advanced Configuration Snippet (Safety Valve) for
-    hbase-site.xml: ::
-
-      <property>
-      <name>hbase.rootdir</name>
-      <value>hdfs://mycluster1-hdfs.lab.example.com:8020/hbase</value>
-      </property>
-
-    |image54|
-
-
-#.  Edit Hue \\ Service-Wide \\ Advanced \\ Hue Service Advanced
-    Configuration Snippet (Safety Valve) for hue\_safety\_valve.ini: ::
-
-      [hadoop]
-      [[hdfs_clusters]]
-      [[[default]]]
-      fs_defaultfs=hdfs://mycluster1-hdfs.lab.example.com:8020
-      webhdfs_url=https://mycluster1-hdfs.lab.example.com:8080/webhdfs/v1
-
-    |image56|
-
-#.  Deploy Client Configuration.
-
-    |image58|
-
-#.  Restart the Cloudera cluster.
-
-    |image60|
-
-#.  Confirm that the Isilon is now your default Hadoop file system.
-    
-    .. parsed-literal::
-
-      [root\@mycluster1-master-0 ~]# **sudo -u hdfs hdfs dfs -ls /**
-      Found 5 items
-      -rw-r--r--   1 root  hadoop              0 2014-08-05 05:59 /THIS_IS_ISILON
-      drwxr-xr-x   - hbase hbase             148 2014-08-05 06:06 /hbase
-      drwxrwxr-x   - solr  solr                0 2014-08-05 06:07 /solr
-      drwxrwxrwt   - hdfs  supergroup        107 2014-08-05 06:07 /tmp
-      drwxr-xr-x   - hdfs  supergroup        184 2014-08-05 06:07 /user
-
-#.  To ensure that no services are using the CDH NameNode and
-    DataNodes, you may stop the CDH HDFS services.
-
-    |image62|
 
 #.  Review Cloudera Manager for any warnings or errors.
 
@@ -530,50 +360,23 @@ Impala
 .. parsed-literal::
 
   [hduser1\@mycluster1-master-0 ~]$ **impala-shell -i mycluster1-worker-0**
-  [mycluster1-worker-0:21000] >  
-  **DROP TABLE IF EXISTS tab11;
-  CREATE EXTERNAL TABLE tab11
-  (
-     id INT,
-     col\_1 BOOLEAN,
-     col\_2 DOUBLE,
-     col\_3 TIMESTAMP
-  )
-  ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
-  LOCATION '/user/hduser1/sample\_data/tab1';
-   
-  DROP TABLE IF EXISTS tab12;
+  [mycluster1-worker-0:21000] > **invalidate metadata;**
+  Query: invalidate metadata
 
-  CREATE TABLE tab12
-  (
-     id INT,
-     col\_1 BOOLEAN,
-     col\_2 DOUBLE,
-     month INT,
-     day INT
-  )
-  ROW FORMAT DELIMITED FIELDS TERMINATED BY ',';
-
-  INSERT OVERWRITE TABLE tab12
-  SELECT id, col\_1, col\_2, MONTH(col\_3), DAYOFMONTH(col\_3)
-  FROM tab11 WHERE YEAR(col\_3) = 2012;**
-  ...
-  WARNINGS: Backend 0:Unknown disk id.  This will negatively affect
-  performance. Check your hdfs settings to enable block location metadata.
-  ...
+  Returned 0 row(s) in 1.05s
 
   [cdhdas2-worker-0:21000] > **show tables;**
   Query: show tables
   +-------+
   \| name  \|
   +-------+
-  \| tab11 \|
-  \| tab12 \|
+  \| tab1 \|
+  \| tab2 \|
   +-------+
   Returned 2 row(s) in 0.01s
 
-  [mycluster1-worker-0:21000] > **select \* from tab11;**
-  Query: select \* from tab11
+  [mycluster1-worker-0:21000] > **select \* from tab1;**
+  Query: select \* from tab1
   +------+-------+------------+-------------------------------+
   \| id   \| col\_1 \| col\_2      \| col\_3                         \|
   +------+-------+------------+-------------------------------+
@@ -582,21 +385,8 @@ Impala
   \| 3    \| false \| 24453.325  \| 2008-08-22 09:33:21.123000000 \|
   \| 4    \| false \| 243423.325 \| 2007-05-12 22:32:21.334540000 \|
   \| 5    \| true  \| 243.325    \| 1953-04-22 09:11:33           \|
-  \| NULL \| NULL  \| NULL       \| NULL                          \|
   +------+-------+------------+-------------------------------+
-  Returned 6 row(s) in 0.20s
-  WARNINGS: Backend 0:Unknown disk id.  This will negatively affect
-  performance. Check your hdfs settings to enable block location metadata.
-
-  [mycluster1-worker-0:21000] > **select \* from tab12;**
-  Query: select \* from tab12
-  +----+-------+---------+-------+-----+
-  \| id \| col\_1 \| col\_2   \| month \| day \|
-  +----+-------+---------+-------+-----+
-  \| 1  \| true  \| 123.123 \| 10    \| 24  \|
-  \| 2  \| false \| 1243.5  \| 10    \| 25  \|
-  +----+-------+---------+-------+-----+
-  Returned 2 row(s) in 0.29s
+  Returned 5 row(s) in 0.20s
   WARNINGS: Backend 0:Unknown disk id.  This will negatively affect
   performance. Check your hdfs settings to enable block location metadata.
 

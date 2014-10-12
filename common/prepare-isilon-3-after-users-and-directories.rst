@@ -16,16 +16,3 @@
       isi services isi\_hdfs\_d enable**
       The service 'isi\_hdfs\_d' has been disabled.
       The service 'isi\_hdfs\_d' has been enabled.
-
-#.  Set the owner and permissions for the HDFS root directory.
-    You first need to determine the access zone ID. 
-    Then we will run the ``chown`` command in the context of this access zone.
-
-    .. parsed-literal::
-
-      isiloncluster1-1# **isi zone zones view zone1**
-      ...
-                        Zone ID: 2
-      isiloncluster1-1# **isi_run -z 2 chown hdfs:hadoop \\
-      /ifs/isiloncluster1/zone1/hadoop**
-
