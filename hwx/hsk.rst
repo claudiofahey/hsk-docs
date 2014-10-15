@@ -198,14 +198,33 @@ Install Ambari Server
     
     section *Download and Run the Ambari Server Installer*.
 
-#.  Launch the installer.
+#.  Install the Ambari Server packages
     
     .. parsed-literal::
 
       [root\@c5manager-server-0 ~]# **yum install ambari-server**
       [root\@c5manager-server-0 ~]# **yum install ambari-agent**
 
+#.  Start the install process
+
+    .. parsed-literal::
+
+      [root\@c5manager-server-0 ~]# **ambari-server setup**
+      
 #.  Accept all defaults and complete the installation process.
+
+#.  Start the server
+
+    .. parsed-literal::
+
+      [root\@c5manager-server-0 ~]# **ambari-server start**
+
+#.  Start the agent
+
+    .. parsed-literal::
+
+      [root\@c5manager-server-0 ~]# **ambari-agent start**
+
 
 #.  Browse to http://c5manager-server-0.example.com:8080/.
 
