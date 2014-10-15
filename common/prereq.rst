@@ -20,7 +20,7 @@ Isilon
   the console-based installation process for your first Isilon node and
   added at least two other nodes for a minimum of 3 Isilon nodes.
 
-- To allow Cloudera CDH 5 or higher to access Isilon, you must
+- To allow Cloudera CDH 5 or higher and  Hortonworks HDP 2.0 or higher to access Isilon, you must
   have OneFS version 7.1.1.0 with patch-130611.
 
 - You must obtain a OneFS HDFS license code and install it on
