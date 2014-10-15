@@ -253,7 +253,6 @@ once the HDP install is completed.
 
 #.  Login to Ambari Server.
     
-    |image30|
 
 #.  Specify hosts for your HDP cluster installation in the Target Hosts text box.
     You can copy and paste from the files isilon-hadoop-tools/etc/\*-hosts.txt that were
@@ -261,12 +260,11 @@ once the HDP install is completed.
     should also be included in the list of target hosts. Additionally, include the
     Ambari Server host.
 
-    |image32|
 
 #.  You may choose to install a specific version of the HDP Service Stack. When
     prompted select the most recent Stack as of this writing (2.2).
 
-    |image34|
+    |Stack21|
 
 
 #.  Continue to select defaults and answer the prompts
@@ -274,11 +272,12 @@ once the HDP install is completed.
     all hosts, provide the SSH private key of the Ambari Server when prompted after 
     updating the Host Registration Information section.  
 
-    |image40|
 
 #.  When prompted to Choose Services, unselect (remove) Nagios and Ganglia from the
     list of services to install.  Ganglia will not function with an Isilon cluster
     without additional configuration beyond what is available through Ambari. 
+
+    |choose_services|
 
 #.  Customize role/host assignments in the page labeled Assign Masters. For the NameNode and
     SNameNode (Secondary NameNode) components, the SmartConnect address of the Isilon cluster
@@ -287,6 +286,8 @@ once the HDP install is completed.
 #.  Assign Slaves and Clients.  Select DataNode for only the Isilon cluster and
     distribute the rest of the selections over the remaining hosts.  The Isilon cluster should
     not be used for any other slave and client components.
+
+    |slaves_clients|
 
 #.  Assign a password to Hive and Oozie if they have been selected as Services.
  
