@@ -1,5 +1,5 @@
 
-13. Map the *hdfs* user to the Isilon superuser. This will allow the
+12. Map the *hdfs* user to the Isilon superuser. This will allow the
     *hdfs* user to chown (change ownership of) all files.
 
     .. warning::

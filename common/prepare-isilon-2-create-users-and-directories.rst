@@ -1,5 +1,5 @@
 
-#.  Execute the script isilon\_create\_users.sh.
+10. Execute the script isilon\_create\_users.sh.
     This script will create all required users and groups for the Hadoop services
     and applications.
 
@@ -31,7 +31,7 @@
 
       isiloncluster1-1# **bash \\
       /ifs/isiloncluster1/scripts/isilon-hadoop-tools/onefs/isilon\_create\_users.sh \\
-      --dist **\ |hsk_dst_strong|\ **--startgid 501 --startuid 501 --zone zone1**
+      --dist** |hsk_dst_strong| **--startgid 501 --startuid 501 --zone zone1**
 
 #.  Execute the script isilon\_create\_directories.sh.
     This script will create all required directories with the appropriate ownership and permissions.
@@ -51,4 +51,4 @@
 
       isiloncluster1-1# **isi_run -z 2 bash \\
       /ifs/isiloncluster1/scripts/isilon-hadoop-tools/onefs/isilon\_create\_directories.sh \\
-      --dist **\ |hsk_dst_strong|\ **--fixperm --zone zone1**
+      --dist** |hsk_dst_strong| **--fixperm --zone zone1**

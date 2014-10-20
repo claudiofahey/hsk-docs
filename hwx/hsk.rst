@@ -1,10 +1,10 @@
 
 .. The following substitutions are used by the common documents.
 
-.. |hsk_dst| replace:: phd
+.. |hsk_dst| replace:: hwx
 .. |hsk_dst_strong| replace:: **hwx**
 .. |hadoop-manager| replace:: Ambari
-.. |hadoop-mapreduce-examples-jar| replace:: **/opt/cloudera/parcels/CDH/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar**
+.. |hadoop-mapreduce-examples-jar| replace:: **hadoop-mapreduce-examples.jar**
 
 
 *****************************************************************************
@@ -82,7 +82,7 @@ environment as best-practices are followed whenever possible.
 .. include:: ../common/apache-hadoop-projects.rst
 
 Hortonworks Data Platform and the Ambari Manager
-————————————————————————————————————————————————-
+------------------------------------------------
 
 The Hortonworks Data Platform (HDP) enables Enterprise Hadoop by providing the complete
 set of essential Hadoop capabilities required for any enterprise.  Utilizing YARN at its
@@ -121,28 +121,10 @@ software versions:
 
 * Ambari Manager 1.6.1
 * Hortonworks HDP 2.2
-* Isilon OneFS 7.1.1 and 7.1.1 with patch-130611
+* Isilon OneFS 7.2.0 (available 3-Nov-2014)
 * VMware vSphere Enterprise 5.5.0
 * VMware Big Data Extensions 2.0
 
-.. table:: Hortonworks HDP and Isilon OneFS Compatibility Matrix
-
-  +--------------------+---------------------+----------------+-------------------------------+
-  |                    | OneFS Version                                                        |
-  +--------------------+---------------------+----------------+-------------------------------+
-  | HDP Version        | 7.0.2.2 - 7.1.0.0   | 7.1.1.0        | 7.1.1.0 + patch-130611        |
-  +====================+=====================+================+===============================+
-  | 1.1 - 1.3\ :sup:`3`| compatible\ :sup:`1`| compatible     | compatible                    |
-  +--------------------+---------------------+----------------+-------------------------------+
-  | 2.0 - 2.2          | not compatible      | not compatible | compatible                    |
-  +--------------------+---------------------+----------------+-------------------------------+
-
-:sup:`1` Fully-compatible but commands and features described in this
-document may not all apply to this version of OneFS.
-
-:sup:`3` Commands and features described in this document may not completely
-apply to all versions of HDP.
- 
 
 .. include:: ../common/environment-hosts.rst
 
@@ -170,8 +152,6 @@ can skip to the section titled “Connect HDP to Isilon” (step
 
 #. Use Ambari Manager to deploy HDP to the virtual machines.
 
-#. Connect HDP services and components to Isilon for all HDFS file access.
-
 #. Perform key functional tests.
 
 
@@ -179,7 +159,13 @@ can skip to the section titled “Connect HDP to Isilon” (step
 
 .. include:: ../common/prepare-network-infrastructure.rst
 
-.. include:: ../common/prepare-isilon.rst
+
+.. include:: ../common/prepare-isilon-1.rst
+
+.. include:: ../common/prepare-isilon-2-create-users-and-directories.rst
+
+.. include:: ../common/prepare-isilon-3-after-users-and-directories.rst
+
 
 .. include:: ../common/create-dns-records-for-isilon.rst
 
@@ -191,25 +177,25 @@ can skip to the section titled “Connect HDP to Isilon” (step
 
 
 Install Ambari Server
-========================
+=====================
 
-#.  Install documentation for Ambari Server 1.6.1 is available from
-    http://docs.hortonworks.com/HDPDocuments/Ambari-1.6.1.0/bk_using_Ambari_book/content/ambari-chap2.html
-    
+.. note::
+    Install documentation for Ambari Server 1.6.1 is available from
+    http://docs.hortonworks.com/HDPDocuments/Ambari-1.6.1.0/bk_using_Ambari_book/content/ambari-chap2.html    
     section *Download and Run the Ambari Server Installer*.
 
 #.  Install the Ambari Server packages
     
     .. parsed-literal::
 
-      [root\@c5manager-server-0 ~]# **yum install ambari-server**
-      [root\@c5manager-server-0 ~]# **yum install ambari-agent**
+      [root\@hadoop-manager-server-0 ~]# **yum install ambari-server**
+      [root\@hadoop-manager-server-0 ~]# **yum install ambari-agent**
 
 #.  Start the install process
 
     .. parsed-literal::
 
-      [root\@c5manager-server-0 ~]# **ambari-server setup**
+      [root\@hadoop-manager-server-0 ~]# **ambari-server setup**
       
 #.  Accept all defaults and complete the installation process.
 
@@ -217,28 +203,25 @@ Install Ambari Server
 
     .. parsed-literal::
 
-      [root\@c5manager-server-0 ~]# **ambari-server start**
+      [root\@hadoop-manager-server-0 ~]# **ambari-server start**
 
 #.  Start the agent
 
     .. parsed-literal::
 
-      [root\@c5manager-server-0 ~]# **ambari-agent start**
+      [root\@hadoop-manager-server-0 ~]# **ambari-agent start**
 
+#.  Browse to ``http://hadoop-manager-server-0.example.com:8080/``.
 
-#.  Browse to http://c5manager-server-0.example.com:8080/.
-
-    |image28|
-
-#.  Login using the following account:    
+#.  Login using the following account:
   
     Username: admin
 
     Password: admin
 
 
-Deploy a Hortonworks Hadoop Cluster with Isilon clustered NAS HDFS
-================================
+Deploy a Hortonworks Hadoop Cluster with Isilon for HDFS
+========================================================
 
 You will deploy Hortonworks HDP Hadoop using the standard process defined
 by Hortonworks.  Ambari Server allows for the immediate usage of an Isilon cluster
@@ -252,7 +235,6 @@ once the HDP install is completed.
   for complete details.
 
 #.  Login to Ambari Server.
-    
 
 #.  Specify hosts for your HDP cluster installation in the Target Hosts text box.
     You can copy and paste from the files isilon-hadoop-tools/etc/\*-hosts.txt that were
@@ -260,24 +242,21 @@ once the HDP install is completed.
     should also be included in the list of target hosts. Additionally, include the
     Ambari Server host.
 
-
 #.  You may choose to install a specific version of the HDP Service Stack. When
     prompted select the most recent Stack as of this writing (2.2).
 
-    |Stack21|
-
+    .. image:: stack21.png
 
 #.  Continue to select defaults and answer the prompts
     appropriately. In order to allow Ambari to automatically install the Agent on
     all hosts, provide the SSH private key of the Ambari Server when prompted after 
-    updating the Host Registration Information section.  
-
+    updating the Host Registration Information section.
 
 #.  When prompted to Choose Services, unselect (remove) Nagios and Ganglia from the
     list of services to install.  Ganglia will not function with an Isilon cluster
     without additional configuration beyond what is available through Ambari. 
 
-    |choose_services|
+    .. image:: choose_services.png
 
 #.  Customize role/host assignments in the page labeled Assign Masters. For the NameNode and
     SNameNode (Secondary NameNode) components, the SmartConnect address of the Isilon cluster
@@ -287,7 +266,7 @@ once the HDP install is completed.
     distribute the rest of the selections over the remaining hosts.  The Isilon cluster should
     not be used for any other slave and client components.
 
-    |slaves_clients|
+    .. image:: slaves_clients.png
 
 #.  Assign a password to Hive and Oozie if they have been selected as Services.
  
@@ -299,6 +278,10 @@ once the HDP install is completed.
     before continuing.
 
 
+.. include:: ../common/adding-a-hadoop-user.rst
+
+.. include:: ../common/functional-tests.rst
+
 .. include:: ../common/wikipedia.rst
 
 .. include:: ../common/where-to-go-from-here.rst
@@ -308,5 +291,7 @@ once the HDP install is completed.
 .. include:: ../common/legal.rst
 
 .. include:: ../common/references.rst
+
+http://www.hortonworks.com/
 
 .. include:: ../common/substitutions.rst
