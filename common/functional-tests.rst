@@ -146,6 +146,16 @@ Type <Control+D>.
   2      false  1243.5        10     25
   Time taken: 0.094 seconds, Fetched: 2 row(s)  
 
+  hive> **select \* from tab1 where id=1;**
+  OK
+  1      true   123.123       2012-10-24 08:55:00
+  Time taken: 15.083 seconds, Fetched: 1 row(s)
+
+  hive> **select \* from tab2 where id=1;**
+  OK
+  1      true   123.123       10     24
+  Time taken: 13.094 seconds, Fetched: 1 row(s)  
+
   hive> **exit;**
 
 Pig

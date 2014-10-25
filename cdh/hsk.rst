@@ -228,13 +228,7 @@ can skip to the section titled “Connect Cloudera Hadoop to Isilon” (step
 
 .. include:: ../common/prepare-network-infrastructure.rst
 
-
 .. include:: ../common/prepare-isilon-1.rst
-
-.. include:: ../common/prepare-isilon-2-create-users-and-directories.rst
-
-.. include:: ../common/prepare-isilon-3-after-users-and-directories.rst
-
 
 .. include:: ../common/create-dns-records-for-isilon.rst
 
@@ -249,7 +243,7 @@ Install Cloudera Manager
 ========================
 
 #.  Download Cloudera Manager 5.2.0 from
-    http://www.cloudera.com/content/cloudera-content/cloudera-docs/CM5/latest/Cloudera-Manager-Quick-Start/Cloudera-Manager-Quick-Start-Guide.html,
+    http://www.cloudera.com/content/cloudera/en/documentation/core/latest/topics/cm_qs_quick_start.html,
     section *Download and Run the Cloudera Manager Server Installer*.
 
 #.  Launch the installer.
@@ -260,7 +254,7 @@ Install Cloudera Manager
 
 #.  Accept all defaults and complete the installation process.
 
-#.  Browse to ``http://hadoop-manager-server-0.example.com:7180/``.
+#.  Browse to ``http://hadoopmanager-server-0.lab.example.com:7180/``.
 
     |image28|
 
@@ -276,8 +270,8 @@ Deploy a Cloudera Hadoop Cluster
 
 .. note::
   **Only some of the steps are documented below.**
-  Refer to the Cloudera Manager Quick Start Guide
-  (http://www.cloudera.com/content/cloudera-content/cloudera-docs/CM5/latest/Cloudera-Manager-Quick-Start/Cloudera-Manager-Quick-Start-Guide.html)
+  Refer to the Cloudera Manager and CDH Quick Start Guide
+  (http://www.cloudera.com/content/cloudera/en/documentation/core/latest/topics/cm_qs_quick_start.html)
   for complete details.
 
 #.  Login to Cloudera Manager.
@@ -323,7 +317,7 @@ Deploy a Cloudera Hadoop Cluster
 #.  Customize role assignments. For small clusters, the following role
     assignment can be used:
 
-    - hadoop-manager-server-0 for all Cloudera Management Service roles
+    - hadoopmanager-server-0 for all Cloudera Management Service roles
 
     - mycluster1-worker-\* for YARN Node Manager, HBase Region Server, Impala Daemon
 

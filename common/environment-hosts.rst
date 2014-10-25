@@ -37,19 +37,14 @@ List of Hosts in Hadoop Environments
 |                            | used to monitor the health and performance of your Isilon                                                                  |
 |                            | cluster. It is recommend for any performance testing.                                                                      |
 +----------------------------+----------------------------------------------------------------------------------------------------------------------------+
-| |hadoop-manager|           | A dedicated host will manage your Hadoop cluster. This will run |hadoop-manager|                                           |
-| (hadoop-manager-server-0)  | which will deploy and                                                                                                      |
-|                            | monitor the Hadoop components.                                                                                             |
+| |hadoop-manager|           | This host will manage your Hadoop cluster. This will run |hadoop-manager| which will deploy and monitor the Hadoop         |
+| (hadoopmanager-server-0)   | components. In smaller environments, you may choose to deploy |hadoop-manager| to your Hadoop Master host.                 |
+|                            |                                                                                                                            |
 +----------------------------+----------------------------------------------------------------------------------------------------------------------------+
 | Hadoop Master              | This host will the YARN Resource Manager, Job History                                                                      |
-| (mycluster1-master-0)      | Server, Hue Server, Hive Metastore Server, etc. In general,                                                                |
+| (mycluster1-master-0)      | Server, Hive Metastore Server, etc.. In general,                                                                           |
 |                            | it will run all "master" services except for the HDFS Name                                                                 |
 |                            | Node.                                                                                                                      |
-+----------------------------+----------------------------------------------------------------------------------------------------------------------------+
-| Hadoop Name                | This host will run the HDFS Name Node. This will only be                                                                   |
-| Node                       | used during the installation process. Once you reconfigure                                                                 |
-| (mycluster1-namenode-0)    | the Hadoop components to use Isilon for HDFS, this node will be                                                            |
-|                            | idle.                                                                                                                      |
 +----------------------------+----------------------------------------------------------------------------------------------------------------------------+
 | Hadoop Worker              | There will be any number of worker nodes, depending on the                                                                 |
 | Node (mycluster1-worker-0, | compute requirements. Each node will run the YARN Node                                                                     |

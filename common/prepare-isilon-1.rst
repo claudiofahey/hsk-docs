@@ -193,9 +193,9 @@ Configure Isilon For HDFS
   
 #.  Open a web browser to the your Isilon cluster's web administration
     page. If you don't know the URL, simply point your browser to
-    https://\ *isilon\_node\_ip\_address*:8080, where
-    *isilon\_node\_ip\_address* is any IP address on any Isilon node (except
-    for InfiniBand addresses). This usually corresponds to the ext-1
+    \https://\ *isilon\_node\_ip\_address*:8080, where
+    *isilon\_node\_ip\_address* is any IP address on any Isilon node that is in
+    the System access zone. This usually corresponds to the ext-1
     interface of any Isilon node.
 
     |image14|
@@ -250,23 +250,6 @@ Configure Isilon For HDFS
     ------                    --------------    -------------     ---------------
     HDFS                      Evaluation        Not Configured    September 4, 2014
 
-#. Extract the Isilon Hadoop Tools to your Isilon cluster. This can
-   be placed in any directory under /ifs. However, Isilon best-practices
-   suggest /ifs/*isiloncluster1*/scripts where *isiloncluster1* is the name
-   of your Isilon cluster.
-
-   .. parsed-literal::
-
-    [user\@workstation ~]$ **scp isilon-hadoop-tools-x.x.tar.gz \\
-    root\@isilon\_node\_ip\_address:/ifs/isiloncluster1/scripts**
-
-    isiloncluster1-1# **tar -xzvf \\
-    /ifs/isiloncluster1/isilon-hadoop-tools-x.x.tar.gz \\
-    -C /ifs/isiloncluster1/scripts**
-
-    isiloncluster1-1# **mv /ifs/isiloncluster1/scripts/isilon-hadoop-tools-x.x \\
-    /ifs/isiloncluster1/scripts/isilon-hadoop-tools**
-
 #.  Create the HDFS root directory. This is usually called *hadoop* and
     must be within the access zone directory.
 
@@ -281,9 +264,112 @@ Configure Isilon For HDFS
       isiloncluster1-1# **isi zone zones modify zone1 \\
       --hdfs-root-directory /ifs/isiloncluster1/zone1/hadoop**
 
+#.  Increase the HDFS daemon thread count.
+
+    .. parsed-literal::
+
+      isiloncluster1-1# **isi hdfs settings modify --server-threads 256**
+
+#.  Set the HDFS block size used for reading from Isilon.
+
+    .. parsed-literal::
+
+      isiloncluster1-1# **isi hdfs settings modify --default-block-size 128M**
+
 #.  Create an indicator file so that we can easily determine when we are looking your Isilon cluster via HDFS.
     
     .. parsed-literal::
 
       isiloncluster1-1# **touch \\
       /ifs/isiloncluster1/zone1/hadoop/THIS\_IS\_ISILON\_isiloncluster1\_zone1**
+
+#.  Extract the Isilon Hadoop Tools to your Isilon cluster. 
+    This can be placed in any directory under /ifs.
+    It is recommended to use /ifs/*isiloncluster1*/scripts where *isiloncluster1* is the name
+    of your Isilon cluster.
+
+    .. parsed-literal::
+
+      [user\@workstation ~]$ **scp isilon-hadoop-tools-x.x.tar.gz \\
+      root\@isilon\_node\_ip\_address:/ifs/isiloncluster1/scripts**
+
+      isiloncluster1-1# **tar -xzvf \\
+      /ifs/isiloncluster1/isilon-hadoop-tools-x.x.tar.gz \\
+      -C /ifs/isiloncluster1/scripts**
+
+      isiloncluster1-1# **mv /ifs/isiloncluster1/scripts/isilon-hadoop-tools-x.x \\
+      /ifs/isiloncluster1/scripts/isilon-hadoop-tools**
+
+
+#.  Execute the script isilon\_create\_users.sh.
+    This script will create all required users and groups for the Hadoop services
+    and applications.
+
+    .. warning::
+
+      The script isilon\_create\_users.sh will create local
+      user and group accounts on your Isilon cluster for Hadoop services. If you are using a
+      directory service such as Active Directory, and you want these users and
+      groups to be defined in your directory service, then DO NOT run this
+      script. Instead, refer to the OneFS documentation and `EMC
+      Isilon Best Practices for Hadoop Data
+      Storage <http://www.emc.com/collateral/white-paper/h12877-wp-emc-isilon-hadoop-best-practices.pdf>`__.  
+      
+    Script Usage: isilon\_create\_users.sh --dist <DIST> [--startgid <GID>] [--startuid <UID>] [--zone <ZONE>]
+
+    dist
+      This will correspond to your Hadoop distribution - |hsk_dst|
+
+    startgid
+      Group IDs will begin with this value. For example: 501
+
+    startuid
+      User IDs will begin with this value. This is generally the same as gid_base. For example: 501
+
+    zone
+      Access Zone name. For example: System
+
+    .. parsed-literal::
+
+      isiloncluster1-1# **bash \\
+      /ifs/isiloncluster1/scripts/isilon-hadoop-tools/onefs/isilon\_create\_users.sh \\
+      --dist** |hsk_dst_strong| **--startgid 501 --startuid 501 --zone zone1**
+
+#.  Execute the script isilon\_create\_directories.sh.
+    This script will create all required directories with the appropriate ownership and permissions.
+
+    Script Usage: isilon\_create\_directories.sh --dist <DIST> [--fixperm] [--zone <ZONE>]
+
+    dist
+      This will correspond to your Hadoop distribution - |hsk_dst|
+
+    fixperm
+      If specified, ownership and permissions will be set on existing directories.
+
+    zone
+      Access Zone name. For example: System
+
+    .. parsed-literal::
+
+      isiloncluster1-1# **bash \\
+      /ifs/isiloncluster1/scripts/isilon-hadoop-tools/onefs/isilon\_create\_directories.sh \\
+      --dist** |hsk_dst_strong| **--fixperm --zone zone1**
+
+
+#.  Map the *hdfs* user to the Isilon superuser. This will allow the
+    *hdfs* user to chown (change ownership of) all files.
+
+    .. warning::
+
+      The command below will restart the HDFS service on Isilon to ensure
+      that any cached user mapping rules are flushed. This will temporarily
+      interrupt any HDFS connections coming from other Hadoop clusters.
+
+    .. parsed-literal::
+
+      isiloncluster1-1# **isi zone zones modify --user-mapping-rules="hdfs=>root" \\
+      --zone zone1**
+      isiloncluster1-1# **isi services isi\_hdfs\_d disable ; \\
+      isi services isi\_hdfs\_d enable**
+      The service 'isi\_hdfs\_d' has been disabled.
+      The service 'isi\_hdfs\_d' has been enabled.

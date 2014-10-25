@@ -47,11 +47,11 @@ Provision Virtual Machines Using Big Data Extensions
 
 #. Login to the Serengeti CLI.
 
-#. Create the |hadoop-manager| cluster.
+#. If you want to use a dedicated |hadoop-manager| server, create the |hadoop-manager| cluster.
    
    .. parsed-literal::
 
-      serengeti>\ **cluster create --name hadoop-manager \\
+      serengeti>\ **cluster create --name hadoopmanager \\
       --specFile basic-server.json --password 1 --networkName defaultNetwork**
       Hint: Password are from 8 to 128 characters, and can include
       alphanumeric characters ([0-9, a-z, A-Z]) and the following special
@@ -64,8 +64,8 @@ Provision Virtual Machines Using Big Data Extensions
       roles:[basic]
         NAME                     IP              STATUS         TASK
         ------------------------------------------------------------ 
-        hadoop-manager-server-0  10.111.128.240  Service Ready
-      cluster hadoop-manager created
+        hadoopmanager-server-0  10.111.128.240  Service Ready
+      cluster hadoopmanager created
 
   .. note::
 
@@ -244,14 +244,14 @@ To run the script, follow these steps:
       ...
       Success!
 
-#.  Repeat the above steps for your |hadoop-manager| cluster named *hadoop-manager*.
+#.  Repeat the above steps for your |hadoop-manager| cluster named *hadoopmanager*.
 
 Resize Root Disk
 ----------------
 
 By default, the / (root) partition size for a VM created by BDE is 20
 GB. This is sufficient for a Hadoop worker but should be increased for
-the your |hadoop-manager| (*hadoop-manager-server-0*) and the master node
+the your |hadoop-manager| (*hadoopmanager-server-0*) and the master node
 (*mycluster1-master-0*). Follow the steps below on each of these nodes.
 
 #.  Remove old data disk.

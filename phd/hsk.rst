@@ -146,90 +146,7 @@ will describe.
 
 .. include:: ../common/prepare-network-infrastructure.rst
 
-
 .. include:: ../common/prepare-isilon-1.rst
-
-#.  Execute the script isilon\_create\_\ |hsk_dst|\ \_users.sh.
-
-    .. warning::
-
-      The script isilon\_create\_\ |hsk_dst|\ \_users.sh will create local
-      user and group accounts on your Isilon cluster for Hadoop services. If you are using a
-      directory service such as Active Directory, and you want these users and
-      groups to be defined in your directory service, then DO NOT run this
-      script. Instead, refer to the OneFS documentation and `EMC
-      Isilon Best Practices for Hadoop Data
-      Storage <http://www.emc.com/collateral/white-paper/h12877-wp-emc-isilon-hadoop-best-practices.pdf>`__.  
-
-    This script performs the following actions:
-
-    - Creates local groups and users with the following names:
-      hdfs mapred hbase gpadmin hive yarn
-
-    - Adds these users to hadoop group.
-      
-    Script Usage: isilon\_create\_\ |hsk_dst|\ \_users.sh [--startgid <GID>] [--startuid <UID>] [--zone <ZONE>]
-
-    startgid
-      Group IDs will begin with this value. For example: 501
-
-    startuid
-      User IDs will begin with this value. This is generally the same as gid_base. For example: 501
-
-    zone
-      Access Zone name. For example: System
-
-    .. parsed-literal::
-
-      isiloncluster1-1# **bash \\
-      /ifs/isiloncluster1/scripts/isilon-hadoop-tools/onefs/isilon\_create\_**\ |hsk_dst_strong|\ **\_users.sh \\
-      --startgid 501 --startuid 501 --zone zone1**
-
-#.  Execute the script isilon\_create\_\ |hsk_dst|\ \_directories.sh.
-
-    This script performs the following actions:
-
-    - Creates directories in the HDFS root for standard Hadoop applications and services.
-
-    - Assigns the appropriate permissions and ownership to these directories.
-
-    Script Usage: isilon\_create\_\ |hsk_dst|\ \_directories.sh [--hbase] [--hive] [--hawq] --fixperm --hdfsroot <hdfs root dir>
-
-    You first need to determine the access zone ID. 
-    Then we will run this script in the context of this access zone.
-
-    .. parsed-literal::
-
-      isiloncluster1-1# **isi zone zones view zone1**
-      ...
-                        Zone ID: 2
-      isiloncluster1-1# **isi_run -z 2 bash \\
-      /ifs/isiloncluster1/scripts/isilon-hadoop-tools/onefs/isilon\_create\_**\ |hsk_dst_strong|\ **\_directories.sh \\
-      --hbase --hive --hawq --fixperm --hdfsroot /ifs/isiloncluster1/zone1/hadoop**
-
-
-#.  Set the owner for the HDFS root directory.
-    You first need to determine the access zone ID. 
-    Then we will run the ``chown`` command in the context of this access zone.
-
-    .. parsed-literal::
-
-      isiloncluster1-1# **isi zone zones view zone1**
-      ...
-                        Zone ID: 2
-      isiloncluster1-1# **isi_run -z 2 chown hdfs:hadoop \\
-      /ifs/isiloncluster1/zone1/hadoop**
-
-#.  Set the permissions for the HDFS root directory. The command below
-    will give the owner full access and everyone else will have
-    read-only access.
-
-    .. parsed-literal::
-
-      isiloncluster1-1# **chmod 755 /ifs/isiloncluster1/zone1/hadoop**
-
-.. include:: ../common/prepare-isilon-3-after-users-and-directories.rst
-
 
 .. include:: ../common/create-dns-records-for-isilon.rst
 
@@ -262,12 +179,12 @@ Install Pivotal Command Center
 
     .. parsed-literal::
 
-      [root\@hadoop-manager-server-0 ~]# **mkdir phd**
-      [root\@hadoop-manager-server-0 ~]# **cd phd**
-      [root\@hadoop-manager-server-0 phd]# **tar --no-same-owner -zxvf \\
+      [root\@hadoopmanager-server-0 ~]# **mkdir phd**
+      [root\@hadoopmanager-server-0 ~]# **cd phd**
+      [root\@hadoopmanager-server-0 phd]# **tar --no-same-owner -zxvf \\
       /mnt/scripts/downloads/PCC-2.3.0-443.x86_64.tgz**
-      [root\@hadoop-manager-server-0 phd]# **cd PCC-2.3.0-443**
-      [root\@hadoop-manager-server-0 PCC-2.3.0-443]# **./install**
+      [root\@hadoopmanager-server-0 phd]# **cd PCC-2.3.0-443**
+      [root\@hadoopmanager-server-0 PCC-2.3.0-443]# **./install**
       You may find the logs in /usr/local/pivotal-cc/pcc_installation.log
       Performing pre-install checks ...                          [  OK  ]
       [INFO]: User gpadmin does not exist. It will be created as part of the 
@@ -282,8 +199,8 @@ Install Pivotal Command Center
       You now need to install a PHD cluster to monitor with Pivotal Command 
       Center.
       You can view your cluster statuses here: 
-      \https://hadoop-manager-server-0.lab.example.com:5443/status
-      [root\@hadoop-manager-server-0 PCC-2.3.0-443]# **service commander status**
+      \https://hadoopmanager-server-0.lab.example.com:5443/status
+      [root\@hadoopmanager-server-0 PCC-2.3.0-443]# **service commander status**
       nodeagent is running
       Jetty is running
       httpd is running
@@ -294,12 +211,12 @@ Install Pivotal Command Center
 
     .. parsed-literal::
 
-      [root\@hadoop-manager-server-0 ~]# su - gpadmin
-      [gpadmin\@hadoop-manager-server-0 ~] -bash-4.1$ **tar zxf \\
+      [root\@hadoopmanager-server-0 ~]# su - gpadmin
+      [gpadmin\@hadoopmanager-server-0 ~] -bash-4.1$ **tar zxf \\
       /mnt/scripts/downloads/PHD-2.1.0.0-175.tgz**
-      [gpadmin\@hadoop-manager-server-0 ~] -bash-4.1$ **tar zxf \\
+      [gpadmin\@hadoopmanager-server-0 ~] -bash-4.1$ **tar zxf \\
       /mnt/scripts/downloads/PADS-1.2.1.0-10335.tgz**
-      [gpadmin\@hadoop-manager-server-0 ~] -bash-4.1$ **icm_client import -s \\
+      [gpadmin\@hadoopmanager-server-0 ~] -bash-4.1$ **icm_client import -s \\
       PHD-2.1.0.0-175/**
       stack: PHD-2.1.0.0
       [INFO] Importing stack
@@ -307,7 +224,7 @@ Install Pivotal Command Center
       [INFO] Creating local stack repository...
       [OK]
       [INFO] Import complete
-      [gpadmin\@hadoop-manager-server-0 ~] -bash-4.1$ **icm_client import -s \\
+      [gpadmin\@hadoopmanager-server-0 ~] -bash-4.1$ **icm_client import -s \\
       PADS-1.2.1.0-10335/**
       stack: PADS-1.2.1.0
       [INFO] Importing stack
@@ -325,9 +242,9 @@ Deploy a Pivotal HD Cluster
 
     .. parsed-literal::
 
-      [gpadmin\@hadoop-manager-server-0 ~] -bash-4.1$ **cd \\
+      [gpadmin\@hadoopmanager-server-0 ~] -bash-4.1$ **cd \\
       /mnt/scripts/isilon-hadoop-tools/etc**
-      [gpadmin\@hadoop-manager-server-0 etc] -bash-4.1$ **cp -rv template-pcc \\
+      [gpadmin\@hadoopmanager-server-0 etc] -bash-4.1$ **cp -rv template-pcc \\
       mycluster1-pcc**
 
 #.  Edit mycluster1-pcc/clusterConfig.xml.
@@ -363,7 +280,7 @@ Deploy a Pivotal HD Cluster
 
     .. parsed-literal::
 
-      [gpadmin\@hadoop-manager-server-0 etc] -bash-4.1$ **icm_client deploy \\
+      [gpadmin\@hadoopmanager-server-0 etc] -bash-4.1$ **icm_client deploy \\
       --confdir mycluster1-pcc --selinuxoff --iptablesoff**
       Please enter the root password for the cluster nodes: **\*\*\***
       PCC creates a gpadmin user on the newly added cluster nodes (if any). 
@@ -384,7 +301,7 @@ Deploy a Pivotal HD Cluster
 
     .. parsed-literal::
 
-      [gpadmin\@hadoop-manager-server-0 etc] -bash-4.1$ **icm_client start \\
+      [gpadmin\@hadoopmanager-server-0 etc] -bash-4.1$ **icm_client start \\
       --clustername mycluster1**
       Starting services
       Starting cluster
@@ -482,7 +399,7 @@ Pivotal Command Center
 ----------------------
 
 Browse to the Pivotal Command Center GUI
-``https://hadoop-manager-server-0.lab.example.com:5443``.
+``https://hadoopmanager-server-0.lab.example.com:5443``.
 
 Login using the following default account: 
 
