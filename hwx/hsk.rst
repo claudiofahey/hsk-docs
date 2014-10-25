@@ -61,10 +61,10 @@ it took IT to deploy Hadoop as the primary reason to start with a
 deployment outside of IT.
 
 This guide is intended to simplify Hadoop deployments by creating a
-shared storage model with EMC Isilon scale out NAS and the Hortonworks Data Platform.
-By leveraging Hortonworks distribution of Apache Ambari management tools 
-which can automate Hadoop cluster deployments the time and cost for deployment 
-can be dramatically reduced.
+shared storage model with EMC Isilon scale out NAS and using an
+industry leader in Enterprise Hadoop, Hortonworks, reduce the time to
+deployment, and the cost of deployment leveraging
+tools that can automate Hadoop cluster deployments.
 
 Audience
 --------
@@ -80,6 +80,7 @@ environment as best-practices are followed whenever possible.
 
 
 .. include:: ../common/apache-hadoop-projects.rst
+
 
 Hortonworks Data Platform and the Ambari Manager
 ------------------------------------------------
