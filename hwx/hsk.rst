@@ -124,7 +124,7 @@ software versions:
 
 * Apache Ambari 1.6.0
 * Hortonworks HDP 2.1
-* Isilon OneFS 7.2.0 (available 3-Nov-2014)
+* Isilon OneFS 7.2.0
 * VMware vSphere Enterprise 5.5.0
 * VMware Big Data Extensions 2.0
 

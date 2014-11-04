@@ -192,7 +192,7 @@ software versions:
 
 * Cloudera Manager 5.2.0
 * Cloudera CDH 5.1.3
-* Isilon OneFS 7.2.0 (available 3-Nov-2014)
+* Isilon OneFS 7.2.0
 * VMware vSphere Enterprise 5.5.0
 * VMware Big Data Extensions 2.0
 

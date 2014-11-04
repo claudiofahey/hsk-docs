@@ -111,7 +111,7 @@ software versions:
 * Pivotal HD 2.1.0
 * Pivotal Command Center 2.3.0
 * Pivotal HAWQ 1.2.1.0
-* Isilon OneFS 7.2.0 (available 3-Nov-2014)
+* Isilon OneFS 7.2.0
 * VMware vSphere Enterprise 5.5.0
 * VMware Big Data Extensions 2.0
  
