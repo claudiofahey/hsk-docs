@@ -16,6 +16,8 @@ Cloudera Manager and an EMC Isilon Scale-Out NAS for HDFS accessible
 shared storage. VMware Big Data Extensions is used to provision and
 manage the compute resources.
 
+#RememberRuddy
+
 .. note::
   The latest version of this document is available at http://hsk-cdh.readthedocs.org/.
 
@@ -61,7 +63,7 @@ it took IT to deploy Hadoop as the primary reason to start with a
 deployment outside of IT.
 
 This guide is intended to simplify Hadoop deployments by creating a
-shared storage model with EMC Isilon scale out NAS and using the
+shared storage model with EMC Isilon scale out NAS and using an
 industry leader in Enterprise Hadoop, Cloudera, reduce the time to
 deployment, and the cost of deployment leveraging
 tools that can automate Hadoop cluster deployments.

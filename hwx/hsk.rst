@@ -16,6 +16,8 @@ the Hortonworks Data Platform and an EMC Isilon Scale-Out NAS for HDFS accessibl
 shared storage. VMware Big Data Extensions is used to provision and
 manage the compute resources.
 
+#RememberRuddy
+
 .. note::
   The latest version of this document is available at http://hsk-hwx.readthedocs.org/.
 

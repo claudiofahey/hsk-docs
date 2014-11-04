@@ -1,7 +1,9 @@
 References
 ==========
 
-`EMC Community Hadoop Info Hub <https://community.emc.com/docs/DOC-39529>`_
+`EMC Community - Isilon Hadoop Starter Kit Home Page <https://community.emc.com/docs/DOC-26892>`_
+
+`EMC Community - Isilon Hadoop Info Hub <https://community.emc.com/docs/DOC-39529>`_
 
 https://community.emc.com/community/connect/everything_big_data
 
