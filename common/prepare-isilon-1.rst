@@ -13,6 +13,12 @@ process.
 
 - It is assumed that you are not using Kerberos authentication
   for Hadoop.
+  
+.. note::
+
+  Starting with OneFS 8.0.0.0 some commands have changed.  Any
+  differences in syntax are documented in separate code blocks.
+  Please follow the syntax for your version.
 
 SmartConnect For HDFS
 ---------------------
@@ -69,6 +75,7 @@ Hadoop Data Lakes
 To view your current list of access zones and the IP pools associated
 with them:
 
+For OneFS 7.2.x.x
 .. parsed-literal::
 
     isiloncluster1-1# **isi zone zones list**
@@ -101,8 +108,42 @@ with them:
                          Failover Policy  : Round Robin
                          Rebalance Policy : Automatic Failback
 
+For OneFS 8.x.x.x
+.. parsed-literal::
+
+	isiloncluster1-1# isi zone zones list
+	Name   Path
+	------------
+	System /ifs
+	------------
+	Total: 1
+	
+	isiloncluster1-1# **isi network pools list -v**
+                          ID: groupnet0.subnet0.pool0
+                    Groupnet: groupnet0
+                      Subnet: subnet0
+                        Name: pool0
+                       Rules: rule0
+                 Access Zone: System
+           Allocation Method: static
+            Aggregation Mode: lacp
+          SC Suspended Nodes: -
+                 Description: Initial ext-1 pool
+                      Ifaces: 1:ext-1
+                   IP Ranges: 192.168.233.10-192.168.233.15
+            Rebalance Policy: auto
+     SC Auto Unsuspend Delay: 0
+           SC Connect Policy: round_robin
+                     SC Zone:
+         SC DNS Zone Aliases: -
+          SC Failover Policy: round_robin
+                   SC Subnet: -
+                      SC Ttl: 0
+               Static Routes: -
+
 To create a new access zone and an associated IP address pool:
 
+For OneFS 7.2.x.x
 .. parsed-literal::
 
     isiloncluster1-1# **mkdir -p /ifs/isiloncluster1/zone1**
@@ -119,6 +160,24 @@ To create a new access zone and an associated IP address pool:
 
     Saving:                                                                         
     OK
+
+For OneFS 8.x.x.x
+.. parsed-literal::
+
+	isiloncluster1-1# **mkdir -p /ifs/isiloncluster1/zone1**
+	isiloncluster1-1# **isi zone zones create --name zone1 \\
+	--path /ifs/isiloncluster1/zone1**
+	isiloncluster1-1# **isi network pools create groupnet0.subnet0.pool1 --ranges \\
+	192.168.233.20-192.168.233.30 --ifaces 1:ext-1 --access-zone zone1 \\
+	--sc-dns-zone subnet0-pool1.isiloncluster1.lab.example.com\\
+	--sc-subnet subnet0 --alloc-method dynamic**
+	isiloncluster1-1# **isi network pool list**
+	ID                      SC Zone                                      Allocation Method
+	---------------------------------------------------------------------------------------
+	groupnet0.subnet0.pool0                                              static
+	groupnet0.subnet0.pool1 subnet0-pool1.isiloncluster1.lab.example.com dynamic
+	---------------------------------------------------------------------------------------
+	Total: 2
 
 .. note::
 
