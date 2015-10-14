@@ -141,6 +141,9 @@ For OneFS 8.x.x.x
                       SC Ttl: 0
                Static Routes: -
 
+Alternatively, using the OneFS UI in OneFS 8.x.x.x
+|image33|
+
 To create a new access zone and an associated IP address pool:
 
 For OneFS 7.2.x.x
@@ -179,6 +182,18 @@ For OneFS 8.x.x.x
 	---------------------------------------------------------------------------------------
 	Total: 2
 
+Alternatively using the OneFS Web UI in OneFS 8.x.x.x
+
+Create the Access Zone, Declare the root, make sure to check "Create zone base directory."
+|image34|
+
+Create your IP Pool and bind it to your new Access Zone.  Then scroll down in the wizard
+window before you commit "Add Pool."
+|image35|
+
+Now add your zone name, choose the dynamic allocation method, and then hit "Add Pool."
+|image36|
+
 .. note::
 
   If you do not have a SmartConnect Advanced license, you will need to omit
@@ -197,6 +212,9 @@ To allow the new IP address pool to be used by data node connections:
     /rack0 0.0.0.0-255.255.255.255 subnet0:pool1
     --------------------------------------------
     Total: 1
+
+Alternatively if using OneFS 8.x.x.x you can accomplish this in the Web Interface
+|image37|
 
 Sharing Data Between Access Zones
 ---------------------------------
@@ -310,7 +328,7 @@ For OneFS 7.x.x.x
     ------                    --------------    -------------     ---------------
     HDFS                      Evaluation        Not Configured    September 4, 2014
 	
-For OneFS 8.x.x.x
+For OneFS 8.x.x.x you may use either the command below OR accomplish this in the OneFS WebUI
    .. parsed-literal::
    
    isiloncluster1-1# isi license view --name HDFS
@@ -324,8 +342,13 @@ For OneFS 8.x.x.x
     .. parsed-literal::
 
       isiloncluster1-1# **mkdir -p /ifs/isiloncluster1/zone1/hadoop**
+	  
+	Alternatively all of the CLI steps below can be accomplished in the OneFS WEbUI if using
+	OneFS 8.x.x.x
+	|image38|
 
-#.  Set the HDFS root directory for the access zone.
+#.  Set the HDFS root directory for the access zone.  The HDFS root can either be the root of the
+    Access Zone or it can be a subfolder in the Access Zone's folder tree.
    
    For OneFS 7.x.x.x
     .. parsed-literal::
@@ -339,7 +362,7 @@ For OneFS 8.x.x.x
 	  isiloncluster1-1# **isi hdfs settings modify --zone=zone1 \\
 	  --root-directory=/ifs/isiloncluster1/zone1/hadoop**
 
-#.  Increase the HDFS daemon thread count.
+#.  Increase the HDFS daemon thread count.  **This is no longer required with OneFS 8.x.x.x**
 
 	For OneFS 7.x.x.x Only
     .. parsed-literal::
@@ -353,10 +376,12 @@ For OneFS 8.x.x.x
 
       isiloncluster1-1# **isi hdfs settings modify --default-block-size 128M**
 	  
+	For OneFS 8.x.x.x
 	.. Parsed-literal::
 	  isiloncluster1-1# **isi hdfs settings modify --zone=zone1 --default-block-size=128M**
 
 #.  Create an indicator file so that we can easily determine when we are looking your Isilon cluster via HDFS.
+    No matter the OneFS version the steps below will use the OneFS command line.
     
     .. parsed-literal::
 
