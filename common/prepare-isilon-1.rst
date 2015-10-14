@@ -17,8 +17,8 @@ process.
 .. note::
 
   Starting with OneFS 8.0.0.0 some commands have changed.  Any
-  differences in syntax are documented in separate code blocks.
-  Please follow the syntax for your version.
+  differences in syntax or approach are called out in separate code 
+  blocks.  Please follow the syntax for your version.
 
 SmartConnect For HDFS
 ---------------------
