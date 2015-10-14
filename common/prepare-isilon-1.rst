@@ -128,9 +128,9 @@ For OneFS 8.x.x.x
            Allocation Method: static
             Aggregation Mode: lacp
           SC Suspended Nodes: -
-                 Description: Initial ext-1 pool
-                      Ifaces: 1:ext-1
-                   IP Ranges: 192.168.233.10-192.168.233.15
+                 Description: Initial 10gige-1 pool
+                      Ifaces: 1:10gige-1
+                   IP Ranges: 10.111.129.115-10.111.129.126
             Rebalance Policy: auto
      SC Auto Unsuspend Delay: 0
            SC Connect Policy: round_robin
@@ -168,7 +168,7 @@ For OneFS 8.x.x.x
 	isiloncluster1-1# **isi zone zones create --name zone1 \\
 	--path /ifs/isiloncluster1/zone1**
 	isiloncluster1-1# **isi network pools create groupnet0.subnet0.pool1 --ranges \\
-	192.168.233.20-192.168.233.30 --ifaces 1:ext-1 --access-zone zone1 \\
+	10.111.129.127-10.111.129.138 --ifaces 1-4:10gige-1 --access-zone zone1 \\
 	--sc-dns-zone subnet0-pool1.isiloncluster1.lab.example.com\\
 	--sc-subnet subnet0 --alloc-method dynamic**
 	isiloncluster1-1# **isi network pool list**
