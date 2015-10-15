@@ -368,14 +368,14 @@ Configure Isilon For HDFS
 
 		isiloncluster1-1# **isi zone zones modify zone1 \\
 		--hdfs-root-directory /ifs/isiloncluster1/zone1/hadoop**
-
+	
     For OneFS 8
 
 	.. parsed-literal::
-
+	
 		isiloncluster1-1# **isi hdfs settings modify --zone=zone1 \\
 		--root-directory=/ifs/isiloncluster1/zone1/hadoop**
-
+	
 #.  Increase the HDFS daemon thread count.  **This is no longer required with OneFS 8**
 	
     .. parsed-literal::
