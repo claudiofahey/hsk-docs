@@ -371,7 +371,7 @@ Configure Isilon For HDFS
 		--hdfs-root-directory /ifs/isiloncluster1/zone1/hadoop**
 	  
     For OneFS 8
-	
+
 	.. parsed-literal::
 
 		isiloncluster1-1# **isi hdfs settings modify --zone=zone1 \\
