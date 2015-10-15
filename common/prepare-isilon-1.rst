@@ -168,26 +168,26 @@ To create a new access zone and an associated IP address pool:
 		Saving:                                                                         
 		OK
 
-For OneFS 8
-
-.. parsed-literal::
-
-	isiloncluster1-1# **mkdir -p /ifs/isiloncluster1/zone1**
-	isiloncluster1-1# **isi zone zones create --name zone1 \\
-	--path /ifs/isiloncluster1/zone1**
-	isiloncluster1-1# **isi network pools create groupnet0.subnet0.pool1 --ranges \\
-	10.111.129.127-10.111.129.138 --ifaces 1-4:10gige-1 --access-zone zone1 \\
-	--sc-dns-zone subnet0-pool1.isiloncluster1.lab.example.com\\
-	--sc-subnet subnet0 --alloc-method dynamic**
-	isiloncluster1-1# **isi network pool list**
-	ID                      SC Zone                                      Allocation Method
-	---------------------------------------------------------------------------------------
-	groupnet0.subnet0.pool0                                              static
-	groupnet0.subnet0.pool1 subnet0-pool1.isiloncluster1.lab.example.com dynamic
-	---------------------------------------------------------------------------------------
-	Total: 2
-
-Alternatively using the OneFS 8 Web UI
+	For OneFS 8
+	
+	.. parsed-literal::
+	
+		isiloncluster1-1# **mkdir -p /ifs/isiloncluster1/zone1**
+		isiloncluster1-1# **isi zone zones create --name zone1 \\
+		--path /ifs/isiloncluster1/zone1**
+		isiloncluster1-1# **isi network pools create groupnet0.subnet0.pool1 --ranges \\
+		0.111.129.127-10.111.129.138 --ifaces 1-4:10gige-1 --access-zone zone1 \\
+		--sc-dns-zone subnet0-pool1.isiloncluster1.lab.example.com\\
+		--sc-subnet subnet0 --alloc-method dynamic**
+		isiloncluster1-1# **isi network pool list**
+		ID                      SC Zone                                      Allocation Method
+		---------------------------------------------------------------------------------------
+		groupnet0.subnet0.pool0                                              static
+		groupnet0.subnet0.pool1 subnet0-pool1.isiloncluster1.lab.example.com dynamic
+		---------------------------------------------------------------------------------------
+		Total: 2
+	
+	Alternatively using the OneFS 8 Web UI
 
 Create the Access Zone, Declare the root, make sure to check "Create zone base directory."
 
