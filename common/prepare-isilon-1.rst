@@ -189,18 +189,18 @@ To create a new access zone and an associated IP address pool:
 	
 	Alternatively using the OneFS 8 Web UI
 
-Create the Access Zone, Declare the root, make sure to check "Create zone base directory."
+		Create the Access Zone, Declare the root, make sure to check "Create zone base directory."
 
-.. need to insert image 34 and have it call the right file.
+		image 34 goes here
 
-Create your IP Pool and bind it to your new Access Zone.  Then scroll down in the wizard
-window before you commit "Add Pool."
+		Create your IP Pool and bind it to your new Access Zone.  Then scroll down in the wizard
+		window before you commit "Add Pool."
 
-.. need to insert image 35
+		image 35 goes here
 
-Now add your zone name, choose the dynamic allocation method, and then hit "Add Pool."
+		Now add your zone name, choose the dynamic allocation method, and then hit "Add Pool."
 
-.. need to insert image 36
+		image 36 goes here
 
 .. note::
 
