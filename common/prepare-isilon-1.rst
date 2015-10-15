@@ -79,12 +79,12 @@ with them:
 
 	.. parsed-literal::
 	
-    	isiloncluster1-1# **isi zone zones list**
-    	Name   Path
-    	------------
-    	System /ifs
-    	------------
-    	Total: 1
+		isiloncluster1-1# **isi zone zones list**
+		Name   Path
+		------------
+		System /ifs
+		------------
+		Total: 1
 		
     	isiloncluster1-1# **isi networks list pools -v**
     	subnet0:pool0
