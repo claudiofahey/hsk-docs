@@ -16,7 +16,7 @@ process.
   
 .. note::
 
-  Starting with OneFS 8.0.0.0 some commands have changed.  Any
+  Starting with OneFS 8 some commands have changed.  Any
   differences in syntax or approach are called out in separate code 
   blocks.  Please follow the syntax for your version.
 
@@ -75,7 +75,8 @@ Hadoop Data Lakes
 To view your current list of access zones and the IP pools associated
 with them:
 
-For OneFS 7.2.x.x
+For OneFS 7
+
 .. parsed-literal::
 
     isiloncluster1-1# **isi zone zones list**
@@ -108,7 +109,8 @@ For OneFS 7.2.x.x
                          Failover Policy  : Round Robin
                          Rebalance Policy : Automatic Failback
 
-For OneFS 8.x.x.x
+For OneFS 8
+
 .. parsed-literal::
 
 	isiloncluster1-1# isi zone zones list
@@ -141,12 +143,13 @@ For OneFS 8.x.x.x
                       SC Ttl: 0
                Static Routes: -
 
-Alternatively, using the OneFS UI in OneFS 8.x.x.x
+Alternatively, using the OneFS UI in OneFS 8
 |image33|
 
 To create a new access zone and an associated IP address pool:
 
-For OneFS 7.2.x.x
+For OneFS 7
+
 .. parsed-literal::
 
     isiloncluster1-1# **mkdir -p /ifs/isiloncluster1/zone1**
@@ -164,7 +167,8 @@ For OneFS 7.2.x.x
     Saving:                                                                         
     OK
 
-For OneFS 8.x.x.x
+For OneFS 8
+
 .. parsed-literal::
 
 	isiloncluster1-1# **mkdir -p /ifs/isiloncluster1/zone1**
@@ -182,16 +186,19 @@ For OneFS 8.x.x.x
 	---------------------------------------------------------------------------------------
 	Total: 2
 
-Alternatively using the OneFS Web UI in OneFS 8.x.x.x
+Alternatively using the OneFS Web UI in OneFS 8
 
 Create the Access Zone, Declare the root, make sure to check "Create zone base directory."
+
 |image34|
 
 Create your IP Pool and bind it to your new Access Zone.  Then scroll down in the wizard
 window before you commit "Add Pool."
+
 |image35|
 
 Now add your zone name, choose the dynamic allocation method, and then hit "Add Pool."
+
 |image36|
 
 .. note::
@@ -213,7 +220,8 @@ To allow the new IP address pool to be used by data node connections:
     --------------------------------------------
     Total: 1
 
-Alternatively if using OneFS 8.x.x.x you can accomplish this in the Web Interface
+Alternatively if using OneFS 8 you can accomplish this in the Web Interface
+
 |image37|
 
 Sharing Data Between Access Zones
@@ -320,7 +328,8 @@ Configure Isilon For HDFS
 
 #. Verify your HDFS license.
 
-For OneFS 7.x.x.x
+For OneFS 7
+
    .. parsed-literal::
 
     isiloncluster1-1# **isi license**
@@ -328,7 +337,9 @@ For OneFS 7.x.x.x
     ------                    --------------    -------------     ---------------
     HDFS                      Evaluation        Not Configured    September 4, 2014
 	
-For OneFS 8.x.x.x you may use either the command below OR accomplish this in the OneFS WebUI
+For OneFS 8
+You can either use the commands below OR accomplish all of this in the OneFS WebUI
+
    .. parsed-literal::
    
    isiloncluster1-1# isi license view --name HDFS
@@ -344,40 +355,47 @@ For OneFS 8.x.x.x you may use either the command below OR accomplish this in the
       isiloncluster1-1# **mkdir -p /ifs/isiloncluster1/zone1/hadoop**
 	  
 	Alternatively all of the CLI steps below can be accomplished in the OneFS WEbUI if using
-	OneFS 8.x.x.x
+	OneFS 8
+	
 	|image38|
 
 #.  Set the HDFS root directory for the access zone.  The HDFS root can either be the root of the
     Access Zone or it can be a subfolder in the Access Zone's folder tree.
    
-   For OneFS 7.x.x.x
+   For OneFS 7
+   
     .. parsed-literal::
 
       isiloncluster1-1# **isi zone zones modify zone1 \\
       --hdfs-root-directory /ifs/isiloncluster1/zone1/hadoop**
 	  
-   For OneFS 8.x.x.x
+   For OneFS 8
+   
 	.. parsed-literal::
 	
 	  isiloncluster1-1# **isi hdfs settings modify --zone=zone1 \\
 	  --root-directory=/ifs/isiloncluster1/zone1/hadoop**
 
-#.  Increase the HDFS daemon thread count.  **This is no longer required with OneFS 8.x.x.x**
+#.  Increase the HDFS daemon thread count.  **This is no longer required with OneFS 8**
 
-	For OneFS 7.x.x.x Only
+	For OneFS 7 Only
+	
     .. parsed-literal::
 
       isiloncluster1-1# **isi hdfs settings modify --server-threads 256**
 
 #.  Set the HDFS block size used for reading from Isilon.
 
-	For OneFS 7.x.x.x
+	For OneFS 7
+	
     .. parsed-literal::
 
       isiloncluster1-1# **isi hdfs settings modify --default-block-size 128M**
 	  
-	For OneFS 8.x.x.x
+	For OneFS 8
+	
 	.. Parsed-literal::
+	
 	  isiloncluster1-1# **isi hdfs settings modify --zone=zone1 --default-block-size=128M**
 
 #.  Create an indicator file so that we can easily determine when we are looking your Isilon cluster via HDFS.
