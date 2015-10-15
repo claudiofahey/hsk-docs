@@ -78,7 +78,7 @@ with them:
 	For OneFS 7
 
 	.. parsed-literal::
-		
+	
     	isiloncluster1-1# **isi zone zones list**
     	Name   Path
     	------------
