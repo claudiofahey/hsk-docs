@@ -392,13 +392,13 @@ You can either use the commands below OR accomplish all of this in the OneFS Web
 
       isiloncluster1-1# **isi hdfs settings modify --default-block-size 128M**
 	  
-	For OneFS 8
+    For OneFS 8
 	
 	.. Parsed-literal::
 	
 	  isiloncluster1-1# **isi hdfs settings modify --zone=zone1 --default-block-size=128M**
 
-#.  Create an indicator file so that we can easily determine when we are looking your Isilon cluster via HDFS.
+#.  Create an indicator file so that we can easily determine we have landed in your intended HDFS Isilon folder.
     No matter the OneFS version the steps below will use the OneFS command line.
     
     .. parsed-literal::
