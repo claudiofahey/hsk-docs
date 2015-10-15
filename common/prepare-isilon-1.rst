@@ -288,27 +288,27 @@ Configure Isilon For HDFS
 
     |image14|
 
-#. Login with your root account. You specified the root password when
-   you configured your first node using the console.
+#.  Login with your root account. You specified the root password when
+    you configured your first node using the console.
 
-#. Check, and edit as necessary, your NTP settings. Click Cluster
-   Management -> General Settings -> NTP.
+#.  Check, and edit as necessary, your NTP settings. Click Cluster
+    Management -> General Settings -> NTP.
 
   |image16|
 
-#. SSH into any node in your Isilon cluster as root.
+#.  SSH into any node in your Isilon cluster as root.
 
-#. Confirm that your Isilon cluster is at OneFS version 7.1.1.0 or higher.
+#.  Confirm that your Isilon cluster is at OneFS version 7.1.1.0 or higher.
    
-   .. parsed-literal::   
+    .. parsed-literal::   
 
     isiloncluster1-1# **isi version**
     Isilon OneFS v7.1.1.0 ...
 
-#. For OneFS version 7.1.1.0, you must have patch-130611 installed.
-   You can view the list of patches you have installed with:
+#.  For OneFS version 7.1.1.0, you must have patch-130611 installed.
+    You can view the list of patches you have installed with:
 
-   .. parsed-literal::
+    .. parsed-literal::
 
     isiloncluster1-1# **isi pkg info**
     patch-130611:
@@ -316,9 +316,9 @@ Configure Isilon For HDFS
       version 2.4 of the Hadoop Distributed File System (HDFS)
       with an Isilon cluster.
 
-#. Install the patch if needed:
+#.  Install the patch if needed:
 
-   .. parsed-literal::
+    .. parsed-literal::
 
     [user\@workstation ~]$ **scp patch-130611.tgz root@mycluster1-hdfs:/tmp**
     isiloncluster1-1# **gunzip < /tmp/patch-130611.tgz \| tar -xvf -**
@@ -333,7 +333,7 @@ Configure Isilon For HDFS
 
 For OneFS 7
 
-   .. parsed-literal::
+    .. parsed-literal::
 
     isiloncluster1-1# **isi license**
     Module                    License Status    Configuration     Expiration Date
@@ -366,14 +366,14 @@ You can either use the commands below OR accomplish all of this in the OneFS Web
 #.  Set the HDFS root directory for the access zone.  The HDFS root can either be the root of the
     Access Zone or it can be a subfolder in the Access Zone's folder tree.
    
-   For OneFS 7
+    For OneFS 7
    
     .. parsed-literal::
 
       isiloncluster1-1# **isi zone zones modify zone1 \\
       --hdfs-root-directory /ifs/isiloncluster1/zone1/hadoop**
 	  
-   For OneFS 8
+    For OneFS 8
    
 	.. parsed-literal::
 	
