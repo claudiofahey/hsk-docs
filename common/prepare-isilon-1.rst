@@ -300,8 +300,8 @@ Configure Isilon For HDFS
 
 #.  Confirm that your Isilon cluster is at OneFS version 7.1.1.0 or higher.
 
-	.. parsed-literal::   
-
+	.. parsed-literal::
+	
 		isiloncluster1-1# **isi version**
 		Isilon OneFS v7.1.1.0 ...
 
