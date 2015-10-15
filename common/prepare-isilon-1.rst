@@ -13,11 +13,11 @@ process.
 
 - It is assumed that you are not using Kerberos authentication
   for Hadoop.
-  
+
 .. note::
 
   Starting with OneFS 8 some commands have changed.  Any
-  differences in syntax or approach are called out in separate code 
+  differences in syntax or approach are called out in separate code
   blocks.  Please follow the syntax for your version.
 
 SmartConnect For HDFS
@@ -78,14 +78,14 @@ with them:
 	For OneFS 7
 
 	.. parsed-literal::
-	
+
 		isiloncluster1-1# **isi zone zones list**
 		Name   Path
 		------------
 		System /ifs
 		------------
 		Total: 1
-		
+
 		isiloncluster1-1# **isi networks list pools -v**
 		subnet0:pool0
 		          In Subnet: subnet0
@@ -108,18 +108,18 @@ with them:
 		                     Connection Policy: Round Robin
 		                     Failover Policy  : Round Robin
 		                     Rebalance Policy : Automatic Failback
-	
+
 	For OneFS 8
 
 	.. parsed-literal::
-	
+
 		isiloncluster1-1# **isi zone zones list**
 		Name   Path
 		------------
 		System /ifs
 		------------
 		Total: 1
-		
+
 		isiloncluster1-1# **isi network pools list -v**
 		                      ID: groupnet0.subnet0.pool0
 		                Groupnet: groupnet0
@@ -142,36 +142,36 @@ with them:
 		               SC Subnet: -
 		                  SC Ttl: 0
 		           Static Routes: -
-	
-	Alternatively, using the OneFS 8 WebUI
 
-.. need to insert image 33
+	Alternatively, using the OneFS 8 WebUI...
+
+  |image63|
 
 To create a new access zone and an associated IP address pool:
 
 	For OneFS 7
-	
+
 	.. parsed-literal::
-	
+
 		isiloncluster1-1# **mkdir -p /ifs/isiloncluster1/zone1**
 		isiloncluster1-1# **isi zone zones create --name zone1 \\
 		--path /ifs/isiloncluster1/zone1**
-		
+
 		isiloncluster1-1# **isi networks create pool --name subnet0:pool1 \\
 		--ranges 10.111.129.127-10.111.129.138 --ifaces 1-4:10gige-1 \\
 		--access-zone zone1 --zone subnet0-pool1.isiloncluster1.lab.example.com \\
 		--sc-subnet subnet0 --dynamic**
-		
+
 		Creating pool
 		'subnet0:pool1':                                                   OK
-		
+
 		Saving:                                                                         
 		OK
 
 	For OneFS 8
-	
+
 	.. parsed-literal::
-	
+
 		isiloncluster1-1# **mkdir -p /ifs/isiloncluster1/zone1**
 		isiloncluster1-1# **isi zone zones create --name zone1 \\
 		--path /ifs/isiloncluster1/zone1**
@@ -186,21 +186,21 @@ To create a new access zone and an associated IP address pool:
 		groupnet0.subnet0.pool1 subnet0-pool1.isiloncluster1.lab.example.com dynamic
 		---------------------------------------------------------------------------------------
 		Total: 2
-	
-	Alternatively using the OneFS 8 Web UI
+
+	Alternatively, using the OneFS 8 Web UI...
 
 		Create the Access Zone, Declare the root, make sure to check "Create zone base directory."
 
-		image 34 goes here
+		|image64|
 
 		Create your IP Pool and bind it to your new Access Zone.  Then scroll down in the wizard
 		window before you commit "Add Pool."
 
-		image 35 goes here
+		|image65|
 
 		Now add your zone name, choose the dynamic allocation method, and then hit "Add Pool."
 
-		image 36 goes here
+		|image66|
 
 .. note::
 
@@ -221,9 +221,9 @@ To allow use of the new IP address pool by data node connections:
     --------------------------------------------
     Total: 1
 
-Alternatively configuration is offered in the OneFS 8 WebUI
+Alternatively, using the OneFS 8 WebUI
 
-	image 37 goes here
+|image67|
 
 
 Sharing Data Between Access Zones
@@ -277,7 +277,7 @@ Configure Isilon For HDFS
 
     In the steps below, replace *zone1* with ``System`` to use the default System access zone
     or you may specify the name of a new access zone that you previously created.
-  
+
 #.  Open a web browser to the your Isilon cluster's web administration
     page. If you don't know the URL, simply point your browser to
     \https://\ *isilon\_node\_ip\_address*:8080, where
@@ -303,7 +303,7 @@ Configure Isilon For HDFS
 
 		isiloncluster1-1# **isi version**
 		Isilon OneFS v7.1.1.0 ...
-	
+
 #.  For OneFS version 7.1.1.0, you must have patch-130611 installed.
     You can view the list of patches you have installed with:
 
@@ -346,7 +346,7 @@ Configure Isilon For HDFS
 		isiloncluster1-1# **isi license view --name HDFS**
 		      Name: HDFS
 		    Status: Activated
-		Expiration: - 
+		Expiration: -
 
 #.  Create the HDFS root directory. This is usually called *hadoop* and
     must be within the access zone directory.
@@ -355,13 +355,13 @@ Configure Isilon For HDFS
 
 		isiloncluster1-1# **mkdir -p /ifs/isiloncluster1/zone1/hadoop**
 
-	Alternatively all of the CLI steps below can be accomplished in the OneFS 8 WebUI.
-	
-	image 38 goes here
-	
+	Alternatively, all of the CLI steps below can be accomplished in the OneFS 8 WebUI.
+
+	|image68|
+
 #.  Set the HDFS root directory for the access zone.  The HDFS root can either be the root of the
     Access Zone or it can be a subfolder in the Access Zone's folder tree.
-   
+
     For OneFS 7
 
     .. parsed-literal::
@@ -377,7 +377,7 @@ Configure Isilon For HDFS
 		--root-directory=/ifs/isiloncluster1/zone1/hadoop**
 
 #.  Increase the HDFS daemon thread count.  **This is no longer required with OneFS 8**
-	
+
     .. parsed-literal::
 
 		isiloncluster1-1# **isi hdfs settings modify --server-threads 256**
@@ -398,13 +398,13 @@ Configure Isilon For HDFS
 
 #.  Create an indicator file so that we can easily determine we have landed in your intended HDFS Isilon folder.
     No matter the OneFS version the steps below will use the OneFS command line.
-    
+
     .. parsed-literal::
 
       isiloncluster1-1# **touch \\
       /ifs/isiloncluster1/zone1/hadoop/THIS\_IS\_ISILON\_isiloncluster1\_zone1**
 
-#.  Extract the Isilon Hadoop Tools to your Isilon cluster. 
+#.  Extract the Isilon Hadoop Tools to your Isilon cluster.
     This can be placed in any directory under /ifs.
     It is recommended to use /ifs/*isiloncluster1*/scripts where *isiloncluster1* is the name
     of your Isilon cluster.
@@ -434,8 +434,8 @@ Configure Isilon For HDFS
       groups to be defined in your directory service, then DO NOT run this
       script. Instead, refer to the OneFS documentation and `EMC
       Isilon Best Practices for Hadoop Data
-      Storage <http://www.emc.com/collateral/white-paper/h12877-wp-emc-isilon-hadoop-best-practices.pdf>`__.  
-      
+      Storage <http://www.emc.com/collateral/white-paper/h12877-wp-emc-isilon-hadoop-best-practices.pdf>`__.
+
     Script Usage: isilon\_create\_users.sh --dist <DIST> [--startgid <GID>] [--startuid <UID>] [--zone <ZONE>]
 
     dist
