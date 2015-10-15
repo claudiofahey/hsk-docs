@@ -188,20 +188,20 @@ For OneFS 8
 	---------------------------------------------------------------------------------------
 	Total: 2
 
-Alternatively using the OneFS Web UI in OneFS 8
+Alternatively using the OneFS 8 Web UI
 
 Create the Access Zone, Declare the root, make sure to check "Create zone base directory."
 
-|image34|
+.. need to insert image 34 and have it call the right file.
 
 Create your IP Pool and bind it to your new Access Zone.  Then scroll down in the wizard
 window before you commit "Add Pool."
 
-.. image:: _images/image035.png
+.. need to insert image 35
 
 Now add your zone name, choose the dynamic allocation method, and then hit "Add Pool."
 
-.. image:: _images/image036.png
+.. need to insert image 36
 
 .. note::
 
@@ -224,7 +224,7 @@ To allow use of the new IP address pool by data node connections:
 
 Alternatively configuration is offered in the OneFS 8 WebUI
 
-.. image:: _images/image037.png
+.. need to insert image 37
 
 
 Sharing Data Between Access Zones
