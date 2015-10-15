@@ -149,24 +149,24 @@ with them:
 
 To create a new access zone and an associated IP address pool:
 
-For OneFS 7
-
-.. parsed-literal::
-
-    isiloncluster1-1# **mkdir -p /ifs/isiloncluster1/zone1**
-    isiloncluster1-1# **isi zone zones create --name zone1 \\
-    --path /ifs/isiloncluster1/zone1**
-
-    isiloncluster1-1# **isi networks create pool --name subnet0:pool1 \\
-    --ranges 10.111.129.127-10.111.129.138 --ifaces 1-4:10gige-1 \\
-    --access-zone zone1 --zone subnet0-pool1.isiloncluster1.lab.example.com \\
-    --sc-subnet subnet0 --dynamic**
-
-    Creating pool
-    'subnet0:pool1':                                                   OK
-
-    Saving:                                                                         
-    OK
+	For OneFS 7
+	
+	.. parsed-literal::
+	
+		isiloncluster1-1# **mkdir -p /ifs/isiloncluster1/zone1**
+		isiloncluster1-1# **isi zone zones create --name zone1 \\
+		--path /ifs/isiloncluster1/zone1**
+		
+		isiloncluster1-1# **isi networks create pool --name subnet0:pool1 \\
+		--ranges 10.111.129.127-10.111.129.138 --ifaces 1-4:10gige-1 \\
+		--access-zone zone1 --zone subnet0-pool1.isiloncluster1.lab.example.com \\
+		--sc-subnet subnet0 --dynamic**
+		
+		Creating pool
+		'subnet0:pool1':                                                   OK
+		
+		Saving:                                                                         
+		OK
 
 For OneFS 8
 
