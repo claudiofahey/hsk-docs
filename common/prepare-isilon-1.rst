@@ -143,9 +143,9 @@ For OneFS 8
                       SC Ttl: 0
                Static Routes: -
 
-Alternatively, using the OneFS UI in OneFS 8
+Alternatively, using the OneFS 8 WebUI
 
-|image33|
+.. need to insert image 33
 
 
 To create a new access zone and an associated IP address pool:
@@ -299,35 +299,35 @@ Configure Isilon For HDFS
 #.  SSH into any node in your Isilon cluster as root.
 
 #.  Confirm that your Isilon cluster is at OneFS version 7.1.1.0 or higher.
-   
-    .. parsed-literal::   
 
-    isiloncluster1-1# **isi version**
-	Isilon OneFS v7.1.1.0 ...
+	.. parsed-literal::   
+
+		isiloncluster1-1# **isi version**
+		Isilon OneFS v7.1.1.0 ...
 
 #.  For OneFS version 7.1.1.0, you must have patch-130611 installed.
     You can view the list of patches you have installed with:
 
     .. parsed-literal::
 
-    isiloncluster1-1# **isi pkg info**
-    patch-130611:
-      This patch allows clients to use
-      version 2.4 of the Hadoop Distributed File System (HDFS)
-      with an Isilon cluster.
+		isiloncluster1-1# **isi pkg info**
+		patch-130611:
+		This patch allows clients to use
+		version 2.4 of the Hadoop Distributed File System (HDFS)
+		with an Isilon cluster.
 
 #.  Install the patch if needed:
 
     .. parsed-literal::
 
-    [user\@workstation ~]$ **scp patch-130611.tgz root@mycluster1-hdfs:/tmp**
-    isiloncluster1-1# **gunzip < /tmp/patch-130611.tgz \| tar -xvf -**
-    isiloncluster1-1# **isi pkg install patch-130611.tar**
-    Preparing to install the package...
-    Checking the package for installation...
-    Installing the package
-    Committing the installation...
-    Package successfully installed.
+		[user\@workstation ~]$ **scp patch-130611.tgz root@mycluster1-hdfs:/tmp**
+		isiloncluster1-1# **gunzip < /tmp/patch-130611.tgz \| tar -xvf -**
+		isiloncluster1-1# **isi pkg install patch-130611.tar**
+		Preparing to install the package...
+		Checking the package for installation...
+		Installing the package
+		Committing the installation...
+		Package successfully installed.
 
 #. Verify your HDFS license.
 
