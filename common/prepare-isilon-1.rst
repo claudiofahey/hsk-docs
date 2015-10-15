@@ -331,36 +331,35 @@ Configure Isilon For HDFS
 
 #. Verify your HDFS license.
 
-For OneFS 7
+	For OneFS 7
 
     .. parsed-literal::
 
-    isiloncluster1-1# **isi license**
-    Module                    License Status    Configuration     Expiration Date
-    ------                    --------------    -------------     ---------------
-    HDFS                      Evaluation        Not Configured    September 4, 2014
+    	isiloncluster1-1# **isi license**
+    	Module                    License Status    Configuration     Expiration Date
+    	------                    --------------    -------------     ---------------
+    	HDFS                      Evaluation        Not Configured    September 4, 2014
 	
-For OneFS 8
-You can either use the commands below OR accomplish all of this in the OneFS WebUI
+	For OneFS 8
+	You can either use the commands below OR accomplish all of this in the OneFS WebUI
 
-   .. parsed-literal::
-   
-   isiloncluster1-1# isi license view --name HDFS
-         Name: HDFS
-       Status: Activated
-   Expiration: - 
+	.. parsed-literal::
+		isiloncluster1-1# isi license view --name HDFS
+		      Name: HDFS
+		    Status: Activated
+		Expiration: - 
 
 #.  Create the HDFS root directory. This is usually called *hadoop* and
     must be within the access zone directory.
 
     .. parsed-literal::
 
-      isiloncluster1-1# **mkdir -p /ifs/isiloncluster1/zone1/hadoop**
+		isiloncluster1-1# **mkdir -p /ifs/isiloncluster1/zone1/hadoop**
 	  
     Alternatively all of the CLI steps below can be accomplished in the OneFS WEbUI if using
 	OneFS 8
 	
-    .. image:: ../../../_images/image038.png
+    .. image:: images/image038.png
 	
 
 #.  Set the HDFS root directory for the access zone.  The HDFS root can either be the root of the
@@ -370,29 +369,29 @@ You can either use the commands below OR accomplish all of this in the OneFS Web
    
     .. parsed-literal::
 
-      isiloncluster1-1# **isi zone zones modify zone1 \\
-      --hdfs-root-directory /ifs/isiloncluster1/zone1/hadoop**
+		isiloncluster1-1# **isi zone zones modify zone1 \\
+		--hdfs-root-directory /ifs/isiloncluster1/zone1/hadoop**
 	  
     For OneFS 8
-   
-	.. parsed-literal::
 	
-	  isiloncluster1-1# **isi hdfs settings modify --zone=zone1 \\
-	  --root-directory=/ifs/isiloncluster1/zone1/hadoop**
+	.. parsed-literal::
+
+		isiloncluster1-1# **isi hdfs settings modify --zone=zone1 \\
+		--root-directory=/ifs/isiloncluster1/zone1/hadoop**
 
 #.  Increase the HDFS daemon thread count.  **This is no longer required with OneFS 8**
 	
     .. parsed-literal::
 
-      isiloncluster1-1# **isi hdfs settings modify --server-threads 256**
+		isiloncluster1-1# **isi hdfs settings modify --server-threads 256**
 
 #.  Set the HDFS block size used for reading from Isilon.
 
-    For OneFS 7
+	For OneFS 7
 
     .. parsed-literal::
 
-      isiloncluster1-1# **isi hdfs settings modify --default-block-size 128M**
+		isiloncluster1-1# **isi hdfs settings modify --default-block-size 128M**
 	  
     For OneFS 8
 	
