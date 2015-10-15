@@ -144,7 +144,9 @@ For OneFS 8
                Static Routes: -
 
 Alternatively, using the OneFS UI in OneFS 8
-|image33|
+
+.. image:: images/image033.png
+
 
 To create a new access zone and an associated IP address pool:
 
@@ -190,23 +192,23 @@ Alternatively using the OneFS Web UI in OneFS 8
 
 Create the Access Zone, Declare the root, make sure to check "Create zone base directory."
 
-|image34|
+.. image:: images/image034.png
 
 Create your IP Pool and bind it to your new Access Zone.  Then scroll down in the wizard
 window before you commit "Add Pool."
 
-|image35|
+.. image:: images/image035.png
 
 Now add your zone name, choose the dynamic allocation method, and then hit "Add Pool."
 
-|image36|
+.. image:: images/image036.png
 
 .. note::
 
   If you do not have a SmartConnect Advanced license, you will need to omit
   the --dynamic option.
 
-To allow the new IP address pool to be used by data node connections:
+To allow use of the new IP address pool by data node connections:
 
 .. parsed-literal::
 
@@ -220,9 +222,10 @@ To allow the new IP address pool to be used by data node connections:
     --------------------------------------------
     Total: 1
 
-Alternatively if using OneFS 8 you can accomplish this in the Web Interface
+Alternatively configuration is offered in the OneFS 8 WebUI
 
-|image37|
+.. image:: images/image037.png
+
 
 Sharing Data Between Access Zones
 ---------------------------------
