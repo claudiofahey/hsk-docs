@@ -357,10 +357,10 @@ You can either use the commands below OR accomplish all of this in the OneFS Web
 
       isiloncluster1-1# **mkdir -p /ifs/isiloncluster1/zone1/hadoop**
 	  
-	Alternatively all of the CLI steps below can be accomplished in the OneFS WEbUI if using
+    Alternatively all of the CLI steps below can be accomplished in the OneFS WEbUI if using
 	OneFS 8
 	
-	.. image:: ../../../_images/image038.png
+    .. image:: ../../../_images/image038.png
 	
 
 #.  Set the HDFS root directory for the access zone.  The HDFS root can either be the root of the
