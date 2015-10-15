@@ -392,7 +392,7 @@ You can either use the commands below OR accomplish all of this in the OneFS Web
 	  
     For OneFS 8
 	
-	.. Parsed-literal::
+	.. parsed-literal::
 	
       isiloncluster1-1# **isi hdfs settings modify --zone=zone1 --default-block-size=128M**
 
