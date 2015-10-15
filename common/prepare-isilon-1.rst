@@ -145,7 +145,7 @@ For OneFS 8
 
 Alternatively, using the OneFS UI in OneFS 8
 
-.. image:: _images/image033.png
+|image33|
 
 
 To create a new access zone and an associated IP address pool:
@@ -192,7 +192,7 @@ Alternatively using the OneFS Web UI in OneFS 8
 
 Create the Access Zone, Declare the root, make sure to check "Create zone base directory."
 
-.. image:: _images/image034.png
+|image34|
 
 Create your IP Pool and bind it to your new Access Zone.  Then scroll down in the wizard
 window before you commit "Add Pool."
