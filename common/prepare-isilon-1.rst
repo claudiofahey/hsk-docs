@@ -86,29 +86,29 @@ with them:
 		------------
 		Total: 1
 		
-    	isiloncluster1-1# **isi networks list pools -v**
-    	subnet0:pool0
-    	          In Subnet: subnet0
-    	         Allocation: Static
-    	             Ranges: 1
-    	                     10.111.129.115-10.111.129.126
-    	    Pool Membership: 4
-    	                     1:10gige-1 (up)
-    	                     2:10gige-1 (up)
-    	                     3:10gige-1 (up)
-    	                     4:10gige-1 (up)
-    	   Aggregation Mode: Link Aggregation Control Protocol (LACP)
-    	        Access Zone: System (1)
-    	       SmartConnect:                    
-    	                     Suspended Nodes  : None
-    	                     Auto Unsuspend ... 0
-    	                     Zone             : subnet0-pool0.isiloncluster1.lab.example.com
-    	                     Time to Live     : 0
-    	                     Service Subnet   : subnet0
-    	                     Connection Policy: Round Robin
-    	                     Failover Policy  : Round Robin
-    	                     Rebalance Policy : Automatic Failback
-		
+		isiloncluster1-1# **isi networks list pools -v**
+		subnet0:pool0
+		          In Subnet: subnet0
+		         Allocation: Static
+		             Ranges: 1
+		                     10.111.129.115-10.111.129.126
+		    Pool Membership: 4
+		                     1:10gige-1 (up)
+		                     2:10gige-1 (up)
+		                     3:10gige-1 (up)
+		                     4:10gige-1 (up)
+		   Aggregation Mode: Link Aggregation Control Protocol (LACP)
+		        Access Zone: System (1)
+		       SmartConnect:                    
+		                     Suspended Nodes  : None
+		                     Auto Unsuspend ... 0
+		                     Zone             : subnet0-pool0.isiloncluster1.lab.example.com
+		                     Time to Live     : 0
+		                     Service Subnet   : subnet0
+		                     Connection Policy: Round Robin
+		                     Failover Policy  : Round Robin
+		                     Rebalance Policy : Automatic Failback
+	
 	For OneFS 8
 
 	.. parsed-literal::
