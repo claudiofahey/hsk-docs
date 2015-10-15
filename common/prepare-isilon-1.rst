@@ -121,28 +121,28 @@ with them:
 		Total: 1
 		
 		isiloncluster1-1# **isi network pools list -v**
-    	                      ID: groupnet0.subnet0.pool0
-    	                Groupnet: groupnet0
-    	                  Subnet: subnet0
-    	                    Name: pool0
-    	                   Rules: rule0
-    	             Access Zone: System
-    	       Allocation Method: static
-    	        Aggregation Mode: lacp
-    	      SC Suspended Nodes: -
-    	             Description: Initial 10gige-1 pool
-    	                  Ifaces: 1:10gige-1
-    	               IP Ranges: 10.111.129.115-10.111.129.126
-    	        Rebalance Policy: auto
-    	 SC Auto Unsuspend Delay: 0
-    	       SC Connect Policy: round_robin
-    	                 SC Zone:
-    	     SC DNS Zone Aliases: -
-    	      SC Failover Policy: round_robin
-    	               SC Subnet: -
-    	                  SC Ttl: 0
-    	           Static Routes: -
-		
+		                      ID: groupnet0.subnet0.pool0
+		                Groupnet: groupnet0
+		                  Subnet: subnet0
+		                    Name: pool0
+		                   Rules: rule0
+		             Access Zone: System
+		       Allocation Method: static
+		        Aggregation Mode: lacp
+		      SC Suspended Nodes: -
+		             Description: Initial 10gige-1 pool
+		                  Ifaces: 1:10gige-1
+		               IP Ranges: 10.111.129.115-10.111.129.126
+		        Rebalance Policy: auto
+		 SC Auto Unsuspend Delay: 0
+		       SC Connect Policy: round_robin
+		                 SC Zone:
+		     SC DNS Zone Aliases: -
+		      SC Failover Policy: round_robin
+		               SC Subnet: -
+		                  SC Ttl: 0
+		           Static Routes: -
+	
 	Alternatively, using the OneFS 8 WebUI
 
 .. need to insert image 33
