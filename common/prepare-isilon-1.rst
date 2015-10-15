@@ -358,7 +358,7 @@ Configure Isilon For HDFS
 
 	Alternatively all of the CLI steps below can be accomplished in the OneFS 8 WebUI.
 	
-.. need to insert image 38
+	image 38 goes here
 	
 #.  Set the HDFS root directory for the access zone.  The HDFS root can either be the root of the
     Access Zone or it can be a subfolder in the Access Zone's folder tree.
