@@ -363,19 +363,19 @@ Configure Isilon For HDFS
     Access Zone or it can be a subfolder in the Access Zone's folder tree.
    
     For OneFS 7
-   
+
     .. parsed-literal::
 
 		isiloncluster1-1# **isi zone zones modify zone1 \\
 		--hdfs-root-directory /ifs/isiloncluster1/zone1/hadoop**
-	
-	For OneFS 8
 
-	.. parsed-literal::
+    For OneFS 8
+
+    .. parsed-literal::
 
 		isiloncluster1-1# **isi hdfs settings modify --zone=zone1 \\
 		--root-directory=/ifs/isiloncluster1/zone1/hadoop**
-	
+
 #.  Increase the HDFS daemon thread count.  **This is no longer required with OneFS 8**
 	
     .. parsed-literal::
@@ -384,17 +384,17 @@ Configure Isilon For HDFS
 
 #.  Set the HDFS block size used for reading from Isilon.
 
-	For OneFS 7
+    For OneFS 7
 
     .. parsed-literal::
 
 		isiloncluster1-1# **isi hdfs settings modify --default-block-size 128M**
-	  
-    For OneFS 8
-	
-	.. parsed-literal::
 
-      isiloncluster1-1# **isi hdfs settings modify --zone=zone1 --default-block-size=128M**
+    For OneFS 8
+
+    .. parsed-literal::
+
+		isiloncluster1-1# **isi hdfs settings modify --zone=zone1 --default-block-size=128M**
 
 #.  Create an indicator file so that we can easily determine we have landed in your intended HDFS Isilon folder.
     No matter the OneFS version the steps below will use the OneFS command line.
