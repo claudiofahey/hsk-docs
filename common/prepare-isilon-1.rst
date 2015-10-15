@@ -294,7 +294,7 @@ Configure Isilon For HDFS
 #.  Check, and edit as necessary, your NTP settings. Click Cluster
     Management -> General Settings -> NTP.
 
-  |image16|
+    |image16|
 
 #.  SSH into any node in your Isilon cluster as root.
 
@@ -303,7 +303,7 @@ Configure Isilon For HDFS
     .. parsed-literal::   
 
     isiloncluster1-1# **isi version**
-    Isilon OneFS v7.1.1.0 ...
+	Isilon OneFS v7.1.1.0 ...
 
 #.  For OneFS version 7.1.1.0, you must have patch-130611 installed.
     You can view the list of patches you have installed with:
