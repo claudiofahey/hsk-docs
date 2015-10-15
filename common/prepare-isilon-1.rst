@@ -378,7 +378,7 @@ You can either use the commands below OR accomplish all of this in the OneFS Web
 
 #.  Increase the HDFS daemon thread count.  **This is no longer required with OneFS 8**
 
-	For OneFS 7 Only
+    For OneFS 7 Only
 	
     .. parsed-literal::
 
@@ -386,8 +386,8 @@ You can either use the commands below OR accomplish all of this in the OneFS Web
 
 #.  Set the HDFS block size used for reading from Isilon.
 
-	For OneFS 7
-	
+    For OneFS 7
+
     .. parsed-literal::
 
       isiloncluster1-1# **isi hdfs settings modify --default-block-size 128M**
