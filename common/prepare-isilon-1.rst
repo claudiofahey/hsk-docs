@@ -76,7 +76,7 @@ To view your current list of access zones and the IP pools associated
 with them:
 
 	For OneFS 7
-
+	
 	.. parsed-literal::
 		
     	isiloncluster1-1# **isi zone zones list**
