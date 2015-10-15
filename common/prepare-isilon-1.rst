@@ -75,78 +75,77 @@ Hadoop Data Lakes
 To view your current list of access zones and the IP pools associated
 with them:
 
-For OneFS 7
+	For OneFS 7
 
-.. parsed-literal::
+	.. parsed-literal::
+		
+    	isiloncluster1-1# **isi zone zones list**
+    	Name   Path
+    	------------
+    	System /ifs
+    	------------
+    	Total: 1
+		
+    	isiloncluster1-1# **isi networks list pools -v**
+    	subnet0:pool0
+    	          In Subnet: subnet0
+    	         Allocation: Static
+    	             Ranges: 1
+    	                     10.111.129.115-10.111.129.126
+    	    Pool Membership: 4
+    	                     1:10gige-1 (up)
+    	                     2:10gige-1 (up)
+    	                     3:10gige-1 (up)
+    	                     4:10gige-1 (up)
+    	   Aggregation Mode: Link Aggregation Control Protocol (LACP)
+    	        Access Zone: System (1)
+    	       SmartConnect:                    
+    	                     Suspended Nodes  : None
+    	                     Auto Unsuspend ... 0
+    	                     Zone             : subnet0-pool0.isiloncluster1.lab.example.com
+    	                     Time to Live     : 0
+    	                     Service Subnet   : subnet0
+    	                     Connection Policy: Round Robin
+    	                     Failover Policy  : Round Robin
+    	                     Rebalance Policy : Automatic Failback
+		
+	For OneFS 8
 
-    isiloncluster1-1# **isi zone zones list**
-    Name   Path
-    ------------
-    System /ifs
-    ------------
-    Total: 1
-
-    isiloncluster1-1# **isi networks list pools -v**
-    subnet0:pool0
-              In Subnet: subnet0
-             Allocation: Static
-                 Ranges: 1
-                         10.111.129.115-10.111.129.126
-        Pool Membership: 4
-                         1:10gige-1 (up)
-                         2:10gige-1 (up)
-                         3:10gige-1 (up)
-                         4:10gige-1 (up)
-       Aggregation Mode: Link Aggregation Control Protocol (LACP)
-            Access Zone: System (1)
-           SmartConnect:                    
-                         Suspended Nodes  : None
-                         Auto Unsuspend ... 0
-                         Zone             : subnet0-pool0.isiloncluster1.lab.example.com
-                         Time to Live     : 0
-                         Service Subnet   : subnet0
-                         Connection Policy: Round Robin
-                         Failover Policy  : Round Robin
-                         Rebalance Policy : Automatic Failback
-
-For OneFS 8
-
-.. parsed-literal::
-
-	isiloncluster1-1# isi zone zones list
-	Name   Path
-	------------
-	System /ifs
-	------------
-	Total: 1
+	.. parsed-literal::
 	
-	isiloncluster1-1# **isi network pools list -v**
-                          ID: groupnet0.subnet0.pool0
-                    Groupnet: groupnet0
-                      Subnet: subnet0
-                        Name: pool0
-                       Rules: rule0
-                 Access Zone: System
-           Allocation Method: static
-            Aggregation Mode: lacp
-          SC Suspended Nodes: -
-                 Description: Initial 10gige-1 pool
-                      Ifaces: 1:10gige-1
-                   IP Ranges: 10.111.129.115-10.111.129.126
-            Rebalance Policy: auto
-     SC Auto Unsuspend Delay: 0
-           SC Connect Policy: round_robin
-                     SC Zone:
-         SC DNS Zone Aliases: -
-          SC Failover Policy: round_robin
-                   SC Subnet: -
-                      SC Ttl: 0
-               Static Routes: -
-
-Alternatively, using the OneFS 8 WebUI
+		isiloncluster1-1# isi zone zones list
+		Name   Path
+		------------
+		System /ifs
+		------------
+		Total: 1
+		
+		isiloncluster1-1# **isi network pools list -v**
+    	                      ID: groupnet0.subnet0.pool0
+    	                Groupnet: groupnet0
+    	                  Subnet: subnet0
+    	                    Name: pool0
+    	                   Rules: rule0
+    	             Access Zone: System
+    	       Allocation Method: static
+    	        Aggregation Mode: lacp
+    	      SC Suspended Nodes: -
+    	             Description: Initial 10gige-1 pool
+    	                  Ifaces: 1:10gige-1
+    	               IP Ranges: 10.111.129.115-10.111.129.126
+    	        Rebalance Policy: auto
+    	 SC Auto Unsuspend Delay: 0
+    	       SC Connect Policy: round_robin
+    	                 SC Zone:
+    	     SC DNS Zone Aliases: -
+    	      SC Failover Policy: round_robin
+    	               SC Subnet: -
+    	                  SC Ttl: 0
+    	           Static Routes: -
+		
+	Alternatively, using the OneFS 8 WebUI
 
 .. need to insert image 33
-
 
 To create a new access zone and an associated IP address pool:
 
