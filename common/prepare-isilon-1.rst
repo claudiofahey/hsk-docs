@@ -333,13 +333,13 @@ Configure Isilon For HDFS
 
 	For OneFS 7
 
-    .. parsed-literal::
+	.. parsed-literal::
 
-    	isiloncluster1-1# **isi license**
-    	Module                    License Status    Configuration     Expiration Date
-    	------                    --------------    -------------     ---------------
-    	HDFS                      Evaluation        Not Configured    September 4, 2014
-	
+		isiloncluster1-1# **isi license**
+		Module                    License Status    Configuration     Expiration Date
+		------                    --------------    -------------     ---------------
+		HDFS                      Evaluation        Not Configured    September 4, 2014
+
 	For OneFS 8
 	You can either use the commands below OR accomplish all of this in the OneFS WebUI
 
