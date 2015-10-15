@@ -352,16 +352,14 @@ Configure Isilon For HDFS
 #.  Create the HDFS root directory. This is usually called *hadoop* and
     must be within the access zone directory.
 
-    .. parsed-literal::
+	.. parsed-literal::
 
 		isiloncluster1-1# **mkdir -p /ifs/isiloncluster1/zone1/hadoop**
-	  
-    Alternatively all of the CLI steps below can be accomplished in the OneFS WEbUI if using
-	OneFS 8
-	
-    .. image:: images/image038.png
-	
 
+	Alternatively all of the CLI steps below can be accomplished in the OneFS 8 WebUI.
+	
+.. need to insert image 38
+	
 #.  Set the HDFS root directory for the access zone.  The HDFS root can either be the root of the
     Access Zone or it can be a subfolder in the Access Zone's folder tree.
    
