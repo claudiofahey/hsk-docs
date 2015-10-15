@@ -223,7 +223,7 @@ To allow use of the new IP address pool by data node connections:
 
 Alternatively configuration is offered in the OneFS 8 WebUI
 
-.. need to insert image 37
+	image 37 goes here
 
 
 Sharing Data Between Access Zones
@@ -303,7 +303,7 @@ Configure Isilon For HDFS
 
 		isiloncluster1-1# **isi version**
 		Isilon OneFS v7.1.1.0 ...
-
+	
 #.  For OneFS version 7.1.1.0, you must have patch-130611 installed.
     You can view the list of patches you have installed with:
 
