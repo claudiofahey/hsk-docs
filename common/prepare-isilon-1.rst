@@ -360,7 +360,8 @@ You can either use the commands below OR accomplish all of this in the OneFS Web
 	Alternatively all of the CLI steps below can be accomplished in the OneFS WEbUI if using
 	OneFS 8
 	
-	|image38|
+	.. image:: ../_images/image038.png
+	
 
 #.  Set the HDFS root directory for the access zone.  The HDFS root can either be the root of the
     Access Zone or it can be a subfolder in the Access Zone's folder tree.
