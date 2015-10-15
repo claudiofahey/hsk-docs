@@ -340,10 +340,10 @@ Configure Isilon For HDFS
 		HDFS                      Evaluation        Not Configured    September 4, 2014
 
 	For OneFS 8
-	You can either use the commands below OR accomplish all of this in the OneFS WebUI
+	You can either use the commands below or accomplish this in the OneFS WebUI
 
 	.. parsed-literal::
-		isiloncluster1-1# isi license view --name HDFS
+		isiloncluster1-1# **isi license view --name HDFS**
 		      Name: HDFS
 		    Status: Activated
 		Expiration: - 
