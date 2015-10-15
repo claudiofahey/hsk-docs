@@ -113,7 +113,7 @@ with them:
 
 	.. parsed-literal::
 	
-		isiloncluster1-1# isi zone zones list
+		isiloncluster1-1# **isi zone zones list**
 		Name   Path
 		------------
 		System /ifs
