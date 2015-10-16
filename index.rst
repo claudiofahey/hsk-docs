@@ -4,8 +4,9 @@ EMC Isilon Hadoop Starter Kit
 *****************************
 
 .. toctree::
-   :maxdepth: 3
-   
+   :maxdepth: 4
+
    cdh/hsk
    phd/hsk
    hwx/hsk
+   bi/bi
