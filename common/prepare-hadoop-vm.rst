@@ -45,11 +45,6 @@ Provision Virtual Machines Using Big Data Extensions
 
     *For more details, refer to the BDE documentation.*
 
-.. note::
-
-    When edting the mycluster1-bde.json file be sure to remove all but a single \
-    node type.  Notice there are several node types separated with braces.
-
 #. Login to the Serengeti CLI.
 
 #. If you want to use a dedicated |hadoop-manager| server, create the |hadoop-manager| cluster.
