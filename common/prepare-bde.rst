@@ -40,6 +40,11 @@ files which define the VMs to create.
     Enter the password: **\*\*\***
     Connected
 
+.. note::
+
+    If you deployed BDE with VMWare SSO be sure to log into Serengi CLI\
+    with your VMWare SSO credentials!!
+
 View Resources
 --------------
 

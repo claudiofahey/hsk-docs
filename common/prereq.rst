@@ -177,4 +177,3 @@ Other
 - Time synchronization is critical for Hadoop. It is highly
   recommended to configure all ESXi hosts and Isilon nodes to use NTP. In
   general, you do not need to run NTP clients in your VMs.
-

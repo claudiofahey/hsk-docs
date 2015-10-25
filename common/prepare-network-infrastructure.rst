@@ -42,13 +42,13 @@ client perspective.
       |image8|
 
    #. Specify the credential used by the DHCP service to communicate with the DNS server.
-      
+
       |image10|
 
 #. Create a new DHCP scope for your lab subnet.
 
    #. Set the following scope options for your environment.
-      
+
       |image12|
 
 #. Test for a proper installation.
@@ -71,7 +71,7 @@ client perspective.
 
         [user\@workstation ~]$ **ping myhost.lab.example.com**
         PING myhost.lab.example.com (10.111.128.240) 56(84) bytes of data.
-        64 bytes from myhost.lab.example.com (10.111.128.240): icmp\_seq=1 
+        64 bytes from myhost.lab.example.com (10.111.128.240): icmp\_seq=1
         ttl=64 time=1.47 ms
 
     #. Confirm that the reverse DNS record for that IP address can be
@@ -81,4 +81,3 @@ client perspective.
 
         [user\@workstation ~]$ **dig +noall +answer -x 10.111.128.240**
         240.128.111.10.in-addr.arpa. 900 IN    PTR    myhost.lab.example.com.
-

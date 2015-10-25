@@ -28,4 +28,3 @@ Isilon best-practices suggest creating an NFS mount for
 
 #.  If you want to locate any VMDKs on an Isilon cluster instead of on
     local disks, add an NFS datastore to each of your ESXi hosts.
-
