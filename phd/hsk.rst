@@ -8,7 +8,7 @@
 
 
 ****************************************************************************
-EMC Isilon Hadoop Starter Kit for Pivotal HD with VMware Big Data Extensions
+EMC Isilon Hadoop Starter Kit for Pivotal HD 2.x with VMware Big Data Extensions
 ****************************************************************************
 
 This document describes how to create a Hadoop environment utilizing
@@ -63,9 +63,9 @@ it took IT to deploy Hadoop as the primary reason to start with a
 deployment outside of IT.
 
 This guide is intended to simplify Hadoop deployments by creating a
-shared storage model with EMC Isilon scale out NAS and Pivotal HD, 
+shared storage model with EMC Isilon scale out NAS and Pivotal HD,
 reduce the time to
-deployment, and the cost of deployment leveraging 
+deployment, and the cost of deployment leveraging
 tools that can automate Hadoop cluster deployments.
 
 Audience
@@ -87,11 +87,24 @@ environment as best-practices are followed whenever possible.
 Pivotal HD with HAWQ
 --------------------
 
-Open-source Hadoop frameworks have rapidly emerged as preferred technology to grapple with the explosion of structured and unstructured big data. You can accelerate your Hadoop investment with an enterprise-ready, fully supported Hadoop distribution that ensures you can harness—and quickly gain insight from—the massive data being driven by new apps, systems, machines, and the torrent of customer sources.
+Open-source Hadoop frameworks have rapidly emerged as preferred technology to
+grapple with the explosion of structured and unstructured big data. You can accelerate
+your Hadoop investment with an enterprise-ready, fully supported Hadoop distribution
+that ensures you can harness—and quickly gain insight from—the massive data being driven
+by new apps, systems, machines, and the torrent of customer sources.
 
-HAWQ™ adds SQL’s expressive power to Hadoop to accelerate data analytics projects, simplify development while increasing productivity, expand Hadoop’s capabilities and cut costs. HAWQ can help your organization render Hadoop queries faster than any Hadoop-based query interface on the market by adding rich, proven, parallel SQL processing facilities. HAWQ leverages your existing business intelligence products, analytic products, and your workforce’s SQL skills to bring more than 100X performance improvement (in some cases up to 600X) to a wide range of query types and workloads. The world’s fastest SQL query engine on Hadoop, HAWQ is 100 percent SQL compliant.
+HAWQ™ adds SQL’s expressive power to Hadoop to accelerate data analytics
+projects, simplify development while increasing productivity, expand Hadoop’s
+capabilities and cut costs. HAWQ can help your organization render Hadoop
+queries faster than any Hadoop-based query interface on the market by adding
+rich, proven, parallel SQL processing facilities. HAWQ leverages your existing
+business intelligence products, analytic products, and your workforce’s SQL skills
+to bring more than 100X performance improvement (in some cases up to 600X) to a wide
+range of query types and workloads. The world’s fastest SQL query engine on Hadoop,
+HAWQ is 100 percent SQL compliant.
 
-The first true SQL processing for enterprise-ready Hadoop, Pivotal HD with HAWQ is available to you as software only or as an appliance-based solution.
+The first true SQL processing for enterprise-ready Hadoop, Pivotal HD with HAWQ
+is available to you as software only or as an appliance-based solution.
 
 More information on Pivotal HD and HAWQ can be found on http://www.pivotal.io/big-data/pivotal-hd.
 
@@ -123,7 +136,7 @@ Installation Overview
 =====================
 
 Below is the overview of the installation process that this document
-will describe. 
+will describe.
 
 #. Confirm prerequisites.
 
@@ -138,7 +151,7 @@ will describe.
 #. Install Pivotal Command Center.
 
 #. Use Pivotal Command Center to deploy Pivotal HD to the virtual machines.
-   
+
 #. Initialize HAWQ.
 
 #. Perform key functional tests.
@@ -172,7 +185,7 @@ Install Pivotal Command Center
 #.  Download the following files from https://network.pivotal.io/products/pivotal-hd.
     This document assumes they have been downloaded to your Isilon cluster in
     /mnt/scripts/downloads
-    
+
     -  PHD 2.1.0
     -  PHD 2.1.0: Pivotal Command Center 2.3.0
     -  PHD 2.1.0: Pivotal HAWQ 1.2.1.0 (optional)
@@ -189,18 +202,18 @@ Install Pivotal Command Center
       [root\@hadoopmanager-server-0 PCC-2.3.0-443]# **./install**
       You may find the logs in /usr/local/pivotal-cc/pcc_installation.log
       Performing pre-install checks ...                          [  OK  ]
-      [INFO]: User gpadmin does not exist. It will be created as part of the 
+      [INFO]: User gpadmin does not exist. It will be created as part of the
       installation process.
-      [INFO]: By default, the directory '/home/gpadmin' is created as the default 
-      home directory for the gpadmin user. This directory must must be consistent 
+      [INFO]: By default, the directory '/home/gpadmin' is created as the default
+      home directory for the gpadmin user. This directory must must be consistent
       across all nodes.
       Do you wish to use the default home directory? [Yy|Nn]: **y**
       [INFO]: Continuing with default /home/gpadmin as home directory for gpadmin
       ...
       You have successfully installed Pivotal Command Center 2.3.0.
-      You now need to install a PHD cluster to monitor with Pivotal Command 
+      You now need to install a PHD cluster to monitor with Pivotal Command
       Center.
-      You can view your cluster statuses here: 
+      You can view your cluster statuses here:
       \https://hadoopmanager-server-0.lab.example.com:5443/status
       [root\@hadoopmanager-server-0 PCC-2.3.0-443]# **service commander status**
       nodeagent is running
@@ -230,7 +243,7 @@ Install Pivotal Command Center
       PADS-1.2.1.0-10335/**
       stack: PADS-1.2.1.0
       [INFO] Importing stack
-      [INFO] Finding and copying available stack rpms from PADS-1.2.1.0-10335/... 
+      [INFO] Finding and copying available stack rpms from PADS-1.2.1.0-10335/...
       [OK]
       [INFO] Creating local stack repository...
       [OK]
@@ -250,7 +263,7 @@ Deploy a Pivotal HD Cluster
       mycluster1-pcc**
 
 #.  Edit mycluster1-pcc/clusterConfig.xml.
-    
+
     #.  Replace all occurances of *mycluster1* with your actual BDE cluster name. This will
         identify your host names.
 
@@ -259,7 +272,7 @@ Deploy a Pivotal HD Cluster
 
     #.  Update *yarn-nodemanager*, *hawq-segment*, and *pxf-service* elements with the complete list
         of worker host names. You may copy and paste from the file
-        isilon-hadoop-tools/etc/mycluster1-hosts.txt. 
+        isilon-hadoop-tools/etc/mycluster1-hosts.txt.
         Do *not* include your master node in these lists.
 
     #.  Update *datanode.disk.mount.points* so that it refers to the local disks that you will use
@@ -285,7 +298,7 @@ Deploy a Pivotal HD Cluster
       [gpadmin\@hadoopmanager-server-0 etc] -bash-4.1$ **icm_client deploy \\
       --confdir mycluster1-pcc --selinuxoff --iptablesoff**
       Please enter the root password for the cluster nodes: **\*\*\***
-      PCC creates a gpadmin user on the newly added cluster nodes (if any). 
+      PCC creates a gpadmin user on the newly added cluster nodes (if any).
       Please enter a non-empty password to be used for the gpadmin user: **\*\*\***
       Verifying input
       Starting install
@@ -321,7 +334,7 @@ Initialize HAWQ
 
       [gpadmin\@mycluster1-master-0 ~]$ **source /usr/local/hawq/greenplum_path.sh**
       [gpadmin\@mycluster1-master-0 ~]$ **gpssh-exkeys -f \\
-      /mnt/scripts/isilon-hadoop-tools/etc/mycluster1-hosts.txt** 
+      /mnt/scripts/isilon-hadoop-tools/etc/mycluster1-hosts.txt**
       [STEP 1 of 5] create local ID and authorize on local host
 
       [STEP 2 of 5] keyscan all hosts and update known_hosts file
@@ -367,12 +380,12 @@ HAWQ
 
   gpadmin=# **\\l**
                    List of databases
-     Name    |  Owner  | Encoding | Access privileges 
+     Name    |  Owner  | Encoding | Access privileges
   -----------+---------+----------+-------------------
-   gpadmin   | gpadmin | UTF8     | 
-   postgres  | gpadmin | UTF8     | 
-   template0 | gpadmin | UTF8     | 
-   template1 | gpadmin | UTF8     | 
+   gpadmin   | gpadmin | UTF8     |
+   postgres  | gpadmin | UTF8     |
+   template0 | gpadmin | UTF8     |
+   template1 | gpadmin | UTF8     |
   (4 rows)
 
   gpadmin=# **\\c gpadmin**
@@ -381,15 +394,15 @@ HAWQ
            Some psql features might not work.
   You are now connected to database "gpadmin".
   gpadmin=# **create table test (a int, b text);**
-  NOTICE:  Table doesn't have 'DISTRIBUTED BY' clause -- Using column named 'a' 
+  NOTICE:  Table doesn't have 'DISTRIBUTED BY' clause -- Using column named 'a'
   as the Greenplum Database data distribution key for this table.
-  HINT:  The 'DISTRIBUTED BY' clause determines the distribution of data. Make 
+  HINT:  The 'DISTRIBUTED BY' clause determines the distribution of data. Make
   sure column(s) chosen are the optimal data distribution key to minimize skew.
   CREATE TABLE
   gpadmin=# **insert into test values (1, '435252345');**
   INSERT 0 1
   gpadmin=# **select * from test;**
-   a |     b     
+   a |     b
   ---+-----------
    1 | 435252345
   (1 row)
@@ -403,9 +416,9 @@ Pivotal Command Center
 Browse to the Pivotal Command Center GUI
 ``https://hadoopmanager-server-0.lab.example.com:5443``.
 
-Login using the following default account: 
+Login using the following default account:
 
-Username: gpadmin 
+Username: gpadmin
 
 Password: Gpadmin1
 
