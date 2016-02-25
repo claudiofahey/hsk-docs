@@ -438,6 +438,293 @@ To execute them after installation, select the service in Ambari, click the *Ser
 
 .. include:: ../common/wikipedia.rst
 
+Installing IBM Value Packages
+=============================
+
+Preface
+-------
+
+Please note that “BigInsights Analyst” and “BigInsights Data Scientist” value package
+have been sanity tested on EMC Isilon, but have not been performance profiled and tested
+under load with Isilon 7.2.0.3 version. EMC and IBM BigInsights plan to validate these
+components under load as part of future integration efforts. Please refer to EMC – IBM
+BigInsights Joint Support Statement for further details.
+
+You must acquire the software from Passport Advantage. The acquired software has a
+*.bin extension. The name of the *.bin file depends on whether the BigInsights Analyst
+or the BigInsights Data Scientist module was downloaded.
+
+When you run the *.bin file, configuration files are copied to appropriate locations
+to enable Ambari to see that value-add services as available. When adding the value-add
+services through Ambari, additional software packages can be downloaded. If the Hadoop
+cluster cannot directly access the internet, a local mirror repository can be created.
+
+Where you perform the following steps depends on whether the Hadoop cluster has
+direct internet access.
+
+* If the Hadoop cluster has direct access to the internet, perform the steps from the
+  Ambari server of the Hadoop cluster.
+* If the Hadoop cluster does not have direct internet access, perform the steps from a
+  Linux host with direct internet access. Then, transfer the files, as required,
+  to a local repository mirror
+
+Installation Prework Procedure
+------------------------------
+
+#.  Apply execution permissions ``chmod +x <package_name>.bin`` on the downloaded *.bin file.
+
+#.  Run the ``bin`` file ``./<package_name>.bin`` to extract and install the services
+    in the module where ``<package_name>`` is ``BI-Analyst-xxxxx.bin`` for **Analyst Module**
+    or ``BI-DS-xxxxx.bin`` for the **Data Scientist Module**
+
+#.  At the prompt agree to the license terms.  Reply ``yes | y`` to continue.
+
+#.  After the prompt, choose **online** (1) or **offline** (2) install.
+
+    * Online install will lay out the Ambari service configuration files and update
+      the repository locations in the Ambari server file.  **Proceed directoy to step 6.**
+    * Offline install initiates a download of files and sets up a local repository mirror.
+      A subdirectory called ``BigInsights`` will be created with RPMs and located in
+      the ``BigInsights/packages`` directory.
+
+#.  Setup a local repository
+
+    A local repository is required if the Hadoop cluster cannot connect directly
+    to the internet, or if you wish to avoid multiple downloads of the same software
+    when installing services across multiple nodes. In the following steps, the host
+    that performs the repository mirror function is called the repository server.
+    If you do not have an additional Linux host, you can use one of the Hadoop
+    management nodes. The repository server must be accessible over the network
+    by the Hadoop cluster. The repository server requires an HTTP web server.
+    The following instructions describe how to set up a repository server by
+    using a Linux host with an Apache HTTP server.
+
+    #.  Install ``httpd`` on the **repository server** ``yum install httpd``
+    #.  Install ``createrepo`` on the **repository server** ``yum install createrepo``
+    #.  Create a directory for value-add repositories, such as ``<http_web_root>/repos/valueadds``.
+        The default location for httpd document root is ``/var/www/html/repos``.  Using that example,
+        ``mkdir /var/www/html/repos/valueadds``.
+    #.  By selecting **Option 2** in step 4, RPMs were downloaded to a subdirectory called ``BigInsights/packages``.
+        Copy all of the RPMs to the mirror web serverlocation.  ``cp BigInsights/pacakges/* /var/www/html/repos/valueadds``
+    #.  Start the web server by ``apachect start`` or ``service httpd start`` depending on your
+        Linux distribution.
+    #.  Test your local repository by browsing to the web directory ``http://<your_mirror_server>/repos/valueadds``.
+        You should see all of the copied files.
+    #.  Run ``createrepo /var/www/html/repos/valueadds`` to initialize the repository.
+    #.  Find the RPM to install on the **Ambari Server** in the ``BigInsights/packages`` directory.
+        The file for the BigInsights Data Scientists is ``BI-DS-x.x.x.x-IOP-x.x.x86_64.rpm``.  The file
+        for BigInsights Analyst is ``BI-Analyst-x.x.x.x-IOP-x.x.x86_64.rpm``.
+
+        .. note::
+          The BigInsights Data Scientist module also entitles you to the features of the
+          BigInsights Analyst module. Therefore, consider doing the yum install for both
+          of the RPM packages.
+
+    #.  Copy these files to the Ambari Server host and install the RPMs using ``sudo yum install BI*.rpm``
+    #.  If the ``/var/lib/ambari-server/resources/stacks/BigInsights/<version_number>/repos/repoinfo.xml`` on
+        the Ambari Server does not exist then create it.  ``touch /var/lib/ambari-server/resources/stacks/BigInsights/<version_number>/repos/repoinfo.xml``
+    #.  Edit the ``/var/lib/ambari-server/resources/stacks/BigInsights/<version_number>/repos/repoinfo.xml`` file
+        to ensure it contains:
+
+        ..  parsed-literal::
+          <repo>
+          <baseurl> http://<your.mirror.web.server>/repos/valueadds </baseurl>
+          <repoid>BIGINSIGHTS-VALUEPACK</repoid>
+          <reponame>BIGINSIGHTS-VALUEPACK</reponame>
+          </repo>
+
+        .. note::
+          The new <repo> section might appear as a single line.
+
+        .. note::
+          If errors are later found with this file, make sure to issue ``yum clean all`` then restart the ambari server.
+
+    #.  When the modules are both installed ``ambari-server restart`` to restart Ambari.
+    #.  Open the Ambari interface ``http://<ambari_server>:8080`` with username ``admin`` and password ``admin``
+    #.  From the Ambari Dashboard choose **Actions > Add Service**
+
+Install BigInsights Services to the Cluster Overview
+----------------------------------------------------
+
+Select the service that you want to install and deploy. Even though your module
+might contain multiple services, install the specific service that you want and
+the BigInsights™ Home service. Installing one value-add service at a time is recommended.
+Follow the service specific installation instructions for more information. At the
+conclusion of installing all the IBM BigInsights Services, the Ambari GUI Software
+List should have green check marks next to each service as shown below:
+
+.. image:: ibmServices.png
+
+
+Installing BigInsights Home
+---------------------------
+
+The BigInsights Home service is the main interface to launch BigInsights - BigSheets,
+BigInsights - Text Analytics, and BigInsights - Big SQL.
+
+.. note::
+  The BigInsights Home service requires Knox to be installed, configured and started.
+
+#.  In the Ambari dashboard, click **Actions > Add Service**.
+
+#.  In the **Add Service Wizard > Choose Services**, select the **BigInsights – BigInsights Home service**.
+
+    .. note::
+      If you do not see the option for BigInsights – BigInsights Home,
+      follow the instructions described in Installing the BigInsights value-add packages.
+
+#.  Click **Next**.
+#.  In the Assign Masters page, select a Management node (edge node) that your
+    users can communicate with. BigInsights Home is a web application that your
+    users must be able to open with a web browser.
+
+#.  In the Assign Slaves and Clients page, make selections to assign slaves and clients.
+    The nodes that you select will have ``JSQSH`` (an open source, command line interface
+    to SQL for Big SQL and other database engines) and ``SFTP client``. Select nodes that
+    might be used to ingest data as an ``SFTP client``, where you might want to work with
+    Big SQL scripts, or other databases interactively.
+
+#.  Click **Next** to review any options that you might want to customize.
+
+#.  Click **Deploy**.
+
+.. note::
+  If the BigInsights – BigInsights Home service fails to install, run the
+  ``remove_value_add_services.sh`` cleanup script located in ``/usr/ibmpacks/bin/<version>/remove_value_add_services.sh``
+
+For more informaton about cleaning the value-add service environment, see Removing BigInsights value-add services
+
+
+Configure Knox
+---------------
+
+The Apache Knox gateway is a system that provides a single point of authentication
+and access for Apache Hadoop services on the compute nodes in a cluster; however
+authentication to HDFS services is completely controlled by Isilon OneFS only.
+
+The Knox gateway simplifies Hadoop security for users that access the cluster and
+execute jobs and operators that control access and manage the cluster. The gateway
+runs as a server, or a cluster of servers, providing centralized access to one or
+more Hadoop clusters.
+
+In IBM® Open Platform with Apache Hadoop, Knox is a service that you start, stop,
+and configure in the Ambari web interface.
+
+Users access the following BigInsights™ value added components through Knox by going
+to the IBM BigInsights home service.
+
+* BigSheets
+* Text Analytics
+* BigSQL
+
+Knox supports only REST API calls for the following Hadoop services:
+
+* WebHCAT
+* Oozie
+* HBase
+* Hive
+* YARN
+
+**To Configure**
+
+#.  Click the Knox service from the Ambari web interface to see the summary page.
+#.  Select **Service Actions > Restart All** to restart it and all of its components.
+
+.. note::
+  If using LDAP, LDAP must be running
+
+#.  Click the BigInsights Home service in the Ambari User Interface.
+
+#.  Select Service Actions > Restart All to restart it and all of its components.
+    Open the BigInsights Home page from a web.
+
+#.  The URL for BigInsights Home is: ``https://<knox_host>:<knox_port>/<knox_gateway_path>/default/BigInsightsWeb/index.html``
+
+    where
+
+    * ``knox_host`` is the host running Knox
+    * ``knox_port`` is the port where Knox is listening (8443 by default)
+    * ``knox_gateway_path`` the value entered in the gateway.path field in the Ambari>Knox>Configs.  (normally this is 'gateway')
+
+
+    An example URL might look like ``https://myhost.company.com:8443/gateway/default/BigInsightsWeb/index.html``
+
+    .. note::
+      If using the Knox Demo LDAP, a default user ID and password were already created.  When accessing this page,
+      use the following credentials:
+
+      username ``guest``
+      password ``guest-password``
+
+
+Installing BigSheets
+--------------------
+
+To extend the power of the Open Platform for Apache Hadoop, install and deploy the
+BigInsights BigSheets service, which is the IBM spreadsheet interface for big data.
+
+#.  Click **Actions>Add Service** from the Ambari Dashboard.
+#.  Select **BigInsights-BigSheets** service
+
+    .. note::
+      If you do not see **BigInsights-BigSheets**, make sure you installed the appropriate
+      modules from the **Prework** section and restart Ambari.
+
+#.  Click **Next**
+#.  In the **Assign Masters** page, decide which node will run the BigSheets master.
+#.  In the **Assign Slaves and Clients** page, all the defaults are automatically accepted.  The next
+    page automatically appears.  **BigSheets** does not have any slaves or clients.  The
+    **Assign Slaves and Clients** page will briefly show, and them immediately proceed.  This
+    is expected behavior.
+#.  In the **Customize Services** page, accept the recommended configuraitons for the BigShets service, or customize
+    the configuration by expanding the configuration files and modifying their values.  In
+    the **Advanced BigSheets-user-config** section, make sure of the following:
+
+    #.  Leave the default username ``bigsheets`` in the ``bigsheets.user`` field.
+    #.  Type a valid password in the ``bigsheets.password`` field.
+    #.  Enter a ``bigsheets.userid`` that is unique across all nodes in the cluster.
+    #.  Click **Next**
+#.  Enter the **Ambari Admin** password in the ``ambari.password`` field.
+#.  Review your changes before accepting them.  If for any reason errors are found
+    or additional configuraiton is necessary, choose the **Back** button.
+#.  When satistifed with all configuration changes, click **Deploy**
+#.  **Test** the **BigSheets** service when the installation is complete.
+#.  Click **Complete**
+
+    .. note::
+      If the **BigSheets** service fails to install, run the ``remove_value_add_services.sh`` cleanup script
+      located in ``/usr/ibmpacks/bin/<version>``
+
+#.  After BigSheets starts for the first time, the following services need to be restarted:
+
+    * HDFS
+    * MapReduce2
+    * YARN
+    * Knox
+    * Nagios (if that is installed)
+    * Ganglia (If that is installed)
+    * BigInsights Home
+
+
+#.  The URL for BigInsights Home is: ``https://<knox_host>:<knox_port>/<knox_gateway_path>/default/BigInsightsWeb/index.html``
+
+    where
+
+    * ``knox_host`` is the host running Knox
+    * ``knox_port`` is the port where Knox is listening (8443 by default)
+    * ``knox_gateway_path`` the value entered in the gateway.path field in the Ambari>Knox>Configs.  (normally this is 'gateway')
+
+
+    An example URL might look like ``https://myhost.company.com:8443/gateway/default/BigInsightsWeb/index.html``
+
+
+
+
+
+
+
+
+
 .. include:: ../common/where-to-go-from-here.rst
 
 .. include:: ../common/known-limitations.rst
