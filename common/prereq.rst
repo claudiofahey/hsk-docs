@@ -100,7 +100,7 @@ Networking
   give by the formula below. Of course, this is in addition to any IP
   addresses used for non-HDFS pools.
 
-  # of IP addresses = 2 * (# of Isilon Nodes) * (# of Access Zones)
+  ``# of IP addresses = 2 * (# of Isilon Nodes) * (# of Access Zones)``
 
   For example, 20 IP addresses are recommended for 5 Isilon nodes and 2
   Access Zones.
@@ -171,9 +171,8 @@ Other
     sshpass on Centos 6.x.
 
 - Several useful scripts and file templates are provided in the
-  archive file isilon-hadoop-tools-\ *x*.\ *x*.tar.gz. Download the latest
-  version from
-  https://github.com/claudiofahey/isilon-hadoop-tools/releases.
+  archive file ``isilon-hadoop-tools-*x*.*x*.tar.gz``. Download the latest
+  version from `Github <https://github.com/claudiofahey/isilon-hadoop-tools/releases>`_.
 
 - Time synchronization is critical for Hadoop. It is highly
   recommended to configure all ESXi hosts and Isilon nodes to use NTP. In

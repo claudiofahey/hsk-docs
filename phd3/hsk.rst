@@ -19,7 +19,7 @@ manage the compute resources.
 #RememberRuddy
 
 .. note::
-  The latest version of this document is available at http://hsk-hwx.readthedocs.org/.
+  The latest version of this document is available at `ReadTheDocs <http://hsk-hwx.readthedocs.org/>`_.
 
 Introduction
 ============
@@ -106,7 +106,7 @@ to bring more than 100X performance improvement (in some cases up to 600X) to a 
 range of query types and workloads. The world’s fastest SQL query engine on Hadoop,
 HAWQ is 100 percent SQL compliant.
 
-More information on Pivotal HD and HAWQ can be found on http://www.pivotal.io/big-data/pivotal-hd.
+For more information on `Pivotal HD and HAWQ <http://pivotal.io/big-data/pivotal-big-data-suite>`_.
 
 Apache Ambari is an open operational framework for provisioning, managing
 and monitoring Apache Hadoop clusters. As of version 3.0 of the Pivotal
@@ -116,7 +116,7 @@ of a Hadoop deployment.  Additionally, it provides a RESTful API to enable
 integration with existing Enterprise management tools such as Microsoft System
 Center and many others.
 
-More information on Pivotal PHD and Ambari can be found at http://Pivotal.com
+For more information on `Pivotal PHD and Ambari <http://pivotalhd.docs.pivotal.io/docs/install-ambari.html>`_.
 
 
 .. include:: ../common/intro-isilon.rst
@@ -187,9 +187,8 @@ Install Ambari Server
 
 .. note::
   **Only some of the steps are documented below.**
-  Follow the instructions in the Pivotal HD Installation Guide through section 3.3
-  before continuing:
-  (http://pivotalhd.docs.pivotal.io/docs/install-ambari.html)
+  Follow the instructions in the `Pivotal HD Installation Guide <http://pivotalhd.docs.pivotal.io/docs/install-ambari.html>`_
+  through section 3.3 before continuing:
 
 .. note::
   Ambari Server is the management interface for Pivotal PHD. A single instance of
@@ -215,8 +214,7 @@ once the PHD install is completed.
 
 .. note::
   **Only some of the steps are documented below.**
-  Refer to the Pivotal PHD Documentation
-  (http://docs.Pivotal.com/PHDDocuments/Ambari-1.6.0.0/bk_using_Ambari_book/content/ambari-chap3_2x.html)
+  Refer to the `Pivotal PHD Documentation <http://pivotalhd.docs.pivotal.io/docs/install-ambari.html>`_
   for complete details.
 
 #. Configure the Ambari Agent on Isilon.
@@ -240,9 +238,9 @@ once the PHD install is completed.
     .. image:: phdStack.png
 
     The values that are provided in the initial installation must be replaced with the actual URLs of the
-    stack that repositories you installed earlier. Replace **http://set\_repo\_url/** with the repository URL
-    you recorded when running the setup_repo.sh script for each stack. If you did not record the URLs, you
-    can obtain the correct URLs by examining the /etc/yum.repos.d/<STACK>-<VERSION>.repo file.
+    stack that repositories you installed earlier. Replace ``http://set\_repo\_url/`` with the repository URL
+    you recorded when running the ``setup_repo.sh`` script for each stack. If you did not record the URLs, you
+    can obtain the correct URLs by examining the ``/etc/yum.repos.d/<STACK>-<VERSION>.repo`` file.
 
 #.  **Install Options:**
 
@@ -330,15 +328,16 @@ once the PHD install is completed.
     -  Oozie Data Dir
     -  Storm storm.local.dir
 
-    In YARN, set:
-    yarn.timeline-service.store-class to ``org.apache.hadoop.yarn.server.timeline.LeveldbTimelineStore``
-    yarn.scheduler.capacity.node-locality-delay to -1.
 
-    If deploying HAWQ, set:
-    hawq.segments.per.node to **2** (you may consider adding more later but this value is a sufficient start)
-    hawq.master.port to **10432** if the target HAWQ master server is also running other postgresql database servers
-    hawq.temp.directory to include the paths to all of your local **tmp** directories are within
-    /data/1, data/2, etc... so HAWQ has spill space when perfrming joins and sorts.
+    In YARN, set the following parameters in YARN>Configs:
+      #.  ``yarn.timeline-service.store-class`` to **org.apache.hadoop.yarn.server.timeline.LeveldbTimelineStore**
+      #.  ``yarn.scheduler.capacity.node-locality-delay`` to **-1**
+
+    If deploying HAWQ, set the following parameters in HAWQ>Configs
+      #.  ``hawq.segments.per.node`` to **2** (you may consider adding more later but this value is a sufficient start)
+      #.  ``hawq.master.port`` to **10432** if the target HAWQ master server is also running other postgresql database servers
+      #.  ``hawq.temp.directory`` to include the paths to all of your local **tmp** directories are within
+          /data/1, data/2, etc... so HAWQ has spill space when performing joins and sorts.
 
 
 #.  **Review:** Carefully review your configuration and then click Deploy.
@@ -353,11 +352,10 @@ once the PHD install is completed.
 #.  **Post Install Configuration:**  Now that the cluster is functional there is one
     last item that remains.
 
-    #.  HAWQ requires that your dfs.blocksize be set for 134217728.  To make this
-        change, in Ambari, Choose HDFS Service>Configs, and then search for dfs.blocksize.
-        enter the parameter value above and choose save.  A restart of the HDFS service
-        is required.  Follow the Yellow restart prompts to restart the HDFS service
-        on all related nodes
+    #.  HAWQ requires ``dfs.blocksize`` be set for 134217728.  To make this
+        change in Ambari, choose HDFS Service>Configs, and then search for ``dfs.blocksize``.
+        Enter the parameter value above and choose save.  Ambari will promp to restart
+        the HDFS service on the PHD Cluster.
 
         .. image::  phdSetBlocksizeForHawq.png
 
@@ -393,8 +391,8 @@ HAWQ
      (1 row)
 
 #.  If you plan to use PL/R, PL/Java, MADlib, or other HAWQ components, follow the
-    instructions in Installing Additional HAWQ Components in the HAWQ 1.3 documentation
-    to install them.  http://hawq.docs.pivotal.io/130/docs-hawq/topics/InstallingtheHAWQComponents.html
+    instructions in `Installing Additional HAWQ Components in the HAWQ 1.3 documentation <http://hawq.docs.pivotal.io/130/docs-hawq/topics/InstallingtheHAWQComponents.html>`_
+    to install them.
 
 Ambari Service Check
 --------------------
@@ -415,6 +413,6 @@ the *Service Actions* button, and select *Run Service Check*.
 
 .. include:: ../common/references.rst
 
-http://www.Pivotal.com/
+http://www.pivotal.io/
 
 .. include:: ../common/substitutions.rst

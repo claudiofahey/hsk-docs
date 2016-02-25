@@ -7,9 +7,9 @@
 .. |hadoop-mapreduce-examples-jar| replace:: **/usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar**
 
 
-*****************************************************************************
-EMC Isilon Hadoop Starter Kit for BigInsights with VMware Big Data Extensions
-*****************************************************************************
+*********************************************************************************
+EMC Isilon Hadoop Starter Kit for BigInsights 4.0 with VMware Big Data Extensions
+*********************************************************************************
 
 This document describes how to create a Hadoop environment utilizing
 the IBM BigInsights and an EMC Isilon Scale-Out NAS for HDFS accessible
@@ -87,28 +87,24 @@ environment as best-practices are followed whenever possible.
 IBM BigInsights and the Ambari Manager
 ------------------------------------------------
 
-The IBM BigInsights (BI) enables Enterprise Hadoop by providing the complete
-set of essential Hadoop capabilities required for any enterprise.  Utilizing YARN at its
-core, it provides capabilities for several functional areas including Data Management, Data
-Access, Data Governance, Integration, Security and Operations.
+The IBM® Open Platform with Apache Hadoop is comprised of entirely Apache Hadoop open
+source components, such as Apache Ambari, YARN, Spark, Knox, Slider, Sqoop, Flume, Hive,
+Oozie, HBase, ZooKeeper, and more.
 
-BI delivers the core elements of Hadoop - scalable storage and
-distributed computing – as well as all of the necessary enterprise
-capabilities such as security, high availability and integration with a
-broad range of hardware and software solutions.  It does so by leveraging
-the power of open source development and drives innovation exclusively through
-the Apache Software Foundation process.
+After installing IBM Open Platform, you can install additional IBM value-add service
+modules. These value-add service modules are installed separately, and they include
+IBM BigInsights® Analyst, IBM BigInsights Data Scientist, and the IBM BigInsights
+Enterprise Management module to provide enhanced capabilities to IBM Open Platform
+to accelerate the conversion of all types of data into business insight and action.
 
 Apache Ambari is an open operational framework for provisioning, managing
-and monitoring Apache Hadoop clusters. As of version 2.0 of the BigInsights
-Data Platform (BI), Ambari can be used to setup and deploy Hadoop clusters
-for nearly any task.  Ambari can provision, manage and monitor every aspect
-of a Hadoop deployment.  Additionally, it provides a RESTful API to enable
-integration with existing Enterprise management tools such as Microsoft System
-Center and many others.
+and monitoring Apache Hadoop clusters. As of version 4.0 of IBM Open Platform,
+Ambari can be used to setup and deploy Hadoop clusters for nearly any task.
+Ambari can provision, manage and monitor every aspect of a Hadoop deployment.
+Additionally, it provides a RESTful API to enable integration with existing
+Enterprise management tools such as Microsoft System Center and many others.
 
-More information on BigInsights BI and Ambari can be found at http://BigInsights.com
-
+For more information on `BigInsights <http://www-03.ibm.com/software/products/en/ibm-biginsights-for-apache-hadoop>`_
 
 .. include:: ../common/intro-isilon.rst
 
@@ -122,9 +118,11 @@ Versions
 The test environments used for this document consist of the following
 software versions:
 
-* Apache Ambari 1.6.0
-* IBM BI 4.0
-* Isilon OneFS 7.2.0
+* Apache Ambari 1.7.0_IBM
+* IBM Open Platform v4.0.0.0
+* Isilon OneFS 7.2.0.3 with patch-159065 or higher
+* All of IBM BigInsights v 4.0 value packs, i.e. Business Analyst,
+  Data Scientist, and Enterprise Management
 * VMware vSphere Enterprise 5.5.0
 * VMware Big Data Extensions 2.0
 
@@ -151,6 +149,8 @@ can skip to the section titled “Connect BI to Isilon” (step
 
 #. Use BDE to provision multiple virtual machines.
 
+#. Download and configure an IBM Open Platform Repository
+
 #. Install Ambari Server.
 
 #. Use Ambari Manager to deploy BI to the virtual machines.
@@ -173,28 +173,116 @@ can skip to the section titled “Connect BI to Isilon” (step
 .. include:: ../common/prepare-hadoop-vm.rst
 
 
+Download and configure an IBM Open Platform Repository
+======================================================
+
+The IBM Open Platform with Apache Hadoop uses the repository-based Ambari installer.
+You have two options for specifying the location of the repository from which Ambari
+obtains the component packages.
+
+The IBM Open Platform with Apache Hadoop installation includes OpenJDK 1.7.0. During
+installation, you can either install the version provided or make sure Java™ 7 is
+installed on all nodes in the cluster.
+
+Log into the IBM Passport Advantage web portal with your IBM assigned credentials and
+download the following packages onto the designated Ambari server node:
+
+* BI-AH-1.0.0.1-IOP-4.0.x86_64.bin
+* IOP-4.0.0.0.x86_64.rpm
+* iop-4.0.0.0.x86_64.tar.gz
+* iop-utils-1.0-iop-4.0.x86_64.tar.gz
+
+#.  Log in to your Linux cluster as ``root``, or as a user with root privileges.
+#.  Ensure that the ``nc`` package is installed on all nodes.  **Required**
+
+    .. parsed-literal::
+      yum install -y nc
+
+#.  Locate the ``IOP-4.0.0.0.x86_64.rpm`` file you downloaded from the download site and
+    run the following command to install the ambari.repo file into ``/etc/yum.repos.d``:
+
+    .. parsed-literal::
+      yum install IOP-4.0.0.0x86_64rpm
+
+    Once complete there is the option of using a mirror repository by editing ``/etc/yum.repols.d/ambari.repo``
+    and replacing ``baseurl=http://ibm-open-platform.ibm.com/repos/Ambari/RHEL6/x86_64/1.7`` with your preferred mirror.
+    For example:  ``baseurl=http://<web.server>/repos/Ambari/RHEL6/x86_64/1.7/`` where ``<web.server>`` is the
+    preferred mirror.
+
+    Disable the ``gpgcheck`` in the ``ambari.repo`` file.  Change ``gpgcheck=1`` to ``gpgcheck=0``
+
+    Alternatively, you can keep ``gpgcheck`` on and change the public key file location to the mirror repository.
+    To do this, change the following ``gpgkey=http://ibm-open-platform.ibm.com/repos/Ambari/RHEL6/x86_64/1.7/BI-GPG-KEY.public``
+    to ``gpgkey=http://<web.server>/repos/Ambari/RHEL6/x86_64/1.7/BI-GPG-KEY.public``.
+
+#.  Clean the yum cache on each node so the right packages from the remote repository are seen by your local yum.
+
+    .. parsed-literal::
+      #sudo yum clean all
+
+#.  Install the Ambari server on the intended management node, using the following command:
+
+    .. parsed-literal::
+      #sudo yum install ambari-sever
+
+    Accept the installation defaults
+
+#.  If using a mirror repository, after installing the Ambari server, update ``/var/lib/ambari-server/resources/stacks/BigInsights/4.0/repos/repoinfo.xml``
+    with the mirror repository URLs.
+
+    In the file, change this:
+
+    .. parsed-literal::
+      <os type="redhat6">
+      <repo>
+      <baseurl> http://ibm-open-platform.ibm.com/repos/IOP/RHEL6/x86_64/4.0</baseurl>
+      <repoid>IOP-4.0</repoid>
+      <reponame>IOP</reponame>
+      </repo>
+      <repo>
+      <baseurl> http://ibm-open-platform.ibm.com/repos/IOP-UTILS/RHEL6/x86_64/1.0</baseurl>
+      <repoid>IOP-UTILS-1.0</repoid>
+      <reponame>IOP-UTILS</reponame>
+      </repo>
+      </os>
+
+    To this, where ``<web.server>`` is your preferred repo.
+
+    .. parsed-literal::
+      <os type="redhat6">
+      <repo>
+      <baseurl> http://<web.server>/repos/IOP/RHEL6/x86_64/4.0</baseurl>
+      <repoid>IOP-4.0</repoid>
+      <reponame>IOP</reponame>
+      </repo>
+      <repo>
+      <baseurl> http://<web.server>/repos/IOP-UTILS/RHEL6/x86_64/1.0</baseurl>
+      <repoid>IOP-UTILS-1.0</repoid>
+      <reponame>IOP-UTILS</reponame>
+      </repo>
+      </os>
+
+
+    Next, edit ``/etc/ambari-server/conf/ambari.properties`` and change the this:
+
+    .. parsed-literal::
+      jdk1.7.url=http://ibm-open-platform.ibm.com/repos/IOP-UTILS/RHEL6/x86_64/1.0/openjdk/jdk-1.7.0.tar.gz
+
+    To this:
+
+    .. parsed-literal::
+      jdk1.7.url=http://<web.server>/repos/IOP-UTILS/RHEL6/x86_64/1.0/openjdk/jdk-1.7.0.tar.gz
+
+
 Install Ambari Server
 =====================
 
-.. note::
-  **Only some of the steps are documented below.**
-  Refer to the Ambari Server documentation
-  (http://docs.BigInsights.com/BIDocuments/Ambari-1.6.0.0/bk_using_Ambari_book/content/ambari-chap2.html)
-  for complete details.
 
 .. note::
   Ambari Server is the management interface for BigInsights BI. A single instance of Ambari Server
   will manage exactly one BI cluster. Therefore, you may choose to deploy it onto your cluster's
   master node (mycluster1-master-0) instead of the dedicated Hadoop management node (hadoopmanager-server-0).
 
-#.  Install the Ambari Server packages.
-
-    .. parsed-literal::
-
-      [root\@hadoopmanager-server-0 ~]# **wget \\
-      http://public-repo-1.BigInsights.com/ambari/centos6/1.x/updates/1.6.0/ambari.repo**
-      [root\@hadoopmanager-server-0 ~]# **cp ambari.repo /etc/yum.repos.d**
-      [root\@hadoopmanager-server-0 ~]# **yum install ambari-server**
 
 #.  Setup Ambari Server.
 
@@ -202,7 +290,13 @@ Install Ambari Server
 
       [root\@hadoopmanager-server-0 ~]# **ambari-server setup**
 
-#.  Accept all defaults and complete the setup process.
+    Accept the setup preferences.
+
+    A Java JDK is installed as part of the Ambari server setup.  However, the Ambari
+    server setup also allows for the reuse of an existing JDK.  To reuse an existing
+    JDK issue ``ambari-server setup -j /full/path/to/JDK`` where ``/full/path/to/JDK``
+    is the full path to the existing JDK.  **This must be run on all linux servers
+    in the hadoop cluster.**
 
 #.  Start the server.
 
@@ -226,11 +320,6 @@ by BigInsights.  Ambari Server allows for the immediate usage of an Isilon clust
 for all HDFS services (NameNode and DataNode), no reconfiguration will be necessary
 once the BI install is completed.
 
-.. note::
-  **Only some of the steps are documented below.**
-  Refer to the BigInsights BI Documentation
-  (http://docs.BigInsights.com/BIDocuments/Ambari-1.6.0.0/bk_using_Ambari_book/content/ambari-chap3_2x.html)
-  for complete details.
 
 #. Configure the Ambari Agent on Isilon.
 
@@ -241,13 +330,11 @@ once the BI install is completed.
     isiloncluster1-1# **isi zone zones modify zone1 --hdfs-ambari-server \\
     hadoopmanager-server-0.lab.example.com**
 
-#.  Login to Ambari Server.
+#.  Choose **Launch Install Wizard** in Ambari.
 
 #.  **Welcome:** Specify the name of your cluster *mycluster1*.
 
-#.  **Select Stack:** Select the BI 2.1 stack.
-
-    .. image:: stack21.png
+#.  **Select Stack:** Select BigInsights™ 4.0
 
 #.  **Install Option:**
 

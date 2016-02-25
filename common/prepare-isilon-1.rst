@@ -187,7 +187,12 @@ To create a new access zone and an associated IP address pool:
 		---------------------------------------------------------------------------------------
 		Total: 2
 
-	Alternatively, using the OneFS 8 Web UI...
+.. note::
+
+  If you do not have a SmartConnect Advanced license, you will need to omit
+  the --dynamic option.
+
+Alternatively, using the OneFS 8 Web UI...
 
 		Create the Access Zone, Declare the root, make sure to check "Create zone base directory."
 
@@ -202,10 +207,6 @@ To create a new access zone and an associated IP address pool:
 
 		|image66|
 
-.. note::
-
-  If you do not have a SmartConnect Advanced license, you will need to omit
-  the --dynamic option.
 
 To allow use of the new IP address pool by data node connections:
 
@@ -280,8 +281,8 @@ Configure Isilon For HDFS
 
 #.  Open a web browser to the your Isilon cluster's web administration
     page. If you don't know the URL, simply point your browser to
-    \https://\ *isilon\_node\_ip\_address*:8080, where
-    *isilon\_node\_ip\_address* is any IP address on any Isilon node that is in
+    ``https://isilon_node_ip_address*:8080``, where
+    ``isilon_node_ip_address`` is any IP address on any Isilon node that is in
     the System access zone. This usually corresponds to the ext-1
     interface of any Isilon node.
 
@@ -348,7 +349,7 @@ Configure Isilon For HDFS
 		    Status: Activated
 		Expiration: -
 
-#.  Create the HDFS root directory. This is usually called *hadoop* and
+#.  Create the HDFS root directory. This is usually called ``hadoop`` and
     must be within the access zone directory.
 
 	  .. parsed-literal::
@@ -415,8 +416,8 @@ Configure Isilon For HDFS
       /ifs/isiloncluster1/zone1/hadoop/THIS\_IS\_ISILON\_isiloncluster1\_zone1**
 
 #.  Extract the Isilon Hadoop Tools to your Isilon cluster.
-    This can be placed in any directory under /ifs.
-    It is recommended to use /ifs/*isiloncluster1*/scripts where *isiloncluster1* is the name
+    This can be placed in any directory under ``/ifs``.
+    It is recommended to use ``/ifs/isiloncluster1/scripts`` where ``isiloncluster1`` is the name
     of your Isilon cluster.
 
     .. parsed-literal::
@@ -432,7 +433,7 @@ Configure Isilon For HDFS
       /ifs/isiloncluster1/scripts/isilon-hadoop-tools**
 
 
-#.  Execute the script isilon\_create\_users.sh.
+#.  Execute the script ``isilon_create_users.sh``.
     This script will create all required users and groups for the Hadoop services
     and applications.
 
@@ -466,7 +467,7 @@ Configure Isilon For HDFS
       /ifs/isiloncluster1/scripts/isilon-hadoop-tools/onefs/isilon\_create\_users.sh \\
       --dist** |hsk_dst_strong| **--startgid 501 --startuid 501 --zone zone1**
 
-#.  Execute the script isilon\_create\_directories.sh.
+#.  Execute the script ``isilon_create_directories.sh``.
     This script will create all required directories with the appropriate ownership and permissions.
 
     Script Usage: isilon\_create\_directories.sh --dist <DIST> [--fixperm] [--zone <ZONE>]
