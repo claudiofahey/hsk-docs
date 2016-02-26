@@ -407,6 +407,12 @@ the *Service Actions* button, and select *Run Service Check*.
 
 .. include:: ../common/where-to-go-from-here.rst
 
+.. include:: ../common/linux-tuning.rst
+
+.. include:: ../common/odp-tuning.rst
+
+.. include:: ../common/isilon-tuning.rst
+
 .. include:: ../common/known-limitations.rst
 
 .. include:: ../common/legal.rst

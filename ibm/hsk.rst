@@ -657,8 +657,8 @@ Knox supports only REST API calls for the following Hadoop services:
       password ``guest-password``
 
 
-Installing BigSheets
---------------------
+BigSheets
+---------
 
 To extend the power of the Open Platform for Apache Hadoop, install and deploy the
 BigInsights BigSheets service, which is the IBM spreadsheet interface for big data.
@@ -717,15 +717,640 @@ BigInsights BigSheets service, which is the IBM spreadsheet interface for big da
 
     An example URL might look like ``https://myhost.company.com:8443/gateway/default/BigInsightsWeb/index.html``
 
+    .. note::
+      If using the Knox Demo LDAP, a default user ID and password were already created.  When accessing this page,
+      use the following credentials:
+
+      username ``guest``
+      password ``guest-password``
+
+
+BigSQL
+------
+
+To extend the power of the Open Platform for Apache Hadoop, install and deploy the
+BigInsights - Big SQL service, which is the IBM SQL interface to the Hadoop-based
+platform, IBM Open Platform with Apache Hadoop.
+
+#.  In the Ambari web interface, click **Actions > Add Service**.
+#.  In the **Add Service Wizard**, Choose **Services**, select the **BigInsights - Big SQL service**,
+    and the **BigInsights Home** service.
+
+    .. note::
+      If you do not see **BigInsights-BigSheets**, make sure you installed the appropriate
+      modules from the **Prework** section and restart Ambari.
+
+#.  Click **Next**.
+#.  In the Assign Masters page, decide which nodes of your cluster you want to run
+    the specified components, or accept the default nodes. Follow these guidelines:
+
+    * For the Big SQL monitoring and editing tool, make sure that the Data Server
+      Manager (DSM) is assigned to the same node that is assigned to the Big SQL Head node.
+
+#.  Click **Next**.
+#.  In the Assign Slaves and Clients page, accept the defaults, or make specific assignments
+    for your nodes. Follow these guidelines:
+
+    * Select the non-head (worker) nodes for the Big SQL Worker components. You must select at
+      least one node as the worker node.
+    * Select all nodes for the CLIENT. This puts JSqsh and SFTP clients on the nodes.
+
+#.  In the Customize Services page, accept the recommended configurations for the Big SQL
+    service, or customize the configuration by expanding the configuration files and modifying
+    the values. Make sure that you have a valid ``bigsql_user`` and ``bigsql_user_password``
+    *(see reference screen below)* and ``user_id`` (created by the ``bi_create_users.sh`` script)
+    in the appropriate fields in the **Advanced bigsql-users-env** section.
+
+    .. image::  bigsqlAdvUsers.png
+
+#.  **Review** configuration changes before accepting.  Should any values require modification
+    hit the **Back** button.  When satisfied, click **Deploy**
+#.  In the **Install**, **Start and Test page**, the Big SQL service is installed and
+    verified. If you have multiple nodes, you can see the progress on each node.
+    When the installation is complete, either view the errors or warnings by clicking
+    the link, or click **Next** to see a summary and then the new service added to the
+    list of services.
+
+    .. note::
+      If the **BigInsights – Big SQL** service fails to install, run the ``remove_value_add_services.sh``
+      cleanup script.
+
+#.  A web application interface for Big SQL monitoring and editing is available
+    to your end-users to work with Big SQL. You access this monitoring utility from
+    the IBM BigInsights Home service. If you have not added the BigInsights Home
+    service yet, do that now.
+#.  Restart the **Knox** Service. Also start the Knox Demo LDAP service if you have not
+    configured your own LDAP.
+#.  Restart the **BigInsights Home** services.
+#.  To run SQL statements from the Big SQL monitoring and editing tool, type the following
+    address in your browser to open the BigInsights Home service:  ``https://<knox_host>:<knox_port>/<knox_gateway_path>/default/BigInsightsWeb/index.html``
+
+    where
+
+    * ``knox_host`` is the host running Knox
+    * ``knox_port`` is the port where Knox is listening (8443 by default)
+    * ``knox_gateway_path`` the value entered in the gateway.path field in the Ambari>Knox>Configs.  (normally this is 'gateway')
+
+
+    An example URL might look like ``https://myhost.company.com:8443/gateway/default/BigInsightsWeb/index.html``
+
+    .. note::
+      If using the Knox Demo LDAP, a default user ID and password were already created.  When accessing this page,
+      use the following credentials:
+
+      username ``guest``
+      password ``guest-password``
+
+
+#.  If the **BigInsights - Big SQL** service shows as ``unavailable``, there might have been
+    a problem with post-installation configuration. Run the following commands as **root**
+    (or **sudo**) where the ``Big SQL monitoring utility (DSM)`` server is installed:
+
+    #.  Run the ``dsmKnoxSetup``
+
+        .. parsed-literal::
+          cd /usr/ibmpacks/bigsql/<version-number>/dsm/1.1/ibm-datasrvrmgr/bin/
+          ./dsmKnoxSetup.sh -knoxHost <knox-host>
+
+        where ``<knox-host>`` is the node where the Knox gateway service is running.
+
+    #.  Make sure that you do not stop and restart the Knox gateway service within
+        Ambari. If you do, then run the ``dsmKnoxSetup`` script again.
+    #.  Restart the **BigInsights Home** service so that the **Big SQL monitoring utility (DSM)**
+        can be accessed from the **BigInsights Home** interface.
+
+#.  For HBase, do the following post-installation steps:
+
+    For all nodes where HBase is installed, check that the symlinks to hive-serde.jar
+    and hive-common.jar in the hbase/lib directory are valid.
+
+    #.  To verify the symlinks are created and valid:
+
+        * ``namei /usr/iop/<version-number>/hbase/lib/hive-serde.jar``
+        * ``namei /usr/iop/<version-number>/hbase/lib/hive-common.jar``
+
+    #.  If they are not valid, do the following steps:
+
+        * ``cd /usr/iop/<version-number>/hbase/lib``
+        * ``rm -rf hive-serde.jar``
+        * ``rm -rf hive-common.jar``
+        * ``ln -s /usr/iop/<version-number>/hive/lib/hive-serde.jar hive-serde.jar``
+        * ``ln -s /usr/iop/<version-number>/hive/lib/hive-common.jar hive-common.jar``
+
+    .. note::
+      After installing the Big SQL service, and fixing the symlinks, restart the HBase
+      service from the Ambari web interface.
+
+.. note::
+  After you add Big SQL worker nodes **restart** the **Hive** service.
+
+
+**Connecting to BigSQL**
+
+You can run Big SQL queries from Java SQL Shell (JSqsh), or from the IBM Data Server
+Manager. You can also run queries from a client application, such as IBM Data Studio,
+that uses JDBC or ODBC drivers. You must identify a running Big SQL server and configure
+either a JDBC or ODBC driver.
+
+For more information about JSqsh, or IBM Data Studio, see the related topics in the
+IBM® BigInsights™ Knowledge Center.
+
+**Running JSqsh**
+
+``JSqsh`` is installed in ``/usr/ibmpacks/common-utils/current/jsqsh/bin``. Change to that
+directory and type ``./jsqsh`` to open the ``JSqsh`` shell:
+
+.. parsed-literal::
+  cd /usr/ibmpacks/common-utils/current/jsqsh/bin
+  ./jsqsh
+
+You can then run any ``JSqsh`` commands from the prompt.
+
+**Connection setup**
+
+To use the ``JSqsh`` command shell, you can use the default connections or define and test
+a connection to the Big SQL server.
+
+#.  The first time that you open the ``JSqsh`` command shell, a configuration wizard is started.
+    When you are at the ``Jsqsh`` command prompt, type ``\drivers`` to determine the available drivers.
+
+    #.  On the driver selection screen, select the ``Big SQL`` instance that you want to run
+
+        .. note::
+          Big SQL is designated as DB2 in this example
+
+
+        .. parsed-literal::
+              Name   Target   Class
+              ------ -------- ------------------------------------
+          ... 2 *db2 IBM Data Server(DB2 com.ibm.db2.jcc.DB2Driver
+
+    #.  Verify the ``port``, ``server``, and ``user name``. Run ``\setup`` and click ``C`` to define
+        a ``password`` for the connection. The *username* must have database administration
+        privileges, or must be granted those privileges by the Big SQL administrator.
+    #.  Test the connection to the Big SQL server.
+    #.  Save and name this connection.
+
+#.  Generally, you can access ``JSqsh`` from ``/usr/ibmpacks/common-utils/current/jsqsh/bin``
+    with the following command:
+
+    .. parsed-literal::
+      ./jsqsh --driver=db2 --user=<username> --password=<user_password>
+
+#.  Open the saved configuration wizard any time by typing ``\setup`` while in the
+    command interface, or ``./jsqsh --setup`` when you open the command interface.
+#.  Specify the following connection name in the ``JSqsh`` command shell to establish a connection:
+
+    .. parsed-literal::
+      ./jsqsh *name*
+
+#.  Use the ``\connect`` command when you are already inside the ``JSqsh`` shell to establish
+    a connection at the ``JSqsh`` prompt:
+
+    .. parsed-literal::
+      \connect name
+
+
+**Commands and Queries**
+
+At the ``JSqsh`` command prompt, you can run ``JSqsh`` commands or database server
+commands. ``JSqsh`` commands usually begin with a backslash ``\`` character.
+
+JSqsh commands accept command-line arguments and allow for common shell
+activities, such as I/O redirection and pipes.
+
+For example, consider this set of commands:
+
+.. parsed-literal::
+  1> select * from t1
+  2> where c1 > 10
+  3> \go --style csv > /tmp/t1.csv
+
+Because the commands do not begin with a backslash character, the first two
+commands are assumed to be SQL statements, and are sent to the Big SQL server.
+
+The ``\go`` command sends the statements to run on the server. The ``\go`` command has
+a built-in alias so that you can omit the backslash. Additionally, you can specify
+a *trailing semicolon* to indicate that you want to run a statement, for example:
+
+.. parsed-literal::
+  1> select * from t1
+  2> where c1 > 10;
+
+The ``--style`` option in the ``\go`` command indicates that the display shows
+comma-separated values (CSV). The ``\go`` form is most useful if you provide
+additional arguments to affect how the query is run. Changing the display style
+is an example of this feature.
+
+The redirection operator ``>``specifies that the results of the command are sent
+to a file called ``/tmp/t1.csv``.
+
+A set of frequently run commands does not require the leading backslash. Any
+``JSqsh`` command can bealiased to another name *(without a leading backslash, if
+you choose)*, by using the ``\alias`` command. For example, if you want to be able to
+type ``bye``, to leave the ``JSqsh`` shell, you establish that word as the alias for the
+``\quit`` command:
+
+.. parsed-literal::
+  \\alias bye='quit'
+
+You can run a script that contains one or more SQL statements. For example, assume
+that you have a file called mySQL.sql. That file contains these statements:
+
+.. parsed-literal::
+  select tabschema, tabname from syscat.tables fetch first 5 rows only;
+  select tabschema, colname, colno, typename, length from syscat.columns fetch first 10 rows only;
+
+You can start JSqsh and run the script at the same time with this command:
+
+.. parsed-literal::
+  /usr/ibmpacks/common-utils/current/jsqsh/bin/jsqsh bigsql < /home/bigsql/mySQL.sql
+
+The ``redirection operator`` specifies to ``JSqsh`` to get the commands from the file located
+in the ``/home/bigsqldirectory``, and then run the statements within the file.
+
+**Command and Query Edit**
+
+The ``JSqsh`` command shell uses the ``JLine2`` library, which allows you to edit previously
+entered commands and queries. You use the command-line edit features to move the arrow
+keys and to edit the command or query on the current line.
+
+The ``JLine2`` library provides the same key bindings *(vi and emacs)* as the ``GNU Readline
+library``. In addition, it attempts to apply any custom key maps that you created in
+a ``GNU Readline`` configuration file, *(.inputrc)* in the local file system ``$HOME/`` directory.
+
+In addition to individual line editing, the ``JSqsh`` command shell remembers the 50
+most recently run statements, which you can view by using the ``\history`` command:
+
+.. parsed-literal::
+  1> \\history
+  (1) use tpch;
+  (2) select count(*) from lineitem
+
+Previously run statements are prefixed with a number in parentheses. You use this
+number to recall that query by using the JSqsh recall operator (!), for example:
+
+.. parsed-literal::
+  1> !2
+  1> select count(*) from lineitem
+  2>
+
+The ``!`` recall operator has the following behavior:
+  * ``!!`` Recalls the previously run statement.
+  * ``!5`` Recalls the fifth query from history.
+  * ``!-2`` Recalls the query from two prior runs.
+
+You can also edit queries that span multiple lines by using the ``\buf-edit`` command,
+which pulls the current query into an external editor, for example:
+
+.. parsed-literal::
+  1> select id, count(*)
+  2> from t1, t2
+  3> where t1.c1 = t2.c2
+  4> \\buf-edit
+
+The query is opened in an external editor *(vi by default)*. However, you
+can specify a different editor on the environment variable ``$EDITOR``. When you close
+the editor, the edited query is entered at the ``JSqsh`` command shell prompt.
+
+The ``JSqsh`` command shell provides built-in aliases, ``vi`` and ``emacs``, for the ``\buf-edit``
+command. The following commands, for example, open the query in the ``vi`` editor:
+
+.. parsed-literal::
+  1> select id, count(*)
+  2> from t1, t2
+  3> where t1.c1 = t2.c2
+  4> vi
+
+**Configuration Variables**
+
+You can use the ``\set`` command to list or define values for a number of configuration
+variables, for example:
+
+.. parsed-literal::
+  1> \\set
+
+If you want to redefine the prompt in the command shell, you run the following
+command with the prompt option:
+
+.. parsed-literal::
+  1> \\set prompt='foo $lineno> '
+  foo 1>
+
+Every ``JSqsh`` configuration variable has built-in help available:
+
+.. parsed-literal::
+  1> \\help prompt
+
+If you want to permanently set a specific variable, you can do so by editing
+your ``$HOME/.jsqsh/sqshrc`` file and including the appropriate ``\set`` command
+in it.
+
+
+Text Analytics
+--------------
+
+The Text Analytics service provides powerful text extraction capabilities. You
+can extract structured information from unstructured and semi-structured text.
+
+It is recommended that you make sure that the ``python-paramiko`` package is installed
+prior to installing the Text Analytics service.
+
+.. parsed-literal::
+  yum instsall python-paramiko
+
+You will be selecting a Master node for Text Analytics, and this node should
+contain the ``python-paramiko`` package. The master node is the node where Text
+Analytics Web Tooling and Text Analytics Runtime are both installed.
+
+#.  In the Ambari dashboard, click **Actions > Add Service**.
+#.  In the **Add Service** Wizard, Choose **Services**, select the **BigInsights - Text Analytics**
+    service.
+
+    .. note::
+      If you do not see the option to select the **BigInsights - Text Analytics** service,
+      complete the steps in **Prework** section of this document.
+
+#.  Click **Next**
+#.  To assign master nodes, select the **Text Analytics Master** server Node.
+#.  Click **Next**. The Assign Slaves and Clients page displays.
+#.  Assign slave and client components to the hosts on which you want them to
+    run. An asterisk (*) after a host name indicates the host is assigned a
+    master component.
+
+    #.  To assign slaves nodes and clients, click All on the Clients column.
+
+        * The client package that is installed contains runtime binaries that
+          are needed to run Text Analytics. This client needs to be installed
+          on all datanodes that belong to your cluster.
+        * Client nodes will install only the Text Analytics Runtime
+          artifacts. ``/usr/ibmpacks/current/text-analytics-runtime``. Choose
+          one or more clients. You do not have to choose the Master node as a
+          client since it already installs Text Analytics Runtime.
+
+#.  Click **Next** and select **BigInsights - Text Analytics**.
+#.  Expand Advanced **ta-database-config** and enter the ``password`` in the
+    ``database.password`` field.  Recommended configurations for the service are
+    completed automatically but you can edit these default settings as desired.
+
+    By default, the database server is MySQL. There are two options:
+
+    #.  ``database.create.new = Yes`` (default)
+
+        * You must enter the password for the database.
+        * You must ensure that the default port, 32050 is free.
+          You can change the port to any free port.
+        * You can change the ``database.username``, but any changes to the
+          ``database.hostnameare`` ignored.
+
+    #.  ``database.create.new = N``
+
+        * You must enter the database.hostname, database.port
+          (where the existing database server instance is running), ``database.user``
+          and ``database.password``. Ensure that the user and password have full
+          access to create a database in the existing database server instance
+          you specify. Especially if it is a remote MySQL server instance, ensure
+          that all permissions are given to the user and password to access this
+          remote instance. Ensure that the server instance is up and running so
+          that the Text Analytics service can be started successfully.
+
+#.  Click **Next** and in the Review screen that opens, click **Deploy**.
+#.  After installation is complete, click **Next > Complete**.
+#.  After the installation is successful, click **Next** and **Complete**.
+
+    .. note::
+      If the **BigInsights - Text Analytics** service fails to install, run
+      the ``remove_value_add_services.sh`` cleanup script.
+
+#.  The Text Analytics directory on all nodes where Text Analytics components
+    are installed is created with world-writable permissions, which are not
+    required. Change the permissions to ``rwxr-x-r-x`` on all nodes to improve
+    security:
+
+    .. parsed-literal::
+      chmod go-w /usr/ibmpacks/text-analytics-runtime
+
+#.  Restart the **Knox** service. If you have not configured LDAP service,
+    start the **Knox Demo LDAP** service.
+
+    .. image::  knoxRestart.png
+
+#.  Open the **BigInsights Home** and launch **Text Analytics** at the following
+    address:
+
+    ``https://<knox_host>:<knox_port>/<knox_gateway_path>/default/BigInsightsWeb/index.html``
+
+    where
+
+    * ``knox_host`` is the host running Knox
+    * ``knox_port`` is the port where Knox is listening (8443 by default)
+    * ``knox_gateway_path`` the value entered in the gateway.path field in the Ambari>Knox>Configs.  (normally this is 'gateway')
+
+
+    An example URL might look like ``https://myhost.company.com:8443/gateway/default/BigInsightsWeb/index.html``
+
+    .. note::
+      If using the Knox Demo LDAP, a default user ID and password were already created.  When accessing this page,
+      use the following credentials:
+
+      username ``guest``
+      password ``guest-password``
+
+    .. note::
+      If you do not see the **Text Analytics** service from **BigInsights Home**,
+      restart the **BigInsights Home** service in Ambari.
+
+At this point, IBM BigHome should show all three Big Insights Services as shown below:
+
+.. image::  textAnalytics.png
+
+
+Big R
+-----
+
+To extend the power of the Open Platform for Apache Hadoop, install and deploy the
+Big R service, which is the IBM R extension, to the Hadoop-based platform, IBM
+Open Platform with Apache Hadoop.
+
+.. note::
+  This sectinon covers the installation of two services.  The ``R`` service and
+  the ``Big R`` service.  Complete the instructions all the way through to ensure
+  all requirements are met.
+
+**Install R Service**
+
+#.  In the Ambari web interface, click **Actions > Add Service.**
+#.  In the **Add Service Wizard**, Choose **Services**, select the ``R`` service.
+#.  Click *Next*
+#.  In the **Assign Slaves and Clients** page, for client nodes, mark all of the
+    nodes as the R Clientnode.
+#.  Click **Next**
+#.  In the **Customize Services** page, accept the recommended configurations for the
+    ``R`` service, or customize the configuration by expanding the configuration files
+    and modifying the values.
+
+    #.  Make sure that you read the ``R`` license, and indicate acceptance by
+        typing ``Y`` in the ``fieldaccept.R.Licenses``. **The value is case sensitive**, so
+        make sure you type an uppercaseletter. The ``R`` Licenses field contains a
+        URL where you can find the licensing information.
+    #.  In the ``user.R.packages`` you must ensure that the following required
+        packages are listed:  ``base64enc``, ``rJava``, and ``data.table``.
+    #.  In the ``user.R.repository`` field, enter the preferred repository. The
+        default is ``epel-release``, which uses the ``EPEL repository``, but you can also
+        type a different repository by entering a URL, such as
+        ``http://repos.domain.com/repos``.
+
+        .. note::
+           When installing R from the EPEL repository, you might have the
+           following GPG key error: ``GPG key retrieval failed: [Errno 14]
+           Could not open/read``
+
+           If you receive this error, you can import the
+           key with the following rpm command, then retry: ``rpm --import``
+
+#.  Click **Next** and in the Review Page that opens, click **Deploy**.
+#.  If ``R`` deployment fails, review and correct the errors before reattempting
+    the installation. Remove the ``R`` service from Ambari and delete the RSERV
+    server by using the following command:
+
+    .. parsed-literal::
+      curl -u [uid]:[pwd] -H "X-Requested-By: ambari" -X DELETE http://[hostname]:8080/api/v1/clusters/[cluster name]/services/RSERV
+
+    where
+
+    * ``[uid:[pwd]]`` = The Ambari Administrator User ID and Password
+    * ``[hostname]`` = The correct hostname for your environment
+    * ``8080`` = The port number 8080 is the default. Modify this according to your environment.
+    * ``[cluster name]`` = The correct name of your cluster.
+
+    Here is an example:
+
+    .. parsed-literal::
+      curl -u admin:admin -H "X-Requested-By: ambari" -X DELETE http://my_host.localdomain:8080/api/v1/clusters/my_cluster/services/RSERV
+
+#.  In the Summary page, click **Complete**. When you return to the Ambari
+    Dashboard Services tab, you notice that the ``R`` service is now listed.
+
+
+**Install Big R Service**
+
+#.  In the Ambari web interface, click **Actions > Add Service.**
+#.  In the **Add Service** Wizard, Choose **Services**, select the ``Big R``
+    service and click **Next**.
+#.  In the **Assign Masters** page, decide which nodes of your cluster you want to
+    run the specified components, or accept the default nodes. You must assign
+    the ``Big R Connector`` to the same node that is running the MapReduce2 Client
+    service, which is a required service that runs MapReduce2 Hadoop jobs. Click
+    **Next**.
+#.  In the **Assign Slaves and Clients** page, accept the defaults, or make
+    specific assignments for your nodes. For client nodes, mark all of the
+    nodes as the ``Big R Client`` node and click **Next**.
+#.  In the **Customize Services** page, default ``Big R`` environment variables are
+    set in the ``bigr-env template`` field. Review these entries for accuracy and
+    completeness. Make any necessary changes and click **Next**
+#.  You can review your selections in the **Review** page before accepting them.
+    If you want to modify any values, click the **Back** button. If you are
+    satisfied with your setup, click **Deploy**.
+#.  In the **Install, Start and Test** page, the ``Big R`` service is installed and
+    verified. If you have multiple nodes, you can see the progress on each
+    node. When the installation is complete, either view the errors or
+    warnings by clicking the link, or click **Next** to see a summary and then
+    the new service added to the list of services.
+
+    .. note::
+      If the **BigInsights – Big R** service fails to install, run
+      the ``remove_value_add_services.sh`` cleanup script.
+
+#.  In the Summary page, click **Complete**.
+
+Running BigInsights - Big R as the YARN application master
+----------------------------------------------------------
+
+You must update the ``Linux Container Executor`` as the default executor in the
+yarn-site.xml file to change the owner to the ``bigr`` server user
+*(the application process owner)*.  This must be edited from Ambari.  Ambari
+overwrites any changes not made from Ambari.
+
+#.  In the Ambari web interface, from the **YARN** service **Configs** page, scroll
+    down to find the **Advanced yarn-site** and expand it.
+#.  Change the ``yarn.nodemanager.container-executor.class`` property to have
+    the following value: ``org.apache.hadoop.yarn.server.nodemanager.LinuxContainerExecutor``
+#.  In the **Custom yarn-site** section, click **Add Property** to add the
+    following properties:
+
+    +----------------------------------------------------------------------+-------+
+    | Property Name                                                        | Value |
+    +======================================================================+=======+
+    | yarn.nodemanager.linux-container-executor.nonsecure-mode.local-user  | Yarn  |
+    +----------------------------------------------------------------------+-------+
+    | yarn.nodemanager.linux-container-executor.nonsecure-mode.limit-users | False |
+    +----------------------------------------------------------------------+-------+
+
+#.  Make sure that the property ``yarn.nodemanager.linux-container-executor.group`` has
+    the value ``hadoop``.
+#.  Click **Save** in the Configs page to save your configuration changes.
+#.  Make sure that the directories on ALL the nodes set in the **Node Manager**
+    section for the properties ``yarn.nodemanager.local-dirs`` and
+    ``yarn.nodemanager.log-dirs`` have permissions ``yarn:hadoop``.  On ALL nodes
+    run the following commands:
+
+    .. parsed-literal::
+      $ echo "yarn.nodemanager.linux-container-executor.group=hadoop" >> /etc/hadoop/conf/container-executor.cfg
+      $ echo "banned.users=hdfs,yarn,mapred,bin" >> /etc/hadoop/conf/container-executor.cfg
+      $ echo "min.user.id=1000" >> /etc/hadoop/conf/container-executor.cfg
+      $ chown root:hadoop /etc/hadoop/conf/container-executor.cfg
+      $ chown root:hadoop /usr/iop/4.0.0.0/hadoop-yarn/bin/container-executor
+      $ chmod 6050 /usr/iop/4.0.0.0/hadoop-yarn/bin/container-executor
+
+#.  Make sure that the ``user ID`` with which the ``BigR`` connection is
+    made (by using ``bigr.connect``) is present on ALL nodes, and that the user
+    belongs to groups ``users`` and ``hadoop``.  If the user does not exist,
+    run the following command as the root user on ALL nodes:  ``$ useradd -G users,hadoop someuser``
+#.  Change the ``SystemML`` configuration file, ``/usr/ibmpacks/current/bigr/machine-learning/SystemML-config.xml``
+
+    .. parsed-literal::
+      dml.yarn.appmaster
+      value: true
+
+#.  You can optionally update the MapReduce configuration to get better performance:
+    #.  In the Ambari web interface, from the **MapReduce2** service **Configs**
+        page, scroll down to find the **Advanced map-red site** section and expand it.
+    #.  Update the property ``mapreduce.task.io.sort.mb`` to ``384``.  With **BigInsights**
+        this should be approximately three times the HDFS block size.
+
+        .. note::
+          If the property is not available, add it to the **Custom map-red site**.
+
+#.  Click **Save** in the Configs page to save your configuration changes.
 
 
 
+Big Insights Online Tutorials
+=============================
 
+Learn how to use BigInsights™ by completing `online tutorials <https://www-01.ib
+m.com/support/knowledgecenter/SSPT3X_4.0.0/com.ibm.swg.im.infosphere.biginsights
+.tut.doc/doc/tut_Introduction.html>`_, which use real data and teach you to run
+applications. Complete the tutorials in any order.
 
+You can find additional information, tutorials, and articles about BigInsights,
+Hadoop, and related components at `Hadoop Dev <http://developer.ibm.com/hadoop/
+docs/tutorials/>`_.
 
+To isolate and resolve problems with BigInsights®, you can use the `troubleshoot
+ing and support information <https://www-01.ibm.com/support/knowledgecenter/SSPT
+3X_4.1.0/com.ibm.swg.im.infosphere.biginsights.trb.doc/doc/troubleshooting.html>`_
+online. This information contains instructions for using the problem-determination
+resources that are provided with BigInsights.
 
 
 .. include:: ../common/where-to-go-from-here.rst
+
+.. include:: ../common/linux-tuning.rst
+
+.. include:: ../common/odp-tuning.rst
+
+.. include:: ../common/isilon-tuning.rst
 
 .. include:: ../common/known-limitations.rst
 
@@ -733,6 +1358,6 @@ BigInsights BigSheets service, which is the IBM spreadsheet interface for big da
 
 .. include:: ../common/references.rst
 
-http://www.BigInsights.com/
+http://www-03.ibm.com/software/products/en/ibm-biginsights-for-apache-hadoop
 
 .. include:: ../common/substitutions.rst

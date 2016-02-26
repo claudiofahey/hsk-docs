@@ -397,6 +397,12 @@ http://www.cloudera.com/content/cloudera-content/cloudera-docs/Impala/latest/Ins
 
 .. include:: ../common/where-to-go-from-here.rst
 
+.. include:: ../common/linux-tuning.rst
+
+.. include:: ../common/cloudera-tuning.rst
+
+.. include:: ../common/isilon-tuning.rst
+
 .. include:: ../common/known-limitations.rst
 
 .. include:: ../common/legal.rst

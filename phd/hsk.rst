@@ -434,6 +434,12 @@ http://pivotalhd.docs.pivotal.io/doc/2100/RunningPHDSamplePrograms.html for addi
 
 .. include:: ../common/where-to-go-from-here.rst
 
+.. include:: ../common/linux-tuning.rst
+
+.. include:: ../common/odp-tuning.rst
+
+.. include:: ../common/isilon-tuning.rst
+
 .. include:: ../common/known-limitations.rst
 
 .. include:: ../common/legal.rst
