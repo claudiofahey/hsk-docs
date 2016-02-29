@@ -81,9 +81,9 @@ if not on_rtd:
 	if hsk_dst != 'hwx':
 		exclude_patterns.append('hwx')
     if hsk_dst != 'phd3':
-    	exclude_patterns.append('phd3')
-    if hsk_dst != 'ibm':
-        exclude_patterns.append('ibm')
+        exclude_patterns.append('phd3')
+    if hsk_dst != 'bi':
+        exclude_patterns.append('bi')
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
