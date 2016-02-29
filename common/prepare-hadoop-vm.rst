@@ -15,7 +15,7 @@ Provision Virtual Machines Using Big Data Extensions
     isilon-hadoop-tools/etc/mycluster1-bde.json.
 
 #.  Edit the file mycluster1-bde.json as desired.
-    
+
     .. table:: Description of mycluster1-bde.json
 
       +---------------------------+----------------------------------------------------------+
@@ -48,7 +48,7 @@ Provision Virtual Machines Using Big Data Extensions
 #. Login to the Serengeti CLI.
 
 #. If you want to use a dedicated |hadoop-manager| server, create the |hadoop-manager| cluster.
-   
+
    .. parsed-literal::
 
       serengeti>\ **cluster create --name hadoopmanager \\
@@ -63,7 +63,7 @@ Provision Virtual Machines Using Big Data Extensions
       node group: server,  instance number: 1
       roles:[basic]
         NAME                     IP              STATUS         TASK
-        ------------------------------------------------------------ 
+        ------------------------------------------------------------
         hadoopmanager-server-0  10.111.128.240  Service Ready
       cluster hadoopmanager created
 
@@ -153,14 +153,14 @@ To run the script, follow these steps:
 #.  Login to your workstation (shown as user\@workstation in the prompts below).
 
 #.  Ensure that you are running a Python version 2.6.6 or higher but less than 3.0.
-    
+
     .. parsed-literal::
 
       [user\@workstation ~]$ **python --version**
       Python 2.6.6
 
 #. If you do not have sshpass installed, you may install it on Centos 6.x using the following commands:
-   
+
    .. parsed-literal::
 
     [root\@workstation ~]$ **wget \\
@@ -168,7 +168,7 @@ To run the script, follow these steps:
     [root\@workstation ~]$ **rpm -i sshpass-1.05-1.el6.x86\_64.rpm**
 
 #. If you have not previously created your SSH key, run the following.
-   
+
    .. parsed-literal::
 
     [user\@workstation ~]$ **ssh-keygen -t rsa**
@@ -235,7 +235,7 @@ To run the script, follow these steps:
     step.
 
 #.  Run bde\_cluster\_post\_deploy.py:
-    
+
     .. parsed-literal::
 
       [user\@workstation ~]$ **cd /mnt/scripts/isilon-hadoop-tools**
@@ -257,13 +257,13 @@ the your |hadoop-manager| (*hadoopmanager-server-0*) and the master node
 #.  Remove old data disk.
 
     #.  Edit /etc/fstab.
-        
+
         .. parsed-literal::
 
           [root\@mycluster1-master-0 ~]# **vi /etc/fstab**
 
     #.  Remove line containing "/dev/sdc1", save the file, and then unmount it.
-        
+
         .. parsed-literal::
 
           [root\@mycluster1-master-0 ~]# **umount /dev/sdc1**
@@ -274,16 +274,16 @@ the your |hadoop-manager| (*hadoopmanager-server-0*) and the master node
     #.  Use the vSphere Web Client to remove virtual disk 3.
 
 #.  Use the vSphere Web Client to increase the size of virtual disk 1 to 250 GB.
-    
+
 #.  Power on the VM and SSH into it.
 
 #.  Extend the partition.
-    
+
     .. warning::
 
       Perform the steps below very carefully. Failure performing these steps may
       result in an unusable system or lost data.
-    
+
     .. parsed-literal::
 
       [root\@mycluster1-master-0 ~]# **fdisk /dev/sda**
@@ -313,7 +313,7 @@ the your |hadoop-manager| (*hadoopmanager-server-0*) and the master node
       [root\@mycluster1-master-0 ~]# **reboot**
 
 #.  After the server reboots, resize the file system.
-    
+
     .. parsed-literal::
 
      [root\@mycluster1-master-0 ~]# **resize2fs /dev/sda3**

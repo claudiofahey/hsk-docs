@@ -5,9 +5,9 @@ Prepare VMware Big Data Extensions
 Installing Big Data Extensions
 ------------------------------
 
-Refer to VMware Big Data Extensions documentation
-(http://pubs.vmware.com/bde-2/index.jsp) for complete details for
-installing it. For a typical deployment, only the steps in the following
+Refer to `VMware Big Data Extensions documentation
+<http://pubs.vmware.com/bde-2/index.jsp>`_ for complete install details.
+For a typical deployment, only the steps in the following
 topics need to be performed:
 
 - Installing Big Data Extensions
@@ -39,6 +39,11 @@ files which define the VMs to create.
     Enter the username: **root**
     Enter the password: **\*\*\***
     Connected
+
+.. note::
+
+    If you deployed BDE with VMWare SSO be sure to log into Serengi CLI\
+    with your VMWare SSO credentials!!
 
 View Resources
 --------------

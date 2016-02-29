@@ -29,4 +29,4 @@ data stored in HDFS beyond MapReduce. The YARN-based architecture of
 Hadoop 2.0 provides a more general processing platform that is not
 constrained to MapReduce.
 
-For full details of the Apache Hadoop project see http://hadoop.apache.org/.
+For full details of the `Apache Hadoop project <http://hadoop.apache.org>`_

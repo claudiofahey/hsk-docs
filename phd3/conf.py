@@ -25,8 +25,8 @@ on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
 # -- General configuration ------------------------------------------------
 
-hsk_dst = 'hwx'
-hsk_distribution = 'Hortonworks'
+hsk_dst = 'phd3'
+hsk_distribution = 'Pivotal Big Data Suite'
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
@@ -80,6 +80,10 @@ if not on_rtd:
 		exclude_patterns.append('phd')
 	if hsk_dst != 'hwx':
 		exclude_patterns.append('hwx')
+    if hsk_dst != 'phd3':
+    	exclude_patterns.append('phd3')
+    if hsk_dst != 'ibm':
+        exclude_patterns.append('ibm')
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'

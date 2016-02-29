@@ -190,9 +190,9 @@ Versions
 The test environments used for this document consist of the following
 software versions:
 
-* Cloudera Manager 5.2.0
-* Cloudera CDH 5.1.3
-* Isilon OneFS 7.2.0
+* Cloudera Manager 5.4.7
+* Cloudera CDH 5.4.7
+* Isilon OneFS 7.2.0.4 or higher
 * VMware vSphere Enterprise 5.5.0
 * VMware Big Data Extensions 2.0
 
@@ -244,12 +244,12 @@ can skip to the section titled “Connect Cloudera Hadoop to Isilon” (step
 Install Cloudera Manager
 ========================
 
-#.  Download Cloudera Manager 5.2.0 from
+#.  Download Cloudera Manager from
     http://www.cloudera.com/content/cloudera/en/documentation/core/latest/topics/cm_qs_quick_start.html,
     section *Download and Run the Cloudera Manager Server Installer*.
 
 #.  Launch the installer.
-    
+
     .. parsed-literal::
 
       [root\@c5manager-server-0 ~]# **./cloudera-manager-installer.bin**
@@ -261,7 +261,7 @@ Install Cloudera Manager
     |image28|
 
 #.  Login using the following account:
-  
+
     Username: admin
 
     Password: admin
@@ -277,7 +277,7 @@ Deploy a Cloudera Hadoop Cluster
   for complete details.
 
 #.  Login to Cloudera Manager.
-    
+
     |image30|
 
 #.  Specify hosts for your CDH cluster installation. You can copy and
@@ -292,8 +292,9 @@ Deploy a Cloudera Hadoop Cluster
 
     |image34|
 
-#.  To make CDH 5.1.3 available for selection, add the following to
-    your Remote Parcel Repository URLs: ::
+#.  By default, the Parcel selection will automatically match the version of Cloudera
+    Manager from the download.  To make other versions available for selection, add something
+    like the following to your Remote Parcel Repository URLs: ::
 
       http://archive.cloudera.com/cdh5/parcels/5.1.3/
 
@@ -310,9 +311,10 @@ Deploy a Cloudera Hadoop Cluster
 
     |image40|
 
-#.  When prompted to choose the CDH services that you want to install, select *Custom Services*. 
+#.  When prompted to choose the CDH services that you want to install, select *Custom Services*.
     Then check *Isilon* and any other services that you would like to install.
-    Do *not* select *HDFS*.
+    Do *not* select *HDFS* or *Cloudera Navigator*.  Isilon takes the place of the
+    usual *HDFS* service.  *Cloudera Navigator* is not currently supported with Isilon HDFS.
 
     .. image:: cloudera-manager-5.2-custom-services-isilon.png
 
@@ -328,10 +330,10 @@ Deploy a Cloudera Hadoop Cluster
     .. image:: view-by-host.png
 
 #.  When prompted to review changes, here you will specify your Isilon cluster address.
-  
+
     Default File System URI
       \hdfs://mycluster1-hdfs.lab.example.com:8020
-      
+
     WebHDFS URL
       \http://mycluster1-hdfs.lab.example.com:8082/webhdfs/v1
 
@@ -394,6 +396,12 @@ http://www.cloudera.com/content/cloudera-content/cloudera-docs/Impala/latest/Ins
 .. include:: ../common/wikipedia.rst
 
 .. include:: ../common/where-to-go-from-here.rst
+
+.. include:: ../common/linux-tuning.rst
+
+.. include:: ../common/cloudera-tuning.rst
+
+.. include:: ../common/isilon-tuning.rst
 
 .. include:: ../common/known-limitations.rst
 

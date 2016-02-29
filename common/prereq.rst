@@ -21,7 +21,7 @@ Isilon
   added at least two other nodes for a minimum of 3 Isilon nodes.
 
 - You must have OneFS version 7.1.1.0 with patch-130611
-  or version 7.2.0.0 and higher.
+  or version 7.2.0.3 and higher.
 
 - You must obtain a OneFS HDFS license code and install it on
   your Isilon cluster. You can get your free OneFS HDFS license from
@@ -33,10 +33,11 @@ Isilon
 - To allow for scripts and other small files to be easily
   shared between all nodes in your environment, it is highly recommended
   to enable NFS (Unix Sharing) on your Isilon cluster. By default, the
-  entire /ifs directory is already exported and this can remain unchanged.
-  This document assumes that a single Isilon cluster is used for this NFS
-  export as well as for HDFS. However, there is no requirement that the
-  NFS export be on the same Isilon cluster that you are using for HDFS.
+  entire /ifs directory is already exported and this can remain unchanged in
+  test or development environments.  It is best practice to close this hole for
+  production use.  This document assumes that a single Isilon cluster is used
+  for this NFS export as well as for HDFS. However, there is no requirement that
+  the NFS export be on the same Isilon cluster that you are using for HDFS.
 
 VMware
 ------
@@ -99,7 +100,7 @@ Networking
   give by the formula below. Of course, this is in addition to any IP
   addresses used for non-HDFS pools.
 
-  # of IP addresses = 2 * (# of Isilon Nodes) * (# of Access Zones)
+  ``# of IP addresses = 2 * (# of Isilon Nodes) * (# of Access Zones)``
 
   For example, 20 IP addresses are recommended for 5 Isilon nodes and 2
   Access Zones.
@@ -170,11 +171,9 @@ Other
     sshpass on Centos 6.x.
 
 - Several useful scripts and file templates are provided in the
-  archive file isilon-hadoop-tools-\ *x*.\ *x*.tar.gz. Download the latest
-  version from
-  https://github.com/claudiofahey/isilon-hadoop-tools/releases.
+  archive file ``isilon-hadoop-tools-*x*.*x*.tar.gz``. Download the latest
+  version from `Github <https://github.com/claudiofahey/isilon-hadoop-tools/releases>`_.
 
 - Time synchronization is critical for Hadoop. It is highly
   recommended to configure all ESXi hosts and Isilon nodes to use NTP. In
   general, you do not need to run NTP clients in your VMs.
-
