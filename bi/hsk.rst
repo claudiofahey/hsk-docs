@@ -1,8 +1,8 @@
 
 .. The following substitutions are used by the common documents.
 
-.. |hsk_dst| replace:: ibm
-.. |hsk_dst_strong| replace:: **ibm**
+.. |hsk_dst| replace:: bi
+.. |hsk_dst_strong| replace:: **bi**
 .. |hadoop-manager| replace:: Ambari
 .. |hadoop-mapreduce-examples-jar| replace:: **/usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar**
 
