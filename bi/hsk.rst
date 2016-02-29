@@ -1,15 +1,15 @@
 
 .. The following substitutions are used by the common documents.
 
-.. |hsk_dst| replace:: bi
-.. |hsk_dst_strong| replace:: **bi**
+.. |hsk_dst| replace:: ibm
+.. |hsk_dst_strong| replace:: **ibm**
 .. |hadoop-manager| replace:: Ambari
 .. |hadoop-mapreduce-examples-jar| replace:: **/usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar**
 
 
-*********************************************************************************
-EMC Isilon Hadoop Starter Kit for BigInsights 4.0 with VMware Big Data extensions
-*********************************************************************************
+*************************************************************************************
+EMC Isilon Hadoop Starter Kit for IBM BigInsights 4.0 with VMware Big Data Extensions
+*************************************************************************************
 
 This document describes how to create a Hadoop environment utilizing
 the IBM BigInsights and an EMC Isilon Scale-Out NAS for HDFS accessible

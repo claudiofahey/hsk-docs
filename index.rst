@@ -10,4 +10,4 @@ EMC Isilon Hadoop Starter Kit
    hwx/hsk
    phd/hsk
    phd3/hsk
-   ibm/hsk
+   bi/hsk
