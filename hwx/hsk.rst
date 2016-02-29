@@ -122,9 +122,9 @@ Versions
 The test environments used for this document consist of the following
 software versions:
 
-* Apache Ambari 1.6.0
-* Hortonworks HDP 2.1
-* Isilon OneFS 7.2.0
+* Apache Ambari 1.7.0
+* Hortonworks HDP 2.2
+* Isilon OneFS 7.2.0.4
 * VMware vSphere Enterprise 5.5.0
 * VMware Big Data Extensions 2.0
 
