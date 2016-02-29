@@ -7,9 +7,9 @@
 .. |hadoop-mapreduce-examples-jar| replace:: **/usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar**
 
 
-*************************************************************************************
-EMC Isilon Hadoop Starter Kit for IBM BigInsights 4.0 with VMware Big Data Extensions
-*************************************************************************************
+*********************************************************************************
+EMC Isilon Hadoop Starter Kit for BigInsights 4.0 with VMware Big Data extensions
+*********************************************************************************
 
 This document describes how to create a Hadoop environment utilizing
 the IBM BigInsights and an EMC Isilon Scale-Out NAS for HDFS accessible
@@ -19,7 +19,7 @@ manage the compute resources.
 #RememberRuddy
 
 .. note::
-  The latest version of this document is available at `ReadTheDocs <http://hsk-bi.readthedocs.org>`_.
+  The latest version of this document is available at http://hsk-hwx.readthedocs.org/.
 
 Introduction
 ============

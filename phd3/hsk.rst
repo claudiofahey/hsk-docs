@@ -19,7 +19,7 @@ manage the compute resources.
 #RememberRuddy
 
 .. note::
-  The latest version of this document is available at `ReadTheDocs <http://hsk-hwx.readthedocs.org/>`_.
+  The latest version of this document is available at `ReadTheDocs <http://hsk-phd3.readthedocs.org/>`_.
 
 Introduction
 ============
