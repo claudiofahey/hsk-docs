@@ -178,8 +178,7 @@ Install Ambari Server
 
 .. note::
   **Only some of the steps are documented below.**
-  Refer to the Ambari Server documentation
-  (http://docs.hortonworks.com/HDPDocuments/Ambari-1.6.0.0/bk_using_Ambari_book/content/ambari-chap2.html)
+  Refer to the `Ambari Server documentation <http://docs.hortonworks.com/HDPDocuments/Ambari-1.7.0.0/index.html>`_
   for complete details.
 
 .. note::
@@ -192,7 +191,7 @@ Install Ambari Server
     .. parsed-literal::
 
       [root\@hadoopmanager-server-0 ~]# **wget \\
-      http://public-repo-1.hortonworks.com/ambari/centos6/1.x/updates/1.6.0/ambari.repo**
+      http://public-repo-1.hortonworks.com/ambari/centos6/1.x/updates/1.7.0/ambari.repo**
       [root\@hadoopmanager-server-0 ~]# **cp ambari.repo /etc/yum.repos.d**
       [root\@hadoopmanager-server-0 ~]# **yum install ambari-server**
 
@@ -228,8 +227,7 @@ once the HDP install is completed.
 
 .. note::
   **Only some of the steps are documented below.**
-  Refer to the Hortonworks HDP Documentation
-  (http://docs.hortonworks.com/HDPDocuments/Ambari-1.6.0.0/bk_using_Ambari_book/content/ambari-chap3_2x.html)
+  Refer to the `Hortonworks HDP Documentation <http://docs.hortonworks.com/HDPDocuments/HDP2/HDP-2.2.9/index.html>`_
   for complete details.
 
 #. Configure the Ambari Agent on Isilon.
@@ -245,7 +243,7 @@ once the HDP install is completed.
 
 #.  **Welcome:** Specify the name of your cluster *mycluster1*.
 
-#.  **Select Stack:** Select the HDP 2.1 stack.
+#.  **Select Stack:** Select the **HDP 2.2** stack.
 
     .. image:: stack21.png
 
