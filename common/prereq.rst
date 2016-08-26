@@ -172,7 +172,7 @@ Other
 
 - Several useful scripts and file templates are provided in the
   archive file ``isilon-hadoop-tools-*x*.*x*.tar.gz``. Download the latest
-  version from `Github <https://github.com/claudiofahey/isilon-hadoop-tools/releases>`_.
+  version from `Github <https://github.com/isilon/isilon_hadoop_tools/releases>`_.
 
 - Time synchronization is critical for Hadoop. It is highly
   recommended to configure all ESXi hosts and Isilon nodes to use NTP. In

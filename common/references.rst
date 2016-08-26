@@ -13,7 +13,7 @@ http://www.emc.com/collateral/white-paper/h12877-wp-emc-isilon-hadoop-best-pract
 
 http://www.emc.com/collateral/white-paper/h13354-wp-security-compliance-scale-out-hadoop-data-lakes.pdf
 
-https://github.com/claudiofahey/isilon-hadoop-tools
+https://github.com/isilon/isilon_hadoop_tools
 
 http://pubs.vmware.com/bde-2/index.jsp
 

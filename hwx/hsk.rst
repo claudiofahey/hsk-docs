@@ -11,6 +11,12 @@
 EMC Isilon Hadoop Starter Kit for Hortonworks with VMware Big Data Extensions
 *****************************************************************************
 
+.. warning::
+  The Hadoop Starter Kits have been retired.  If you are looking for Implementation
+  guides for Hortonworks on Isilon please see the new `Implementation Guides <https://support.emc.com/docu71396_Isilon-OneFS-8.0.0-Hortonworks-Installation-Guide.pdf?language=en_US>`_ available on emc support.  Implementation guides for Cloudera and IBM are in draft and will
+  replace these guides when they are available.
+
+
 This document describes how to create a Hadoop environment utilizing
 the Hortonworks Data Platform and an EMC Isilon Scale-Out NAS for HDFS accessible
 shared storage. VMware Big Data Extensions is used to provision and
